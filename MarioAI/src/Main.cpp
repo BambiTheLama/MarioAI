@@ -1,8 +1,9 @@
-#include <iostream>
+#include "GameObject/Game.h"
 
 int main()
 {
-	printf("SIEMKA\n");
-
+	Game* game = new Game();
+	game->start();
+	delete game;
 	return 0;
 }

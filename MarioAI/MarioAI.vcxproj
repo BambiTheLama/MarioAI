@@ -19,7 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameObject\Block.cpp" />
+    <ClCompile Include="src\GameObject\Game.cpp" />
+    <ClCompile Include="src\GameObject\GameObject.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\NN.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\GameObject\Block.h" />
+    <ClInclude Include="src\GameObject\Game.h" />
+    <ClInclude Include="src\GameObject\GameObject.h" />
+    <ClInclude Include="src\NN.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
