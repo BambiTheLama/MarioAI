@@ -1,20 +1,34 @@
 #include "GameObject.h"
 
-std::list<textureSource> GameObject::texturesLoaded;
+std::list<textureSource> GameObject::texturesLoaded=std::list<textureSource>();
 
 GameObject::GameObject(Rectangle pos, std::string path)
 {
 	this->pos = pos;
-	for(auto t:texturesLoaded)
-		if (path.compare(t.path))
-		{
-			this->texture = texture;
-			return;
-		}
-	texture.texture = LoadTexture(path.c_str());
-	texture.path = path;
-	if (texture.texture.id > 0)
-		texturesLoaded.push_back(texture);
+	bool loaded = false;
+	if (texturesLoaded.size() > 0)
+	{
+		for (auto t : texturesLoaded)
+			if (path.compare(t.path) == 0)
+			{
+				this->texture = texture;
+				loaded = true;
+			}
+	}
+
+	if (!loaded)
+	{
+		texture.texture = LoadTexture(path.c_str());
+		texture.path = path;
+		if (texture.texture.id > 0)
+			texturesLoaded.push_back(texture);
+	}
+}
+
+GameObject::GameObject(GameObject& o)
+{
+	pos = o.pos;
+	texture = o.texture;
 }
 
 void GameObject::draw()

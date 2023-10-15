@@ -20,15 +20,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GameObject\Block.cpp" />
+    <ClCompile Include="src\GameObject\Chunk.cpp" />
     <ClCompile Include="src\GameObject\Game.cpp" />
     <ClCompile Include="src\GameObject\GameObject.cpp" />
+    <ClCompile Include="src\GameObject\Lava.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\NN.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject\Block.h" />
+    <ClInclude Include="src\GameObject\Chunk.h" />
     <ClInclude Include="src\GameObject\Game.h" />
     <ClInclude Include="src\GameObject\GameObject.h" />
+    <ClInclude Include="src\GameObject\Lava.h" />
+    <ClInclude Include="src\json.hpp" />
     <ClInclude Include="src\NN.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -6,12 +6,15 @@ class Block :
 public:
 	Block(Rectangle pos, std::string path);
 
+	Block(Block& b);
+
 	virtual ~Block() {}
 
-	virtual void update();
+	virtual void update(float deltaTime);
 
 	virtual ObjectType getType() { return ObjectType::Block; }
 
-	virtual void draw();
+	virtual Block* clone() { return new Block(*this); }
+
 };
 

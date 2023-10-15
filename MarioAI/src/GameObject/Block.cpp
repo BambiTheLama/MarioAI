@@ -4,13 +4,11 @@ Block::Block(Rectangle pos,std::string path) :GameObject(pos,path)
 {
 
 }
-
-void Block::update()
+Block::Block(Block& b) :GameObject(b)
 {
 
 }
-
-void Block::draw()
+void Block::update(float deltaTime)
 {
 
 }
