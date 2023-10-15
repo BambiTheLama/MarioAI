@@ -22,11 +22,18 @@ void Player::update(float deltaTime)
 	Rectangle pos = getPos();
 	if (IsKeyDown(KEY_A))
 	{
-		pos.x -= speed * deltaTime;
+		if (!isObjectAt({ pos.x - speed * deltaTime,pos.y,pos.width,pos.height-1 }, ObjectType::Block))
+		{
+			pos.x -= speed * deltaTime;
+		}
 	}
 	if (IsKeyDown(KEY_D))
 	{
-		pos.x += speed * deltaTime;
+		if (!isObjectAt({ pos.x + speed * deltaTime,pos.y,pos.width,pos.height-1 }, ObjectType::Block))
+		{
+			pos.x += speed * deltaTime;
+		}
+
 	}
 	if (IsKeyDown(KEY_SPACE))
 	{
@@ -53,32 +60,34 @@ void Player::update(float deltaTime)
 	}
 	if (game)
 	{
-		Rectangle objsPos = { pos.x,pos.y + pos.height,pos.width,2 };
-		std::list<GameObject*> obj = game->getObjectsAt(objsPos);
-		for (auto o : obj)
+		if (isObjectAt({ pos.x,pos.y + pos.height,pos.width,2 }, ObjectType::Block))
 		{
-			if(CheckCollisionRecs(o->getPos(), objsPos))
-			if (o->getType() == ObjectType::Block)
-			{
-				pressJumpTime = pressJumpTimeMax;
-			}
+			pressJumpTime = pressJumpTimeMax;
 		}
-
-		if (!jumping && obj.size() <= 0)
+		else if (!jumping)
 		{
 			pos.y += deltaTime / pressJumpTimeMax * jumpHeight;
 			pressJumpTime = 0;
 		}
-
-		obj = game->getObjectsAt({ pos.x,pos.y -1,pos.width,1 });
-		for (auto o : obj)
+		if (isObjectAt({ pos.x,pos.y - 1,pos.width,1 }, ObjectType::Block))
 		{
-			if (o->getType() == ObjectType::Block)
-			{
-				pressJumpTime = 0;
-			}
+			pressJumpTime = 0;
 		}
 
 	}
 	moveTo(pos.x, pos.y);
+}
+
+bool Player::isObjectAt(Rectangle pos,ObjectType type)
+{
+	std::list<GameObject*> obj = game->getObjectsAt(pos);
+	for (auto o : obj)
+	{
+		if (CheckCollisionRecs(o->getPos(), pos))
+			if (o->getType() == type)
+			{
+				return true;
+			}
+	}
+	return false;
 }

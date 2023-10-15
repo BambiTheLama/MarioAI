@@ -23,5 +23,7 @@ public:
 
     Player* clone() { return new Player(*this); }
 
+    bool isObjectAt(Rectangle pos,ObjectType type);
+
 };
 
