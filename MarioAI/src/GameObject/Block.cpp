@@ -1,6 +1,6 @@
 #include "Block.h"
 
-Block::Block(Rectangle pos,std::string path) :GameObject(pos,path)
+Block::Block(Rectangle pos,std::string path,Game* game) :GameObject(pos,path,game)
 {
 
 }

@@ -5,8 +5,8 @@ std::vector<GameObject*> objectToCopy;
 void createObjectToCopy()
 {
 	objectToCopy = std::vector<GameObject*>{
-	new Block({ 0,0,blockSize,blockSize }, "res/Block.png"),
-	new Lava({ 0,0,blockSize,blockSize }, "res/Lava.png"),
+	new Block({ 0,0,blockSize,blockSize }, "res/Block.png",NULL),
+	new Lava({ 0,0,blockSize,blockSize }, "res/Lava.png",NULL),
 
 	};
 }
@@ -19,7 +19,7 @@ void deleteObjectToCopy()
 	objectToCopy.clear();
 }
 
-Chunk::Chunk(int chunk)
+Chunk::Chunk(int chunk, Game* game)
 {
 	this->chunk = chunk;
 	for (int y = 0; y < mapH; y++)
@@ -31,16 +31,19 @@ Chunk::Chunk(int chunk)
 		{
 			blocks[y][x] = objectToCopy[0]->clone();
 			blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
+			blocks[y][x]->setGame(game);
 		}
 	for (int y = mapH - 1; y < mapH; y++)
 		for (int x = 0; x < mapW; x++)
 		{
 			blocks[y][x] = objectToCopy[1]->clone();
 			blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
+			blocks[y][x]->setGame(game);
 		}
+	this->game = game;
 }
 
-Chunk::Chunk(int chunk, nlohmann::json map)
+Chunk::Chunk(int chunk, Game* game, nlohmann::json map)
 {
 	this->chunk = chunk;
 	for (int y = 0; y < mapH; y++)
@@ -61,6 +64,7 @@ Chunk::Chunk(int chunk, nlohmann::json map)
 		{
 			blocks[y][x] = objectToCopy[blockId]->clone();
 			blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
+			blocks[y][x]->setGame(game);
 			times--;
 			if (times <= 0)
 			{
@@ -76,8 +80,9 @@ Chunk::Chunk(int chunk, nlohmann::json map)
 		{
 			blocks[y][x] = objectToCopy[1]->clone();
 			blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
+			blocks[y][x]->setGame(game);
 		}
-	
+	this->game = game;
 }
 
 Chunk::~Chunk()

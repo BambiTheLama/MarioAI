@@ -34,6 +34,8 @@
     <ClInclude Include="src\GameObject\Game.h" />
     <ClInclude Include="src\GameObject\GameObject.h" />
     <ClInclude Include="src\GameObject\Lava.h" />
+    <ClInclude Include="src\GameObject\ObjType\Destoryable.h" />
+    <ClInclude Include="src\GameObject\ObjType\Hitable.h" />
     <ClInclude Include="src\GameObject\Player.h" />
     <ClInclude Include="src\json.hpp" />
     <ClInclude Include="src\NN.h" />

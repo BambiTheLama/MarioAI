@@ -4,7 +4,7 @@ class Lava :
     public GameObject
 {
 public:
-	Lava(Rectangle pos, std::string path);
+	Lava(Rectangle pos, std::string path,Game* game);
 
 	Lava(Lava& l);
 

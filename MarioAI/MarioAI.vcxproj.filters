@@ -7,6 +7,9 @@
     <Filter Include="src\GameObject">
       <UniqueIdentifier>{634c3b0c-4b09-4cc3-a11f-e0f545409cfa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\GameObject\ObjType">
+      <UniqueIdentifier>{0462fbe2-5f47-4518-b2cc-8a67afe24938}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -30,7 +33,9 @@
     <ClCompile Include="src\GameObject\Lava.cpp">
       <Filter>src\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\Player.cpp" />
+    <ClCompile Include="src\GameObject\Player.cpp">
+      <Filter>src\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\NN.h">
@@ -54,6 +59,14 @@
     <ClInclude Include="src\GameObject\Lava.h">
       <Filter>src\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Player.h" />
+    <ClInclude Include="src\GameObject\Player.h">
+      <Filter>src\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\ObjType\Hitable.h">
+      <Filter>src\GameObject\ObjType</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\ObjType\Destoryable.h">
+      <Filter>src\GameObject\ObjType</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

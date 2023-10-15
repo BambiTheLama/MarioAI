@@ -1,10 +1,11 @@
 #pragma once
 #include "GameObject.h"
+#include "ObjType/Hitable.h"
 class Block :
     public GameObject
 {
 public:
-	Block(Rectangle pos, std::string path);
+	Block(Rectangle pos, std::string path,Game* game);
 
 	Block(Block& b);
 

@@ -12,14 +12,17 @@ struct textureSource
 	Texture2D texture;
 	std::string path;
 };
+class Game;
 
 class GameObject
 {
 	Rectangle pos;
 	textureSource texture;
 	static std::list<textureSource> texturesLoaded;
+protected:
+	Game* game;
 public:
-	GameObject(Rectangle pos,std::string path);
+	GameObject(Rectangle pos,std::string path,Game* game);
 
 	GameObject(GameObject& o);
 
@@ -35,7 +38,13 @@ public:
 
 	Rectangle getPos() { return pos; }
 
+	void setGame(Game* game) { this->game = game; }
+
 	void moveTo(float x, float y) { pos.x = x, pos.y = y; }
+
+	std::list<GameObject*> getObjectsAt(Rectangle pos, ObjectType type);
+
+	bool isObjectAt(Rectangle pos, ObjectType type);
 
 	friend class Game;
 };

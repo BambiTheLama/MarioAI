@@ -7,7 +7,7 @@ Game::Game()
 {
 	InitWindow(1600, 900, "MARIO");
 	createObjectToCopy();
-	Chunk* chunk = new Chunk(0);
+	Chunk* chunk = new Chunk(0,this);
 	target = new Player({128,500,64,64},"",this);
 	chunks.push_back(chunk);
 
@@ -31,13 +31,20 @@ void Game::draw()
 	if (target)
 		target->draw();
 }
-
+int i = 1;
 void Game::update(float deltaTime)
 {
 	for (auto chunk : chunks)
 		chunk->update(deltaTime);
-	if(target)
+	if (target)
+	{
 		target->update(deltaTime);
+		camera.target.x = target->getPos().x;
+
+	}
+	if (IsKeyPressed(KEY_F1))
+		loadChunk(i++);
+
 }
 
 
@@ -46,7 +53,10 @@ void Game::start()
 	float deltaTime = 0;
 	double time = 0;
 	double time2 = GetTime();
-	while (!WindowShouldClose())
+	camera.offset = { GetScreenWidth() / 2.0f,GetScreenHeight() / 2.0f };
+	camera.target.y = 880/2;
+	camera.zoom = 1;
+	while (!WindowShouldClose() && play)
 	{
 		time = time2;
 		time2 = GetTime();
@@ -55,7 +65,9 @@ void Game::start()
 		update(deltaTime);
 		BeginDrawing();
 		ClearBackground(WHITE);
+		BeginMode2D(camera);
 		draw();
+		EndMode2D();
 		EndDrawing();
 	}
 }
@@ -77,7 +89,7 @@ void Game::deleteChunk(int i)
 
 void Game::loadChunk(int i)
 {
-	chunks.push_back(new Chunk(i, map));
+	chunks.push_back(new Chunk(i,this));
 }
 
 std::list<GameObject*> Game::getObjectsAt(Rectangle pos)

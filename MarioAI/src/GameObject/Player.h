@@ -1,15 +1,19 @@
 #pragma once
 #include "GameObject.h"
+#include "ObjType/Hitable.h"
+
 class Game;
+
 class Player :
-    public GameObject
+    public GameObject,public Hitable
 {
-    float speed = 64;
+    float speed = 32;
     bool jumping = false;
-    float jumpHeight = 500;
+    float jumpHeight = 400;
     float pressJumpTime = 0;
     float pressJumpTimeMax = 10.0f;
-    Game* game = NULL;
+    int hp = 1;
+    float invisibleFrames = 0;
 public:
     Player(Rectangle pos,std::string path,Game *g);
 
@@ -23,7 +27,7 @@ public:
 
     Player* clone() { return new Player(*this); }
 
-    bool isObjectAt(Rectangle pos,ObjectType type);
+    void hitObj();
 
 };
 

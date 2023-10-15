@@ -1,6 +1,6 @@
 #include "Lava.h"
 
-Lava::Lava(Rectangle pos, std::string path):GameObject(pos,path)
+Lava::Lava(Rectangle pos, std::string path,Game*game):GameObject(pos,path,game)
 {
 
 }

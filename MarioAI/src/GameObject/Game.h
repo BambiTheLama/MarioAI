@@ -12,6 +12,7 @@ class Game
 	GameObject* target;
 	nlohmann::json map;
 	Camera2D camera;
+	bool play = true;
 	
 public:
 	Game();
@@ -35,5 +36,7 @@ public:
 	void removeBlock(GameObject* o);
 
 	void addObj(GameObject* o);
+
+	void lostGame() { play = false; }
 };
 

@@ -10,17 +10,18 @@
 
 void createObjectToCopy();
 void deleteObjectToCopy();
-
+class Game;
 class Chunk
 {
 	int chunk;
 	GameObject* blocks[mapH][mapW];
 	std::list<GameObject*> objects;
+	Game* game;
 
 public:
-	Chunk(int chunk);
+	Chunk(int chunk,Game* game);
 
-	Chunk(int chunk, nlohmann::json map);
+	Chunk(int chunk, Game* game, nlohmann::json map);
 
 	~Chunk();
 
