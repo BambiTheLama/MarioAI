@@ -35,7 +35,7 @@ public:
 
 	Rectangle getPos() { return pos; }
 
-	void moveTo(int x, int y) { pos.x = x, pos.y = y; }
+	void moveTo(float x, float y) { pos.x = x, pos.y = y; }
 
 	friend class Game;
 };

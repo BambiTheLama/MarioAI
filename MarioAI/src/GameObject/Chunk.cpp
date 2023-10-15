@@ -124,20 +124,20 @@ void Chunk::getObjs(Rectangle pos, std::list<GameObject*>* obj)
 	int y = pos.y / 64;
 	int w = x + pos.width / 64;
 	int h = y + pos.height / 64;
-	int startX = mapW;
-	int startY = mapH;
+	int startX = mapW-1;
+	int startY = mapH-1;
 	if (x >= 0 && x < mapW)
 		startX = x;
 	if (y >= 0 && y < mapH)
 		startY = y;
-	int endX = mapW;
-	int endY = mapH;
+	int endX = mapW-1;
+	int endY = mapH-1;
 	if (w >= 0 && w < mapW)
 		endX = w;
 	if (h >= 0 && h < mapH)
 		endY = h;
-	for(int x=startX;x<endX;x++)
-		for(int y=startY;y<endY;y++)
+	for(int x=startX;x<=endX;x++)
+		for(int y=startY;y<=endY;y++)
 			if(blocks[y][x])
 				obj->push_back(blocks[y][x]);
 }

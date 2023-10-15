@@ -30,6 +30,7 @@
     <ClCompile Include="src\GameObject\Lava.cpp">
       <Filter>src\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObject\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\NN.h">
@@ -53,5 +54,6 @@
     <ClInclude Include="src\GameObject\Lava.h">
       <Filter>src\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameObject\Player.h" />
   </ItemGroup>
 </Project>

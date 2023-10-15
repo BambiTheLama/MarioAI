@@ -1,11 +1,14 @@
 #include "Game.h"
 #include "GameObject.h"
 #include "Block.h"
+#include "Player.h"
+
 Game::Game()
 {
-	InitWindow(1600, 896, "MARIO");
+	InitWindow(1600, 900, "MARIO");
 	createObjectToCopy();
 	Chunk* chunk = new Chunk(0);
+	target = new Player({128,500,64,64},"",this);
 	chunks.push_back(chunk);
 
 }

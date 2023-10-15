@@ -11,6 +11,7 @@ class Game
 	std::list<Chunk*> chunks;
 	GameObject* target;
 	nlohmann::json map;
+	Camera2D camera;
 	
 public:
 	Game();
