@@ -36,6 +36,7 @@
     <ClCompile Include="src\GameObject\Player.cpp">
       <Filter>src\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObject\DestoryAbleBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\NN.h">
@@ -68,5 +69,6 @@
     <ClInclude Include="src\GameObject\ObjType\Destoryable.h">
       <Filter>src\GameObject\ObjType</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameObject\DestoryAbleBlock.h" />
   </ItemGroup>
 </Project>

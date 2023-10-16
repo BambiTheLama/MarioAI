@@ -1,5 +1,6 @@
 #include "Chunk.h"
 #include "Lava.h"
+#include "DestoryAbleBlock.h"
 std::vector<GameObject*> objectToCopy;
 
 void createObjectToCopy()
@@ -7,7 +8,7 @@ void createObjectToCopy()
 	objectToCopy = std::vector<GameObject*>{
 	new Block({ 0,0,blockSize,blockSize }, "res/Block.png",NULL),
 	new Lava({ 0,0,blockSize,blockSize }, "res/Lava.png",NULL),
-
+	new DestoryAbleBlock({0,0,blockSize,blockSize},"res/Block.png",NULL),
 	};
 }
 void deleteObjectToCopy()
@@ -41,6 +42,9 @@ Chunk::Chunk(int chunk, Game* game)
 			blocks[y][x]->setGame(game);
 		}
 	this->game = game;
+	blocks[7][10] = objectToCopy[2]->clone();
+	blocks[7][10]->moveTo(startX + 10 * blockSize, 7 * blockSize);
+	blocks[7][10]->setGame(game);
 }
 
 Chunk::Chunk(int chunk, Game* game, nlohmann::json map)
@@ -154,6 +158,6 @@ void Chunk::removeBlock(GameObject* o)
 	int y = pos.y / 64;
 	if (x < 0 || x >= mapW || y < 0 || y >= mapH)
 		return;
-	delete blocks[y][x];
+	//delete blocks[y][x];
 	blocks[y][x] = NULL;
 }

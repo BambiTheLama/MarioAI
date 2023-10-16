@@ -12,7 +12,7 @@ GameObject::GameObject(Rectangle pos, std::string path,Game* game)
 		for (auto t : texturesLoaded)
 			if (path.compare(t.path) == 0)
 			{
-				this->texture = texture;
+				this->texture = t;
 				loaded = true;
 			}
 	}

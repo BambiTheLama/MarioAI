@@ -13,7 +13,7 @@ class Game
 	nlohmann::json map;
 	Camera2D camera;
 	bool play = true;
-	
+	std::list<GameObject*> toDelete;
 public:
 	Game();
 
@@ -36,6 +36,8 @@ public:
 	void removeBlock(GameObject* o);
 
 	void addObj(GameObject* o);
+
+	void addToDelete(GameObject* o);
 
 	void lostGame() { play = false; }
 };

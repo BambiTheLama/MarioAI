@@ -44,6 +44,9 @@ void Game::update(float deltaTime)
 	}
 	if (IsKeyPressed(KEY_F1))
 		loadChunk(i++);
+	for (auto o : toDelete)
+		delete o;
+	toDelete.clear();
 
 }
 
@@ -111,6 +114,10 @@ void Game::removeBlock(GameObject* o)
 	for (auto c : chunks)
 		if (CheckCollisionRecs(o->getPos(), c->getPos()))
 			c->removeBlock(o);
+}
+void Game::addToDelete(GameObject* o)
+{
+	toDelete.push_back(o);
 }
 void Game::addObj(GameObject* o)
 {

@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Game.h"
 #include "Block.h"
+#include "ObjType/Destoryable.h"
 
 Player::Player(Rectangle pos, std::string path,Game *g):GameObject(pos,path,g)
 {
@@ -74,13 +75,13 @@ void Player::update(float deltaTime)
 		std::list<GameObject*> obj = getObjectsAt({ pos.x,pos.y - 1,pos.width,1 },ObjectType::Block);
 		for (auto o : obj)
 		{
-			Hitable* b = dynamic_cast<Hitable*>(o);
-			if (!b)
+			Destoryable* d = dynamic_cast<Destoryable*>(o);
+			if (!d)
 			{
 				pressJumpTime = 0;
 				continue;
 			}
-			b->hitObj();
+			d->destory();
 		}
 
 	}
