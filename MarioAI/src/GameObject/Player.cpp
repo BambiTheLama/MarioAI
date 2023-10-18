@@ -14,7 +14,10 @@ Player::Player(Player& m) :GameObject(m)
 
 void Player::draw()
 {
-	DrawRectangleRec(getPos(), RED);
+	Texture2D texture = getTexture().texture;
+	Rectangle texturePos = { 19*sprite,0,19,texture.height };
+	Rectangle pos = getPos();
+	DrawTexturePro(texture, texturePos, pos, { 0,0 }, 0, WHITE);
 }
 
 void Player::update(float deltaTime)
@@ -37,6 +40,14 @@ void Player::update(float deltaTime)
 		{
 			pos.x += speed * deltaTime;
 		}
+	}
+	if (IsKeyPressed(KEY_LEFT))
+	{
+		sprite--;
+	}
+	if (IsKeyPressed(KEY_RIGHT))
+	{
+		sprite++;
 	}
 	if (IsKeyDown(KEY_SPACE))
 	{
@@ -64,7 +75,7 @@ void Player::update(float deltaTime)
 	}
 	if (game)
 	{
-		if (isObjectAt({ pos.x+5,pos.y + pos.height,pos.width-10,2 }, ObjectType::Block))
+		if (isObjectAt({ pos.x+3,pos.y + pos.height,pos.width-6,2 }, ObjectType::Block))
 		{
 			pressJumpTime = pressJumpTimeMax;
 
@@ -74,7 +85,7 @@ void Player::update(float deltaTime)
 			pos.y += deltaTime / pressJumpTimeMax * jumpHeight;
 			pressJumpTime = 0;
 		}
-		std::list<GameObject*> obj = getObjectsAt({ pos.x+5,pos.y - 1,pos.width-10,1 },ObjectType::Block);
+		std::list<GameObject*> obj = getObjectsAt({ pos.x+3,pos.y - 1,pos.width-6,1 },ObjectType::Block);
 		for (auto o : obj)
 		{
 			Destoryable* d = dynamic_cast<Destoryable*>(o);

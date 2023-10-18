@@ -14,6 +14,7 @@ class Player :
     float pressJumpTimeMax = 10.0f;
     int hp = 1;
     float invisibleFrames = 0;
+    int sprite = 0;
 public:
     Player(Rectangle pos,std::string path,Game *g);
 

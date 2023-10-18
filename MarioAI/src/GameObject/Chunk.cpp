@@ -6,9 +6,11 @@ std::vector<GameObject*> objectToCopy;
 void createObjectToCopy()
 {
 	objectToCopy = std::vector<GameObject*>{
-	new Block({ 0,0,blockSize,blockSize }, "res/Block.png",NULL),
-	new Lava({ 0,0,blockSize,blockSize }, "res/Lava.png",NULL),
-	new DestoryAbleBlock({0,0,blockSize,blockSize},"res/Block.png",NULL),
+		new Block({ 0,0,blockSize,blockSize }, "res/Klocek.png",NULL),
+		new Lava({ 0,0,blockSize,blockSize }, "res/Lava.png",NULL),
+		new DestoryAbleBlock({0,0,blockSize,blockSize},"res/brick.png",NULL),
+		new Block({ 0,0,blockSize,blockSize }, "res/SteelBlock.png",NULL),
+		new Block({ 0,0,blockSize,blockSize }, "res/Rura.png",NULL),
 	};
 }
 void deleteObjectToCopy()
