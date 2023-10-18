@@ -36,7 +36,12 @@
     <ClCompile Include="src\GameObject\Player.cpp">
       <Filter>src\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\DestoryAbleBlock.cpp" />
+    <ClCompile Include="src\GameObject\DestoryAbleBlock.cpp">
+      <Filter>src\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\ParticleSystem.cpp">
+      <Filter>src\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\NN.h">
@@ -69,6 +74,11 @@
     <ClInclude Include="src\GameObject\ObjType\Destoryable.h">
       <Filter>src\GameObject\ObjType</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\DestoryAbleBlock.h" />
+    <ClInclude Include="src\GameObject\DestoryAbleBlock.h">
+      <Filter>src\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\ParticleSystem.h">
+      <Filter>src\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

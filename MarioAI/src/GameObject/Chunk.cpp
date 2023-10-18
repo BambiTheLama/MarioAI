@@ -45,6 +45,10 @@ Chunk::Chunk(int chunk, Game* game)
 	blocks[7][10] = objectToCopy[2]->clone();
 	blocks[7][10]->moveTo(startX + 10 * blockSize, 7 * blockSize);
 	blocks[7][10]->setGame(game);
+
+	blocks[6][11] = objectToCopy[0]->clone();
+	blocks[6][11]->moveTo(startX + 11 * blockSize, 6 * blockSize);
+	blocks[6][11]->setGame(game);
 }
 
 Chunk::Chunk(int chunk, Game* game, nlohmann::json map)
@@ -105,8 +109,12 @@ void Chunk::update(float deltaTime)
 		for (int x = 0; x < mapW; x++)
 			if (blocks[y][x])
 				blocks[y][x]->update(deltaTime);
+
 	for (auto o : objects)
 		o->update(deltaTime);
+	for (auto o : toRemove)
+		objects.remove(o);
+
 }
 
 void Chunk::draw()
@@ -129,10 +137,10 @@ void Chunk::getObjs(Rectangle pos, std::list<GameObject*>* obj)
 			obj->remove(o);
 			obj->push_back(o);
 		}
-	int x = (pos.x - (chunk * mapW * 64)) / 64;
-	int y = pos.y / 64;
-	int w = x + pos.width / 64;
-	int h = y + pos.height / 64;
+	int x = ((pos.x - (chunk * mapW * 64)) / 64) - 1;
+	int y = (pos.y / 64) - 1;
+	int w = x + pos.width / 64 +2;
+	int h = y + pos.height / 64 +2;
 	int startX = mapW-1;
 	int startY = mapH-1;
 	if (x >= 0 && x < mapW)

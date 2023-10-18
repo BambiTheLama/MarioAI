@@ -25,9 +25,10 @@ void Player::update(float deltaTime)
 	Rectangle pos = getPos();
 	if (IsKeyDown(KEY_A))
 	{
-		if (!isObjectAt({ pos.x - speed * deltaTime,pos.y,pos.width,pos.height-1 }, ObjectType::Block))
+		if (!isObjectAt({ pos.x - speed * deltaTime,pos.y,pos.width,pos.height-1  }, ObjectType::Block))
 		{
 			pos.x -= speed * deltaTime;
+
 		}
 	}
 	if (IsKeyDown(KEY_D))
@@ -36,7 +37,6 @@ void Player::update(float deltaTime)
 		{
 			pos.x += speed * deltaTime;
 		}
-
 	}
 	if (IsKeyDown(KEY_SPACE))
 	{
@@ -56,23 +56,25 @@ void Player::update(float deltaTime)
 		pos.y -= t /pressJumpTimeMax*jumpHeight;
 		
 	}
-	else if (pressJumpTime != pressJumpTimeMax)
+	else 
 	{
 		jumping = false;
-		pressJumpTime = 0;
+		if (pressJumpTime != pressJumpTimeMax)
+			pressJumpTime = 0;
 	}
 	if (game)
 	{
-		if (isObjectAt({ pos.x,pos.y + pos.height,pos.width,2 }, ObjectType::Block))
+		if (isObjectAt({ pos.x+5,pos.y + pos.height,pos.width-10,2 }, ObjectType::Block))
 		{
 			pressJumpTime = pressJumpTimeMax;
+
 		}
 		else if (!jumping)
 		{
 			pos.y += deltaTime / pressJumpTimeMax * jumpHeight;
 			pressJumpTime = 0;
 		}
-		std::list<GameObject*> obj = getObjectsAt({ pos.x,pos.y - 1,pos.width,1 },ObjectType::Block);
+		std::list<GameObject*> obj = getObjectsAt({ pos.x+5,pos.y - 1,pos.width-10,1 },ObjectType::Block);
 		for (auto o : obj)
 		{
 			Destoryable* d = dynamic_cast<Destoryable*>(o);

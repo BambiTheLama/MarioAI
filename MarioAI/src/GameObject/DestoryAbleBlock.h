@@ -15,6 +15,7 @@ public:
     virtual void draw()
     {
         DrawRectangleRec(getPos(), RED);
+        GameObject::draw();
     }
 
     virtual void destory();

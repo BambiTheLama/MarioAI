@@ -25,6 +25,7 @@
     <ClCompile Include="src\GameObject\Game.cpp" />
     <ClCompile Include="src\GameObject\GameObject.cpp" />
     <ClCompile Include="src\GameObject\Lava.cpp" />
+    <ClCompile Include="src\GameObject\ParticleSystem.cpp" />
     <ClCompile Include="src\GameObject\Player.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\NN.cpp" />
@@ -38,6 +39,7 @@
     <ClInclude Include="src\GameObject\Lava.h" />
     <ClInclude Include="src\GameObject\ObjType\Destoryable.h" />
     <ClInclude Include="src\GameObject\ObjType\Hitable.h" />
+    <ClInclude Include="src\GameObject\ParticleSystem.h" />
     <ClInclude Include="src\GameObject\Player.h" />
     <ClInclude Include="src\json.hpp" />
     <ClInclude Include="src\NN.h" />

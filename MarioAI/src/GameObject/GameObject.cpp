@@ -1,7 +1,7 @@
 #include "GameObject.h"
 #include "Game.h"
 
-std::list<textureSource> GameObject::texturesLoaded=std::list<textureSource>();
+std::list<TextureSource> GameObject::texturesLoaded=std::list<TextureSource>();
 
 GameObject::GameObject(Rectangle pos, std::string path,Game* game)
 {

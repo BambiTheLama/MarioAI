@@ -7,7 +7,7 @@ enum class ObjectType
 	NON=0,Block=1,Enemy=2,Bullet=3,Palyer=4,Lava=5,
 };
 
-struct textureSource
+struct TextureSource
 {
 	Texture2D texture;
 	std::string path;
@@ -17,8 +17,8 @@ class Game;
 class GameObject
 {
 	Rectangle pos;
-	textureSource texture;
-	static std::list<textureSource> texturesLoaded;
+	TextureSource texture;
+	static std::list<TextureSource> texturesLoaded;
 protected:
 	Game* game;
 public:
@@ -45,6 +45,8 @@ public:
 	std::list<GameObject*> getObjectsAt(Rectangle pos, ObjectType type);
 
 	bool isObjectAt(Rectangle pos, ObjectType type);
+
+	TextureSource getTexture() { return texture; }
 
 	friend class Game;
 };

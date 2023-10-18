@@ -16,6 +16,7 @@ class Chunk
 	int chunk;
 	GameObject* blocks[mapH][mapW];
 	std::list<GameObject*> objects;
+	std::list<GameObject*> toRemove;
 	Game* game;
 
 public:
@@ -33,7 +34,7 @@ public:
 
 	void addObj(GameObject* o) { objects.remove(o); objects.push_back(o); }
 
-	void removeObj(GameObject* o) { objects.remove(o); }
+	void removeObj(GameObject* o) { toRemove.remove(o); toRemove.push_back(o); }
 
 	void removeBlock(GameObject* o);
 

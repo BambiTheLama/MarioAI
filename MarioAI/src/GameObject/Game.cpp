@@ -117,6 +117,7 @@ void Game::removeBlock(GameObject* o)
 }
 void Game::addToDelete(GameObject* o)
 {
+	toDelete.remove(o);
 	toDelete.push_back(o);
 }
 void Game::addObj(GameObject* o)
