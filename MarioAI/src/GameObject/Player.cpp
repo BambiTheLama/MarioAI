@@ -15,7 +15,7 @@ Player::Player(Player& m) :GameObject(m)
 void Player::draw()
 {
 	Texture2D texture = getTexture().texture;
-	Rectangle texturePos = { 19*sprite,0,19,texture.height };
+	Rectangle texturePos = { texture.height *sprite,0,texture.height,texture.height };
 	Rectangle pos = getPos();
 	DrawTexturePro(texture, texturePos, pos, { 0,0 }, 0, WHITE);
 }
@@ -89,12 +89,11 @@ void Player::update(float deltaTime)
 		for (auto o : obj)
 		{
 			Destoryable* d = dynamic_cast<Destoryable*>(o);
-			if (!d)
+			if (d)
 			{
-				pressJumpTime = 0;
-				continue;
+				d->destory();
 			}
-			d->destory();
+			pressJumpTime = 0;
 		}
 
 	}

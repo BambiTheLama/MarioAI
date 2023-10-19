@@ -127,3 +127,27 @@ void Game::addObj(GameObject* o)
 		if (CheckCollisionRecs(o->getPos(), c->getPos()))
 			c->addObj(o);
 }
+void Game::updatePos(GameObject* o)
+{
+	bool isAtchunks = false;
+	for (auto c : chunks)
+	{
+		if (CheckCollisionRecs(o->getPos(), c->getPos()))
+		{
+			if (!c->hasObj(o))
+			{
+				c->addObj(o);
+			}
+			isAtchunks = true;
+		}
+		else
+		{
+			if (c->hasObj(o))
+			{
+				c->removeObj(o);
+			}
+		}
+	}
+	if (!isAtchunks)
+		addToDelete(o);
+}

@@ -1,16 +1,21 @@
 #include "Chunk.h"
 #include "Lava.h"
 #include "DestoryAbleBlock.h"
+#include "PowerBlock.h"
 std::vector<GameObject*> objectToCopy;
 
 void createObjectToCopy()
 {
 	objectToCopy = std::vector<GameObject*>{
-		new Block({ 0,0,blockSize,blockSize }, "res/Klocek.png",NULL),
+		new Block({ 0,0,blockSize,blockSize }, "res/Stone.png",NULL),
 		new Lava({ 0,0,blockSize,blockSize }, "res/Lava.png",NULL),
-		new DestoryAbleBlock({0,0,blockSize,blockSize},"res/brick.png",NULL),
+		new DestoryAbleBlock({0,0,blockSize,blockSize},"res/Brick.png",NULL),
 		new Block({ 0,0,blockSize,blockSize }, "res/SteelBlock.png",NULL),
-		new Block({ 0,0,blockSize,blockSize }, "res/Rura.png",NULL),
+		new Block({ 0,0,blockSize,blockSize }, "res/Pipe.png",NULL),
+		new PowerBlock({ 0,0,blockSize,blockSize }, "res/CoinBlock.png",NULL,PowerType::Coin),
+		new PowerBlock({ 0,0,blockSize,blockSize }, "res/CoinBlock.png",NULL,PowerType::Mushroom),
+		new PowerBlock({ 0,0,blockSize,blockSize }, "res/CoinBlock.png",NULL,PowerType::Plant),
+		
 	};
 }
 void deleteObjectToCopy()
@@ -44,13 +49,20 @@ Chunk::Chunk(int chunk, Game* game)
 			blocks[y][x]->setGame(game);
 		}
 	this->game = game;
-	blocks[7][10] = objectToCopy[2]->clone();
+	blocks[7][10] = objectToCopy[0]->clone();
 	blocks[7][10]->moveTo(startX + 10 * blockSize, 7 * blockSize);
 	blocks[7][10]->setGame(game);
 
-	blocks[6][11] = objectToCopy[0]->clone();
+	blocks[6][11] = objectToCopy[6]->clone();
 	blocks[6][11]->moveTo(startX + 11 * blockSize, 6 * blockSize);
 	blocks[6][11]->setGame(game);
+
+	blocks[mapH-4][0] = objectToCopy[0]->clone();
+	blocks[mapH-4][0]->moveTo(startX + 0 * blockSize, (mapH - 4) * blockSize);
+	blocks[mapH-4][0]->setGame(game);
+	blocks[mapH - 4][mapW-1] = objectToCopy[0]->clone();
+	blocks[mapH - 4][mapW-1]->moveTo(startX + (mapW-1) * blockSize, (mapH - 4) * blockSize);
+	blocks[mapH - 4][mapW-1]->setGame(game);
 }
 
 Chunk::Chunk(int chunk, Game* game, nlohmann::json map)
@@ -170,4 +182,11 @@ void Chunk::removeBlock(GameObject* o)
 		return;
 	//delete blocks[y][x];
 	blocks[y][x] = NULL;
+}
+bool Chunk::hasObj(GameObject* o)
+{ 
+	for (auto obj : objects)
+		if (o == obj)
+			return true; 
+	return false; 
 }

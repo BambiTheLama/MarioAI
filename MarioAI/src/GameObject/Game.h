@@ -40,5 +40,7 @@ public:
 	void addToDelete(GameObject* o);
 
 	void lostGame() { play = false; }
+
+	void updatePos(GameObject* o);
 };
 

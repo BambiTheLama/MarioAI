@@ -42,6 +42,9 @@
     <ClCompile Include="src\GameObject\ParticleSystem.cpp">
       <Filter>src\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObject\PowerBlock.cpp" />
+    <ClCompile Include="src\GameObject\PowerMushroom.cpp" />
+    <ClCompile Include="src\GameObject\PowerFlower.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\NN.h">
@@ -80,6 +83,9 @@
     <ClInclude Include="src\GameObject\ParticleSystem.h">
       <Filter>src\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameObject\PowerBlock.h" />
+    <ClInclude Include="src\GameObject\PowerMushroom.h" />
+    <ClInclude Include="src\GameObject\PowerFlower.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

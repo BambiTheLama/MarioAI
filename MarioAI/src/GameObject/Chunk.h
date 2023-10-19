@@ -41,5 +41,7 @@ public:
 	Rectangle getPos() { return { chunk * mapW * 64.0f,0,64.0f * mapW,64 * mapH }; }
 
 	int getChunk() { return chunk; }
+
+	bool hasObj(GameObject* o);
 };
 

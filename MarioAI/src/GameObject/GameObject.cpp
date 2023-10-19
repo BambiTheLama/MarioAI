@@ -74,3 +74,8 @@ bool GameObject::isObjectAt(Rectangle pos, ObjectType type)
 	}
 	return false;
 }
+
+void GameObject::updatePos()
+{
+	game->updatePos(this);
+}

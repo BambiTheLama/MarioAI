@@ -27,6 +27,9 @@
     <ClCompile Include="src\GameObject\Lava.cpp" />
     <ClCompile Include="src\GameObject\ParticleSystem.cpp" />
     <ClCompile Include="src\GameObject\Player.cpp" />
+    <ClCompile Include="src\GameObject\PowerBlock.cpp" />
+    <ClCompile Include="src\GameObject\PowerFlower.cpp" />
+    <ClCompile Include="src\GameObject\PowerMushroom.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\NN.cpp" />
   </ItemGroup>
@@ -41,6 +44,9 @@
     <ClInclude Include="src\GameObject\ObjType\Hitable.h" />
     <ClInclude Include="src\GameObject\ParticleSystem.h" />
     <ClInclude Include="src\GameObject\Player.h" />
+    <ClInclude Include="src\GameObject\PowerBlock.h" />
+    <ClInclude Include="src\GameObject\PowerFlower.h" />
+    <ClInclude Include="src\GameObject\PowerMushroom.h" />
     <ClInclude Include="src\json.hpp" />
     <ClInclude Include="src\NN.h" />
   </ItemGroup>

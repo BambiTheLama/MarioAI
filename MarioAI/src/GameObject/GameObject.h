@@ -2,9 +2,10 @@
 #include "raylib.h"
 #include <list>
 #include <string>
+
 enum class ObjectType
 {
-	NON=0,Block=1,Enemy=2,Bullet=3,Palyer=4,Lava=5,
+	NON=0,Block=1,Enemy=2,Bullet=3,Palyer=4,Lava=5,PowerUp=6
 };
 
 struct TextureSource
@@ -47,6 +48,8 @@ public:
 	bool isObjectAt(Rectangle pos, ObjectType type);
 
 	TextureSource getTexture() { return texture; }
+
+	void updatePos();
 
 	friend class Game;
 };
