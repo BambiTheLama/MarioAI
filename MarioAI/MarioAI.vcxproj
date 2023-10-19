@@ -42,6 +42,7 @@
     <ClInclude Include="src\GameObject\Lava.h" />
     <ClInclude Include="src\GameObject\ObjType\Destoryable.h" />
     <ClInclude Include="src\GameObject\ObjType\Hitable.h" />
+    <ClInclude Include="src\GameObject\ObjType\PowerType.h" />
     <ClInclude Include="src\GameObject\ParticleSystem.h" />
     <ClInclude Include="src\GameObject\Player.h" />
     <ClInclude Include="src\GameObject\PowerBlock.h" />

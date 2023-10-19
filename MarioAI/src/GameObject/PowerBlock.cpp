@@ -32,7 +32,7 @@ void PowerBlock::draw()
 	DrawTexturePro(texture, texturePos, pos, { 0,0 }, 0, WHITE);
 }
 
-void PowerBlock::destory()
+void PowerBlock::destory(int power)
 {
 	if (used)
 		return;

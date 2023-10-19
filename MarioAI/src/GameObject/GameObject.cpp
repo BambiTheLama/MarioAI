@@ -79,3 +79,8 @@ void GameObject::updatePos()
 {
 	game->updatePos(this);
 }
+void GameObject::deleteObject()
+{
+	game->removeObj(this);
+	game->addToDelete(this);
+}

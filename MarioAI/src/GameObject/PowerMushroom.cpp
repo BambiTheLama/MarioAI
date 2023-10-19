@@ -14,7 +14,7 @@ void PowerMushroom::update(float deltaTime)
 {
 	Rectangle pos = getPos();
 	const float speed = 300;
-	const float downSpeed = 300;
+	const float downSpeed = 500;
 	if (left)
 	{
 		if (!isObjectAt({ pos.x - speed * deltaTime,pos.y,pos.width,pos.height - 2 }, ObjectType::Block))

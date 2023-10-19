@@ -11,9 +11,9 @@ DestoryAbleBlock::DestoryAbleBlock(DestoryAbleBlock& d):Block(d)
 
 }
 
-void DestoryAbleBlock::destory()
+void DestoryAbleBlock::destory(int power)
 {
-	if (game)
+	if (power > 1 && game)
 	{
 		ParticleSystem* particleSystem = new ParticleSystem(getPos(), getTexture().path, game);
 		game->addObj(particleSystem);

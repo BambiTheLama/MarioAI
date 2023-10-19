@@ -8,7 +8,7 @@ Game::Game()
 	InitWindow(1600, 900, "MARIO");
 	createObjectToCopy();
 	Chunk* chunk = new Chunk(0,this);
-	target = new Player({128,500,64,64}, "res/CzesiekSmall.png",this);
+	target = new Player({128,500,64,64},this);
 	chunks.push_back(chunk);
 
 }
@@ -34,14 +34,14 @@ void Game::draw()
 int i = 1;
 void Game::update(float deltaTime)
 {
-	for (auto chunk : chunks)
-		chunk->update(deltaTime);
 	if (target)
 	{
 		target->update(deltaTime);
 		camera.target.x = target->getPos().x;
-
 	}
+	for (auto chunk : chunks)
+		chunk->update(deltaTime);
+
 	if (IsKeyPressed(KEY_F1))
 		loadChunk(i++);
 	for (auto o : toDelete)

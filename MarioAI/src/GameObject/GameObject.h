@@ -17,11 +17,12 @@ class Game;
 
 class GameObject
 {
-	Rectangle pos;
+
 	TextureSource texture;
 	static std::list<TextureSource> texturesLoaded;
 protected:
 	Game* game;
+	Rectangle pos;
 public:
 	GameObject(Rectangle pos,std::string path,Game* game);
 
@@ -51,6 +52,9 @@ public:
 
 	void updatePos();
 
+	void deleteObject();
+
 	friend class Game;
+
 };
 

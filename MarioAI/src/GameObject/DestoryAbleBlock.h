@@ -18,6 +18,6 @@ public:
         GameObject::draw();
     }
 
-    virtual void destory();
+    virtual void destory(int power);
 };
 

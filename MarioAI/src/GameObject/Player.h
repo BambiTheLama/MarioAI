@@ -15,14 +15,21 @@ class Player :
     int hp = 1;
     float invisibleFrames = 0;
     int sprite = 0;
+    int points = 0;
+    float distance = 0;
+    TextureSource bigPlayer;
+    TextureSource powerPlayer;
+    bool moveLeft = false;
 public:
-    Player(Rectangle pos,std::string path,Game *g);
+    Player(Rectangle pos, Game* g);
 
     Player(Player& m);
 
     void draw();
 
     void update(float deltaTime);
+
+    void checkPowerUps();
 
     ObjectType getType() { return ObjectType::Palyer; }
 

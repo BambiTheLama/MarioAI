@@ -2,6 +2,6 @@
 class Destoryable
 {
 public:
-	virtual void destory() = 0;
+	virtual void destory(int power) = 0;
 };
 

@@ -49,7 +49,7 @@ Chunk::Chunk(int chunk, Game* game)
 			blocks[y][x]->setGame(game);
 		}
 	this->game = game;
-	blocks[7][10] = objectToCopy[0]->clone();
+	blocks[7][10] = objectToCopy[2]->clone();
 	blocks[7][10]->moveTo(startX + 10 * blockSize, 7 * blockSize);
 	blocks[7][10]->setGame(game);
 

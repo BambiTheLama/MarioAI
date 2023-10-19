@@ -1,10 +1,7 @@
 #pragma once
 #include "Block.h"
 #include "ObjType/Destoryable.h"
-enum class PowerType
-{
-    Coin,Mushroom,Plant
-};
+#include "ObjType/PowerType.h"
 class PowerBlock :
     public Block,public Destoryable
 {
@@ -22,6 +19,6 @@ public:
 
     virtual void draw();
 
-    virtual void destory();
+    virtual void destory(int power);
 };
 
