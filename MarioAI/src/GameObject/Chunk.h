@@ -10,6 +10,7 @@
 
 void createObjectToCopy();
 void deleteObjectToCopy();
+GameObject* cloneObject(int i);
 class Game;
 class Chunk
 {
@@ -35,6 +36,8 @@ public:
 	void addObj(GameObject* o) { objects.remove(o); objects.push_back(o); }
 
 	void removeObj(GameObject* o) { toRemove.remove(o); toRemove.push_back(o); }
+
+	bool addBlock(GameObject* o);
 
 	void removeBlock(GameObject* o);
 

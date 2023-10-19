@@ -57,4 +57,17 @@ void PowerBlock::destory(int power)
 		game->addObj(o);
 	used = true;
 	sprite = 1;
+	game->removeBlock(this);
+	game->addToDelete(this);
+	o=cloneObject(3);
+	if (o)
+	{
+		Rectangle pos = getPos();
+		o->moveTo(pos.x, pos.y);
+		if (!game->addBlock(o))
+		{
+			delete o;
+		}
+	}
+
 }

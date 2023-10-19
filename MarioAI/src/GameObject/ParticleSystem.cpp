@@ -65,9 +65,17 @@ ParticleSystem::~ParticleSystem()
 }
 void ParticleSystem::update(float deltaTime)
 {
+	bool deleteObj = true;
 	for (int i = 0; i < size; i++)
+	{
 		particles[i]->update(deltaTime);
-	if (particles[0]->lifeTime <= 0)
+
+		if (particles[i]->lifeTime > 0)
+		{
+			deleteObj = false;
+		}
+	}
+	if (deleteObj)
 	{
 		game->removeObj(this);
 		game->addToDelete(this);

@@ -19,7 +19,5 @@ void DestoryAbleBlock::destory(int power)
 		game->addObj(particleSystem);
 		game->removeBlock(this);
 		game->addToDelete(this);
-
-
 	}
 }

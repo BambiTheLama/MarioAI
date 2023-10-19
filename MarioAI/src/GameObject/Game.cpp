@@ -10,7 +10,7 @@ Game::Game()
 	Chunk* chunk = new Chunk(0,this);
 	target = new Player({128,500,64,64},this);
 	chunks.push_back(chunk);
-
+	SetTargetFPS(60);
 }
 
 Game::~Game()
@@ -115,6 +115,18 @@ void Game::removeBlock(GameObject* o)
 	for (auto c : chunks)
 		if (CheckCollisionRecs(o->getPos(), c->getPos()))
 			c->removeBlock(o);
+}
+bool Game::addBlock(GameObject* o)
+{
+	for (auto c : chunks)
+		if (CheckCollisionRecs(o->getPos(), c->getPos()))
+		{
+			bool isAdd=c->addBlock(o);
+			if (isAdd)
+				return true;
+		}
+	return false;
+
 }
 void Game::addToDelete(GameObject* o)
 {

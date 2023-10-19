@@ -26,6 +26,12 @@ void deleteObjectToCopy()
 	}
 	objectToCopy.clear();
 }
+GameObject* cloneObject(int i)
+{
+	if (i < 0 || i >= objectToCopy.size())
+		return NULL;
+	return objectToCopy[i]->clone();
+}
 
 Chunk::Chunk(int chunk, Game* game)
 {
@@ -172,7 +178,18 @@ void Chunk::getObjs(Rectangle pos, std::list<GameObject*>* obj)
 			if(blocks[y][x])
 				obj->push_back(blocks[y][x]);
 }
-
+bool Chunk::addBlock(GameObject* o)
+{
+	Rectangle pos = o->getPos();
+	int x = ((pos.x - (chunk * mapW * 64)) / 64);
+	int y = (pos.y / 64);
+	if (blocks[y][x])
+	{
+		return false;
+	}
+	blocks[y][x] = o;
+	return true;
+}
 void Chunk::removeBlock(GameObject* o)
 {
 	Rectangle pos = o->getPos();

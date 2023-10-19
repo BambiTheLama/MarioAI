@@ -35,6 +35,8 @@ public:
 
 	void removeBlock(GameObject* o);
 
+	bool addBlock(GameObject* o);
+
 	void addObj(GameObject* o);
 
 	void addToDelete(GameObject* o);

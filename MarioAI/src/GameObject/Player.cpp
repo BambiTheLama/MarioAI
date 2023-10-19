@@ -42,7 +42,7 @@ void Player::draw()
 	if (moveLeft)
 		texturePos.width *= -1;
 	Rectangle pos = getPos();
-	DrawRectangleRec(pos, RED);
+	//DrawRectangleRec(pos, RED);
 	DrawTexturePro(texture, texturePos, pos, { 0,0 }, 0, WHITE);
 }
 
@@ -88,14 +88,6 @@ void Player::update(float deltaTime)
 		distance = 0;
 		sprite = 0;
 	}
-	if (IsKeyPressed(KEY_LEFT))
-	{
-		sprite--;
-	}
-	if (IsKeyPressed(KEY_RIGHT))
-	{
-		sprite++;
-	}
 	if (IsKeyDown(KEY_SPACE))
 	{
 		float t = 0;
@@ -122,15 +114,32 @@ void Player::update(float deltaTime)
 	}
 	if (game)
 	{
-		if (isObjectAt({ pos.x+3,pos.y + pos.height,pos.width-6,2 }, ObjectType::Block))
+		if (isObjectAt({ pos.x+3,pos.y + pos.height,pos.width-6,1 }, ObjectType::Block))
 		{
 			pressJumpTime = pressJumpTimeMax;
 
 		}
 		else if (!jumping)
 		{
-			pos.y += deltaTime / pressJumpTimeMax * jumpHeight;
-			pressJumpTime = 0;
+			float y = pos.y;
+			float times = 1;
+			do
+			{
+				pos.y = y;
+				pos.y += deltaTime / pressJumpTimeMax * jumpHeight/times;
+				times++;
+			}
+			while (isObjectAt(pos, ObjectType::Block) && times<10);
+			if (times >= 10)
+			{
+				pos.y = y;
+				pressJumpTime = pressJumpTimeMax;
+			}
+			else
+			{
+				pressJumpTime = 0;
+			}
+
 		}
 		std::list<GameObject*> obj = getObjectsAt({ pos.x+3,pos.y - 1,pos.width-6,1 },ObjectType::Block);
 		for (auto o : obj)
@@ -163,9 +172,11 @@ void Player::checkPowerUps()
 			break;
 		case PowerType::Mushroom:
 			if (hp < 2)
+			{
 				hp = 2;
-			pos.y -= pos.height;
-			pos.height *= 2;
+				pos.y -= pos.height;
+				pos.height *= 2;
+			}
 			break;
 		case PowerType::Plant:
 			if (hp < 2)
