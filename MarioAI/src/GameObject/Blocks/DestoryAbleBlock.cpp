@@ -1,6 +1,6 @@
 #include "DestoryAbleBlock.h"
-#include "Game.h"
-#include "ParticleSystem.h"
+#include "../../Engine/Game.h"
+#include "../ParticleSystem.h"
 DestoryAbleBlock::DestoryAbleBlock(Rectangle pos, std::string path, Game* game):Block(pos,path,game)
 {
 

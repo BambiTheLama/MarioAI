@@ -1,5 +1,5 @@
 #include "ParticleSystem.h"
-#include "Game.h"
+#include "../Engine/Game.h"
 
 Particle::Particle(TextureSource texture, Rectangle texturePos, Rectangle pos, float lifeTime)
 {

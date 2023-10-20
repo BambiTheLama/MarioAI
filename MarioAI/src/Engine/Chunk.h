@@ -1,16 +1,15 @@
 #pragma once
 #include "../json.hpp"
 #include "raylib.h"
-#include "Block.h"
+#include "../GameObject/Blocks/Block.h"
+#include "ObjectToClone.h"
 #include <vector>
 #include <list>
 #define blockSize 64
 #define mapH 15
 #define mapW 25
 
-void createObjectToCopy();
-void deleteObjectToCopy();
-GameObject* cloneObject(int i);
+
 class Game;
 class Chunk
 {

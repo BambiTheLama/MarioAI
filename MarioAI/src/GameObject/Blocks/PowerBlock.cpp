@@ -1,7 +1,7 @@
 #include "PowerBlock.h"
-#include "Game.h"
-#include "PowerMushroom.h"
-#include "PowerFlower.h"
+#include "../../Engine/Game.h"
+#include "../Powers/PowerMushroom.h"
+#include "../Powers/PowerFlower.h"
 
 PowerBlock::PowerBlock(Rectangle pos, std::string path, Game* game,PowerType powerType):Block(pos,path,game)
 {
@@ -59,7 +59,7 @@ void PowerBlock::destory(int power)
 	sprite = 1;
 	game->removeBlock(this);
 	game->addToDelete(this);
-	o=cloneObject(3);
+	o=cloneObject(ObjectID::Steal);
 	if (o)
 	{
 		Rectangle pos = getPos();

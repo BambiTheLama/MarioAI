@@ -1,6 +1,6 @@
 #pragma once
-#include "GameObject.h"
-#include "ObjType/PowerType.h"
+#include "../GameObject.h"
+#include "../ObjType/PowerType.h"
 class PowerMushroom :
     public GameObject,public PowerTypeObject
 {

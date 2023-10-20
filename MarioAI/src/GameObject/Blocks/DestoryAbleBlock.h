@@ -1,6 +1,6 @@
 #pragma once
 #include "Block.h"
-#include "ObjType/Destoryable.h"
+#include "../ObjType/Destoryable.h"
 class DestoryAbleBlock :
     public Block,public Destoryable
 {

@@ -1,5 +1,5 @@
 #include "PowerMushroom.h"
-#include "Game.h"
+#include "../../Engine/Game.h"
 PowerMushroom::PowerMushroom(Rectangle pos, std::string path, Game* game) :GameObject(pos, path, game)
 {
 

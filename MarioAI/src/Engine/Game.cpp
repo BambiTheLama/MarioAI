@@ -1,8 +1,8 @@
 #include "Game.h"
-#include "GameObject.h"
-#include "Block.h"
-#include "Player.h"
-
+#include "../GameObject/GameObject.h"
+#include "../GameObject/Blocks/Block.h"
+#include "../GameObject/Player.h"
+#include "ObjectToClone.h"
 Game::Game()
 {
 	InitWindow(1600, 900, "MARIO");

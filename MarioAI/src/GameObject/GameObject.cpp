@@ -1,5 +1,5 @@
 #include "GameObject.h"
-#include "Game.h"
+#include "../Engine/Game.h"
 
 std::list<TextureSource> GameObject::texturesLoaded=std::list<TextureSource>();
 

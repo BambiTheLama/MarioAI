@@ -19,35 +19,39 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\GameObject\Block.cpp" />
-    <ClCompile Include="src\GameObject\Chunk.cpp" />
-    <ClCompile Include="src\GameObject\DestoryAbleBlock.cpp" />
-    <ClCompile Include="src\GameObject\Game.cpp" />
+    <ClCompile Include="src\Engine\Chunk.cpp" />
+    <ClCompile Include="src\Engine\Game.cpp" />
+    <ClCompile Include="src\Engine\ObjectToClone.cpp" />
+    <ClCompile Include="src\GameObject\Blocks\Block.cpp" />
+    <ClCompile Include="src\GameObject\Blocks\DestoryAbleBlock.cpp" />
+    <ClCompile Include="src\GameObject\Blocks\Lava.cpp" />
+    <ClCompile Include="src\GameObject\Blocks\PowerBlock.cpp" />
     <ClCompile Include="src\GameObject\GameObject.cpp" />
-    <ClCompile Include="src\GameObject\Lava.cpp" />
     <ClCompile Include="src\GameObject\ParticleSystem.cpp" />
     <ClCompile Include="src\GameObject\Player.cpp" />
-    <ClCompile Include="src\GameObject\PowerBlock.cpp" />
-    <ClCompile Include="src\GameObject\PowerFlower.cpp" />
-    <ClCompile Include="src\GameObject\PowerMushroom.cpp" />
+    <ClCompile Include="src\GameObject\Powers\Coin.cpp" />
+    <ClCompile Include="src\GameObject\Powers\PowerFlower.cpp" />
+    <ClCompile Include="src\GameObject\Powers\PowerMushroom.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\NN.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\GameObject\Block.h" />
-    <ClInclude Include="src\GameObject\Chunk.h" />
-    <ClInclude Include="src\GameObject\DestoryAbleBlock.h" />
-    <ClInclude Include="src\GameObject\Game.h" />
+    <ClInclude Include="src\Engine\Chunk.h" />
+    <ClInclude Include="src\Engine\Game.h" />
+    <ClInclude Include="src\Engine\ObjectToClone.h" />
+    <ClInclude Include="src\GameObject\Blocks\Block.h" />
+    <ClInclude Include="src\GameObject\Blocks\DestoryAbleBlock.h" />
+    <ClInclude Include="src\GameObject\Blocks\Lava.h" />
+    <ClInclude Include="src\GameObject\Blocks\PowerBlock.h" />
     <ClInclude Include="src\GameObject\GameObject.h" />
-    <ClInclude Include="src\GameObject\Lava.h" />
     <ClInclude Include="src\GameObject\ObjType\Destoryable.h" />
     <ClInclude Include="src\GameObject\ObjType\Hitable.h" />
     <ClInclude Include="src\GameObject\ObjType\PowerType.h" />
     <ClInclude Include="src\GameObject\ParticleSystem.h" />
     <ClInclude Include="src\GameObject\Player.h" />
-    <ClInclude Include="src\GameObject\PowerBlock.h" />
-    <ClInclude Include="src\GameObject\PowerFlower.h" />
-    <ClInclude Include="src\GameObject\PowerMushroom.h" />
+    <ClInclude Include="src\GameObject\Powers\Coin.h" />
+    <ClInclude Include="src\GameObject\Powers\PowerFlower.h" />
+    <ClInclude Include="src\GameObject\Powers\PowerMushroom.h" />
     <ClInclude Include="src\json.hpp" />
     <ClInclude Include="src\NN.h" />
   </ItemGroup>

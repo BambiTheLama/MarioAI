@@ -1,7 +1,7 @@
 #pragma once
 #include "Block.h"
-#include "ObjType/Destoryable.h"
-#include "ObjType/PowerType.h"
+#include "../ObjType/Destoryable.h"
+#include "../ObjType/PowerType.h"
 class PowerBlock :
     public Block,public Destoryable
 {

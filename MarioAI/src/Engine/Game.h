@@ -1,6 +1,6 @@
 #pragma once
 #include "raylib.h"
-#include "GameObject.h"
+#include "../GameObject/GameObject.h"
 #include <list>
 #include "../json.hpp"
 #include "Chunk.h"

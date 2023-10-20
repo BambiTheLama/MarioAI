@@ -1,6 +1,6 @@
 #include "Player.h"
-#include "Game.h"
-#include "Block.h"
+#include "../Engine/Game.h"
+#include "Blocks/Block.h"
 #include "ObjType/Destoryable.h"
 #include "ObjType/PowerType.h"
 Player::Player(Rectangle pos,Game *g):GameObject(pos, "res/CzesiekSmall.png",g)

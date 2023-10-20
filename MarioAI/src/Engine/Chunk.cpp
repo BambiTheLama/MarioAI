@@ -1,37 +1,6 @@
 #include "Chunk.h"
-#include "Lava.h"
-#include "DestoryAbleBlock.h"
-#include "PowerBlock.h"
-std::vector<GameObject*> objectToCopy;
 
-void createObjectToCopy()
-{
-	objectToCopy = std::vector<GameObject*>{
-		new Block({ 0,0,blockSize,blockSize }, "res/Stone.png",NULL),
-		new Lava({ 0,0,blockSize,blockSize }, "res/Lava.png",NULL),
-		new DestoryAbleBlock({0,0,blockSize,blockSize},"res/Brick.png",NULL),
-		new Block({ 0,0,blockSize,blockSize }, "res/SteelBlock.png",NULL),
-		new Block({ 0,0,blockSize,blockSize }, "res/Pipe.png",NULL),
-		new PowerBlock({ 0,0,blockSize,blockSize }, "res/CoinBlock.png",NULL,PowerType::Coin),
-		new PowerBlock({ 0,0,blockSize,blockSize }, "res/CoinBlock.png",NULL,PowerType::Mushroom),
-		new PowerBlock({ 0,0,blockSize,blockSize }, "res/CoinBlock.png",NULL,PowerType::Plant),
-		
-	};
-}
-void deleteObjectToCopy()
-{
-	for (auto o : objectToCopy)
-	{
-		delete o;
-	}
-	objectToCopy.clear();
-}
-GameObject* cloneObject(int i)
-{
-	if (i < 0 || i >= objectToCopy.size())
-		return NULL;
-	return objectToCopy[i]->clone();
-}
+
 
 Chunk::Chunk(int chunk, Game* game)
 {
@@ -43,30 +12,30 @@ Chunk::Chunk(int chunk, Game* game)
 	for (int y = mapH-3; y < mapH-1; y++)
 		for (int x = 0; x < mapW; x++)
 		{
-			blocks[y][x] = objectToCopy[0]->clone();
+			blocks[y][x] = cloneObject(ObjectID::Flor);
 			blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
 			blocks[y][x]->setGame(game);
 		}
 	for (int y = mapH - 1; y < mapH; y++)
 		for (int x = 0; x < mapW; x++)
 		{
-			blocks[y][x] = objectToCopy[1]->clone();
+			blocks[y][x] = cloneObject(ObjectID::Lava);
 			blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
 			blocks[y][x]->setGame(game);
 		}
 	this->game = game;
-	blocks[7][10] = objectToCopy[2]->clone();
+	blocks[7][10] = cloneObject(ObjectID::PowerBlockCoin);
 	blocks[7][10]->moveTo(startX + 10 * blockSize, 7 * blockSize);
 	blocks[7][10]->setGame(game);
 
-	blocks[6][11] = objectToCopy[6]->clone();
+	blocks[6][11] = cloneObject(ObjectID::PowerBlockMushroom);
 	blocks[6][11]->moveTo(startX + 11 * blockSize, 6 * blockSize);
 	blocks[6][11]->setGame(game);
 
-	blocks[mapH-4][0] = objectToCopy[0]->clone();
+	blocks[mapH-4][0] = cloneObject(ObjectID::Flor);
 	blocks[mapH-4][0]->moveTo(startX + 0 * blockSize, (mapH - 4) * blockSize);
 	blocks[mapH-4][0]->setGame(game);
-	blocks[mapH - 4][mapW-1] = objectToCopy[0]->clone();
+	blocks[mapH - 4][mapW-1] = cloneObject(ObjectID::Flor);
 	blocks[mapH - 4][mapW-1]->moveTo(startX + (mapW-1) * blockSize, (mapH - 4) * blockSize);
 	blocks[mapH - 4][mapW-1]->setGame(game);
 }
@@ -90,7 +59,7 @@ Chunk::Chunk(int chunk, Game* game, nlohmann::json map)
 	for (int y = 0; y < mapH; y++)
 		for (int x = 0; x < mapW; x++)
 		{
-			blocks[y][x] = objectToCopy[blockId]->clone();
+			blocks[y][x] = cloneObject((ObjectID)blockId);
 			blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
 			blocks[y][x]->setGame(game);
 			times--;
@@ -106,7 +75,7 @@ Chunk::Chunk(int chunk, Game* game, nlohmann::json map)
 	for (int y = mapH - 1; y < mapH; y++)
 		for (int x = 0; x < mapW; x++)
 		{
-			blocks[y][x] = objectToCopy[1]->clone();
+			blocks[y][x] = cloneObject(ObjectID::Lava);
 			blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
 			blocks[y][x]->setGame(game);
 		}
