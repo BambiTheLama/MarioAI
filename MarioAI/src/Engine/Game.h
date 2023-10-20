@@ -13,6 +13,7 @@ class Game
 	nlohmann::json map;
 	Camera2D camera;
 	bool play = true;
+	bool win = false;
 	std::list<GameObject*> toDelete;
 public:
 	Game();
@@ -44,5 +45,7 @@ public:
 	void lostGame() { play = false; }
 
 	void updatePos(GameObject* o);
+
+	void setWin() { win = true; play = false; }
 };
 

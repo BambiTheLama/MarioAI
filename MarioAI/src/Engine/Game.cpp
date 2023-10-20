@@ -67,13 +67,31 @@ void Game::start()
 
 		update(deltaTime);
 		BeginDrawing();
-		ClearBackground(WHITE);
+		ClearBackground(DARKBLUE);
 		BeginMode2D(camera);
 		draw();
 		EndMode2D();
 		DrawFPS(0, 0);
+		if (win)
+		{
+			DrawText("YOU PASS THE GAME\nPRESS ENDER TO CONTINUE", 100, 100, 69, WHITE);
+		}
 		EndDrawing();
 	}
+	while (IsKeyUp(KEY_ENTER) && win && !WindowShouldClose())
+	{
+		BeginDrawing();
+		ClearBackground(DARKBLUE);
+		BeginMode2D(camera);
+		draw();
+		EndMode2D();
+		DrawFPS(0, 0);
+
+		DrawText("YOU PASS THE GAME\nPRESS ENDER TO CONTINUE", 100, 100, 69, WHITE);
+	
+		EndDrawing();
+	}
+
 }
 
 void Game::deleteChunk(int i)

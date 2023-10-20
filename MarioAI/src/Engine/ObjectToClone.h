@@ -12,7 +12,9 @@ enum class ObjectID
 	PowerBlockCoin,		//Power blok w ktorym jest coin
 	PowerBlockMushroom,	//Power blok w ktorym jest grzyb
 	PowerBlockFlower,	//Power blok w ktorym jest kwiatek
-	Coin				//Coin na mapie ktory mozemy podnosc
+	Coin,				//Coin na mapie ktory mozemy podnosc
+	Flag,				//End Map flag
+
 };
 
 void createObjectToCopy();

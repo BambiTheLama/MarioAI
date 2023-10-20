@@ -38,6 +38,11 @@ Chunk::Chunk(int chunk, Game* game)
 	blocks[mapH - 4][mapW-1] = cloneObject(ObjectID::Flor);
 	blocks[mapH - 4][mapW-1]->moveTo(startX + (mapW-1) * blockSize, (mapH - 4) * blockSize);
 	blocks[mapH - 4][mapW-1]->setGame(game);
+	GameObject* o = cloneObject(ObjectID::Flag);
+	o->moveTo(startX + (mapW - 1) * blockSize, (5) * blockSize);
+	o->setGame(game);
+	addObj(o);
+
 }
 
 Chunk::Chunk(int chunk, Game* game, nlohmann::json map)

@@ -24,6 +24,7 @@
     <ClCompile Include="src\Engine\ObjectToClone.cpp" />
     <ClCompile Include="src\GameObject\Blocks\Block.cpp" />
     <ClCompile Include="src\GameObject\Blocks\DestoryAbleBlock.cpp" />
+    <ClCompile Include="src\GameObject\Blocks\Flag.cpp" />
     <ClCompile Include="src\GameObject\Blocks\Lava.cpp" />
     <ClCompile Include="src\GameObject\Blocks\PowerBlock.cpp" />
     <ClCompile Include="src\GameObject\GameObject.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="src\Engine\ObjectToClone.h" />
     <ClInclude Include="src\GameObject\Blocks\Block.h" />
     <ClInclude Include="src\GameObject\Blocks\DestoryAbleBlock.h" />
+    <ClInclude Include="src\GameObject\Blocks\Flag.h" />
     <ClInclude Include="src\GameObject\Blocks\Lava.h" />
     <ClInclude Include="src\GameObject\Blocks\PowerBlock.h" />
     <ClInclude Include="src\GameObject\GameObject.h" />

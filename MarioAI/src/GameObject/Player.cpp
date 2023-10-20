@@ -151,6 +151,11 @@ void Player::update(float deltaTime)
 			}
 			pressJumpTime = 0;
 		}
+		obj = getObjectsAt(pos, ObjectType::Finish);
+		if (obj.size() > 0)
+		{
+			game->setWin();
+		}
 		
 
 	}

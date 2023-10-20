@@ -6,7 +6,7 @@
 #include "Chunk.h"
 #include "../GameObject/ObjType/PowerType.h"
 #include "../GameObject/Powers/Coin.h"
-
+#include "../GameObject/Blocks/Flag.h"
 std::vector<GameObject*> objectToCopy;
 
 void createObjectToCopy()
@@ -21,6 +21,7 @@ void createObjectToCopy()
 		new PowerBlock({ 0,0,blockSize,blockSize }, "res/CoinBlock.png",NULL,PowerType::Mushroom),
 		new PowerBlock({ 0,0,blockSize,blockSize }, "res/CoinBlock.png",NULL,PowerType::Plant),
 		new Coin({0,0,blockSize,blockSize},"res/Coin.png",NULL),
+		new Flag({0,0,blockSize,blockSize*6},"res/Flag.png",NULL),
 
 
 	};
