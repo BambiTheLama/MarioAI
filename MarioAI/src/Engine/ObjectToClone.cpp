@@ -5,6 +5,7 @@
 #include <vector>
 #include "Chunk.h"
 #include "../GameObject/ObjType/PowerType.h"
+#include "../GameObject/Powers/Coin.h"
 
 std::vector<GameObject*> objectToCopy;
 
@@ -19,6 +20,7 @@ void createObjectToCopy()
 		new PowerBlock({ 0,0,blockSize,blockSize }, "res/CoinBlock.png",NULL,PowerType::Coin),
 		new PowerBlock({ 0,0,blockSize,blockSize }, "res/CoinBlock.png",NULL,PowerType::Mushroom),
 		new PowerBlock({ 0,0,blockSize,blockSize }, "res/CoinBlock.png",NULL,PowerType::Plant),
+		new Coin({0,0,blockSize,blockSize},"res/Coin.png",NULL),
 
 
 	};
@@ -30,6 +32,7 @@ void deleteObjectToCopy()
 		delete o;
 	}
 	objectToCopy.clear();
+	
 }
 GameObject* cloneObject(ObjectID Id)
 {
