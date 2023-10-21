@@ -4,9 +4,10 @@
 #include <list>
 #include "../json.hpp"
 #include "Chunk.h"
+#include "Scene.h"
 
-
-class Game
+class Game:
+	public Scene
 {
 	std::list<Chunk*> chunks;
 	GameObject* target;
@@ -15,6 +16,7 @@ class Game
 	bool play = true;
 	bool win = false;
 	std::list<GameObject*> toDelete;
+	int points = 0;
 public:
 	Game();
 
@@ -47,5 +49,9 @@ public:
 	void updatePos(GameObject* o);
 
 	void setWin() { win = true; play = false; }
+
+	void addPoints(int p) { points += p; }
+
+	GameObject* getPlayer() { return target; }
 };
 

@@ -5,31 +5,30 @@
 #include "ObjectToClone.h"
 Game::Game()
 {
-	InitWindow(1600, 900, "MARIO");
-	createObjectToCopy();
+
 	Chunk* chunk = new Chunk(0,this);
-	target = new Player({128,500,64,64},this);
+	target = new Player({ 128,500,64,64 }, this);
 	chunks.push_back(chunk);
-	SetTargetFPS(60);
+	camera.offset = { GetScreenWidth() / 2.0f,GetScreenHeight() / 2.0f };
+	camera.target.y = 880 / 2;
+	camera.zoom = 1;
 }
 
 Game::~Game()
 {
 	for (auto chunk : chunks)
 		delete chunk;
-	for (auto t : GameObject::texturesLoaded)
-		UnloadTexture(t.texture);
-	GameObject::texturesLoaded.clear();
-	CloseWindow();
-	deleteObjectToCopy();
+
 }
 
 void Game::draw()
 {
+	BeginMode2D(camera);
 	for(auto chunk:chunks)
 		chunk->draw();
 	if (target)
 		target->draw();
+	EndMode2D();
 }
 int i = 1;
 void Game::update(float deltaTime)
@@ -53,38 +52,14 @@ void Game::update(float deltaTime)
 
 void Game::start()
 {
-	float deltaTime = 0;
-	double time = 0;
-	double time2 = GetTime();
-	camera.offset = { GetScreenWidth() / 2.0f,GetScreenHeight() / 2.0f };
-	camera.target.y = 880/2;
-	camera.zoom = 1;
-	while (!WindowShouldClose() && play)
-	{
-		time = time2;
-		time2 = GetTime();
-		deltaTime = time2 - time;
-
-		update(deltaTime);
-		BeginDrawing();
-		ClearBackground(DARKBLUE);
-		BeginMode2D(camera);
-		draw();
-		EndMode2D();
-		DrawFPS(0, 0);
-		if (win)
-		{
-			DrawText("YOU PASS THE GAME\nPRESS ENDER TO CONTINUE", 100, 100, 69, WHITE);
-		}
-		EndDrawing();
-	}
+	
 	while (IsKeyUp(KEY_ENTER) && win && !WindowShouldClose())
 	{
 		BeginDrawing();
 		ClearBackground(DARKBLUE);
-		BeginMode2D(camera);
+
 		draw();
-		EndMode2D();
+
 		DrawFPS(0, 0);
 
 		DrawText("YOU PASS THE GAME\nPRESS ENDER TO CONTINUE", 100, 100, 69, WHITE);

@@ -31,7 +31,7 @@ public:
 
     void checkPowerUps();
 
-    ObjectType getType() { return ObjectType::Palyer; }
+    ObjectType getType() { return ObjectType::Player; }
 
     Player* clone() { return new Player(*this); }
 

@@ -43,7 +43,12 @@ void Player::draw()
 		texturePos.width *= -1;
 	Rectangle pos = getPos();
 	//DrawRectangleRec(pos, RED);
-	DrawTexturePro(texture, texturePos, pos, { 0,0 }, 0, WHITE);
+	if (invisibleFrames <= 0 || (int)(invisibleFrames*10)%10>5)
+	{
+		DrawTexturePro(texture, texturePos, pos, { 0,0 }, 0, WHITE);
+	}
+
+
 }
 
 void Player::update(float deltaTime)
@@ -204,8 +209,15 @@ void Player::hitObj()
 	if (invisibleFrames <= 0)
 	{
 		hp--;
+		if (hp == 1)
+		{
+			pos.height /= 2;
+			pos.y += pos.height;
+		}
+		invisibleFrames = 2;
 		if (hp <= 0 && game)
 			game->lostGame();
+
 	}
 
 }

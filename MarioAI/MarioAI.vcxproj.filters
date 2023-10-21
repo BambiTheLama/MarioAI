@@ -19,6 +19,9 @@
     <Filter Include="src\Engine">
       <UniqueIdentifier>{8aa7e799-43ef-47c7-bbd1-6a6dee71f77d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\GameObject\Enemy">
+      <UniqueIdentifier>{73656395-2fdf-40c6-91b0-8d76ebeac301}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -68,6 +71,18 @@
     </ClCompile>
     <ClCompile Include="src\GameObject\Blocks\Lava.cpp">
       <Filter>src\GameObject\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Scene.cpp">
+      <Filter>src\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Engine.cpp">
+      <Filter>src\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\MapEdytor.cpp">
+      <Filter>src\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Enemy\Goomba.cpp">
+      <Filter>src\GameObject\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,8 +143,24 @@
     <ClInclude Include="src\GameObject\Blocks\Flag.h">
       <Filter>src\GameObject\Blocks</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="src\Engine\Scene.h">
+      <Filter>src\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Engine.h">
+      <Filter>src\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\MapEdytor.h">
+      <Filter>src\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Enemy\Goomba.h">
+      <Filter>src\GameObject\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MarioAI.rc" />
   </ItemGroup>
 </Project>

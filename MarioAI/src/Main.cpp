@@ -1,8 +1,8 @@
-#include "Engine/Game.h"
+#include "Engine/Engine.h"
 
 int main()
 {
-	Game* game = new Game();
+	Engine* game = new Engine();
 	game->start();
 	delete game;
 	return 0;

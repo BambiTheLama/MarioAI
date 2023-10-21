@@ -34,6 +34,32 @@ GameObject::GameObject(GameObject& o)
 	game = o.game;
 }
 
+GameObject::GameObject(nlohmann::json readFile)
+{
+	pos.x = readFile["Pos"][0];
+	pos.y = readFile["Pos"][1];
+	pos.width = readFile["Pos"][2];
+	pos.height = readFile["Pos"][3];
+	texture.path = readFile["Texture0"];
+	bool loaded = false;
+	if (texturesLoaded.size() > 0)
+	{
+		for (auto t : texturesLoaded)
+			if (texture.path.compare(t.path) == 0)
+			{
+				this->texture = t;
+				loaded = true;
+			}
+	}
+	if (!loaded)
+	{
+		texture.texture = LoadTexture(texture.path.c_str());
+		if (texture.texture.id > 0)
+			texturesLoaded.push_back(texture);
+	}
+	game = NULL;
+}
+
 void GameObject::draw()
 {
 	Rectangle source = { 0,0,(float)texture.texture.width,(float)texture.texture.height };
@@ -47,13 +73,23 @@ std::list<GameObject*> GameObject::getObjectsAt(Rectangle pos, ObjectType type)
 	std::list<GameObject*> obj = game->getObjectsAt(pos);
 	obj.remove(this);
 	std::list<GameObject*> retList;
-	for (auto o : obj)
+
+	if (type == ObjectType::Player)
 	{
-		if (!CheckCollisionRecs(o->getPos(), pos))
-			continue;
-		if (o->getType() != type)
-			continue;
-		retList.push_back(o);
+		GameObject* o = game->getPlayer();
+		if (o &&CheckCollisionRecs(pos,o->getPos()))
+			retList.push_back(o);
+	}
+	else
+	{
+		for (auto o : obj)
+		{
+			if (!CheckCollisionRecs(o->getPos(), pos))
+				continue;
+			if (o->getType() != type)
+				continue;
+			retList.push_back(o);
+		}
 	}
 	return retList;
 }
@@ -83,4 +119,13 @@ void GameObject::deleteObject()
 {
 	game->removeObj(this);
 	game->addToDelete(this);
+}
+
+void GameObject::saveToFile(nlohmann::json& saveFile)
+{
+	saveFile["Pos"][0] = pos.x;
+	saveFile["Pos"][1] = pos.y;
+	saveFile["Pos"][2] = pos.width;
+	saveFile["Pos"][3] = pos.height;
+	saveFile["Texture0"] = texture.path;
 }

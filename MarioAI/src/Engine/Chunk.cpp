@@ -12,34 +12,40 @@ Chunk::Chunk(int chunk, Game* game)
 	for (int y = mapH-3; y < mapH-1; y++)
 		for (int x = 0; x < mapW; x++)
 		{
-			blocks[y][x] = cloneObject(ObjectID::Flor);
+			blocks[y][x] = cloneStaticObject(StaticObjectID::Flor);
 			blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
 			blocks[y][x]->setGame(game);
 		}
 	for (int y = mapH - 1; y < mapH; y++)
 		for (int x = 0; x < mapW; x++)
 		{
-			blocks[y][x] = cloneObject(ObjectID::Lava);
+			blocks[y][x] = cloneStaticObject(StaticObjectID::Lava);
 			blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
 			blocks[y][x]->setGame(game);
 		}
 	this->game = game;
-	blocks[7][10] = cloneObject(ObjectID::PowerBlockCoin);
+	blocks[7][10] = cloneStaticObject(StaticObjectID::PowerBlockCoin);
 	blocks[7][10]->moveTo(startX + 10 * blockSize, 7 * blockSize);
 	blocks[7][10]->setGame(game);
 
-	blocks[6][11] = cloneObject(ObjectID::PowerBlockMushroom);
+	blocks[6][11] = cloneStaticObject(StaticObjectID::PowerBlockMushroom);
 	blocks[6][11]->moveTo(startX + 11 * blockSize, 6 * blockSize);
 	blocks[6][11]->setGame(game);
 
-	blocks[mapH-4][0] = cloneObject(ObjectID::Flor);
+	blocks[mapH-4][0] = cloneStaticObject(StaticObjectID::Flor);
 	blocks[mapH-4][0]->moveTo(startX + 0 * blockSize, (mapH - 4) * blockSize);
 	blocks[mapH-4][0]->setGame(game);
-	blocks[mapH - 4][mapW-1] = cloneObject(ObjectID::Flor);
+	blocks[mapH - 4][mapW-1] = cloneStaticObject(StaticObjectID::Flor);
 	blocks[mapH - 4][mapW-1]->moveTo(startX + (mapW-1) * blockSize, (mapH - 4) * blockSize);
 	blocks[mapH - 4][mapW-1]->setGame(game);
-	GameObject* o = cloneObject(ObjectID::Flag);
+
+	GameObject* o = cloneDynamicObject(DynamicObjectID::Flag);
 	o->moveTo(startX + (mapW - 1) * blockSize, (5) * blockSize);
+	o->setGame(game);
+	addObj(o);
+
+	o = cloneDynamicObject(DynamicObjectID::Goomba);
+	o->moveTo(startX + (mapW - 6) * blockSize, (mapH-5) * blockSize);
 	o->setGame(game);
 	addObj(o);
 
@@ -64,7 +70,7 @@ Chunk::Chunk(int chunk, Game* game, nlohmann::json map)
 	for (int y = 0; y < mapH; y++)
 		for (int x = 0; x < mapW; x++)
 		{
-			blocks[y][x] = cloneObject((ObjectID)blockId);
+			blocks[y][x] = cloneStaticObject((StaticObjectID)blockId);
 			blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
 			blocks[y][x]->setGame(game);
 			times--;
@@ -80,7 +86,7 @@ Chunk::Chunk(int chunk, Game* game, nlohmann::json map)
 	for (int y = mapH - 1; y < mapH; y++)
 		for (int x = 0; x < mapW; x++)
 		{
-			blocks[y][x] = cloneObject(ObjectID::Lava);
+			blocks[y][x] = cloneStaticObject(StaticObjectID::Lava);
 			blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
 			blocks[y][x]->setGame(game);
 		}
@@ -180,4 +186,44 @@ bool Chunk::hasObj(GameObject* o)
 		if (o == obj)
 			return true; 
 	return false; 
+}
+
+void Chunk::saveToJson(nlohmann::json& saveFile)
+{
+	int ID = -1;
+	int times = 0;
+	int i = 0;
+	for (int y = 0; y < mapH; y++)
+		for (int x = 0; x < mapW; x++)
+		{
+			int newId = ID;
+			if (!blocks[y][x])
+			{
+				if (ID == -1)
+				{
+					times++;
+				}
+				else
+				{
+					newId = -1;
+				}
+			}
+			else
+			{
+
+			}
+			if (newId != ID)
+			{
+				saveFile[chunk]["Blocks"][i][0] = ID;
+				saveFile[chunk]["Blocks"][i][0] = times;
+			}
+		}
+	i = 0;
+	for (auto o : objects)
+	{
+		o->saveToFile(saveFile[chunk]["Objects"][i]);
+		i++;
+
+	}
+
 }

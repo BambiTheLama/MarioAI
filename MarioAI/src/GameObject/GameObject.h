@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include <list>
 #include <string>
+#include "../json.hpp"
 
 enum class ObjectType
 {
@@ -9,7 +10,7 @@ enum class ObjectType
 	Block=1,
 	Enemy=2,
 	Bullet=3,
-	Palyer=4,
+	Player=4,
 	Lava=5,
 	PowerUp=6,
 	Finish
@@ -34,6 +35,8 @@ public:
 	GameObject(Rectangle pos,std::string path,Game* game);
 
 	GameObject(GameObject& o);
+
+	GameObject(nlohmann::json readFile);
 
 	virtual ~GameObject(){}
 
@@ -61,7 +64,9 @@ public:
 
 	void deleteObject();
 
-	friend class Game;
+	virtual void saveToFile(nlohmann::json& saveFile);
+
+	friend class Engine;
 
 };
 

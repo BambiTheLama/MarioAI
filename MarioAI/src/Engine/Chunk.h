@@ -22,6 +22,8 @@ class Chunk
 public:
 	Chunk(int chunk,Game* game);
 
+	Chunk(int chunk);
+
 	Chunk(int chunk, Game* game, nlohmann::json map);
 
 	~Chunk();
@@ -45,5 +47,7 @@ public:
 	int getChunk() { return chunk; }
 
 	bool hasObj(GameObject* o);
+
+	void saveToJson(nlohmann::json &saveFile);
 };
 

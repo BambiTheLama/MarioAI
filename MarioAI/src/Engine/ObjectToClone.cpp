@@ -1,43 +1,55 @@
 #include "ObjectToClone.h"
-#include "../GameObject/Blocks/Lava.h"
-#include "../GameObject/Blocks/DestoryAbleBlock.h"
-#include "../GameObject/Blocks/PowerBlock.h"
 #include <vector>
 #include "Chunk.h"
+#include "../GameObject/Blocks/Flag.h"
+#include "../GameObject/Blocks/Lava.h"
+#include "../GameObject/Blocks/PowerBlock.h"
+#include "../GameObject/Blocks/DestoryAbleBlock.h"
 #include "../GameObject/ObjType/PowerType.h"
 #include "../GameObject/Powers/Coin.h"
-#include "../GameObject/Blocks/Flag.h"
-std::vector<GameObject*> objectToCopy;
+#include "../GameObject/Enemy/Goomba.h"
+
+std::vector<GameObject*> staticObjectToCopy;
+std::vector<GameObject*> dynamicObjectToCopy;
 
 void createObjectToCopy()
 {
-	objectToCopy = std::vector<GameObject*>{
+	staticObjectToCopy = std::vector<GameObject*>{
 		new Block({ 0,0,blockSize,blockSize }, "res/Stone.png",NULL),
 		new Lava({ 0,0,blockSize,blockSize }, "res/Lava.png",NULL),
 		new DestoryAbleBlock({0,0,blockSize,blockSize},"res/Brick.png",NULL),
 		new Block({ 0,0,blockSize,blockSize }, "res/SteelBlock.png",NULL),
-		new Block({ 0,0,blockSize,blockSize }, "res/Pipe.png",NULL),
 		new PowerBlock({ 0,0,blockSize,blockSize }, "res/CoinBlock.png",NULL,PowerType::Coin),
 		new PowerBlock({ 0,0,blockSize,blockSize }, "res/CoinBlock.png",NULL,PowerType::Mushroom),
 		new PowerBlock({ 0,0,blockSize,blockSize }, "res/CoinBlock.png",NULL,PowerType::Plant),
 		new Coin({0,0,blockSize,blockSize},"res/Coin.png",NULL),
-		new Flag({0,0,blockSize,blockSize*6},"res/Flag.png",NULL),
 
-
+	};
+	dynamicObjectToCopy = std::vector<GameObject*>{
+		new Block({ 0,0,blockSize * 2,blockSize * 2 }, "res/Pipe.png",NULL),
+		new Flag({0,0,blockSize,blockSize * 6},"res/Flag.png",NULL),
+		new Goomba({0,0,blockSize,blockSize},"res/Goomba.png",NULL),
 	};
 }
 void deleteObjectToCopy()
 {
-	for (auto o : objectToCopy)
+	for (auto o : staticObjectToCopy)
 	{
 		delete o;
 	}
-	objectToCopy.clear();
+	staticObjectToCopy.clear();
 	
 }
-GameObject* cloneObject(ObjectID Id)
+GameObject* cloneStaticObject(StaticObjectID Id)
 {
-	if ((int)Id < 0 || (int)Id >= objectToCopy.size())
+	if ((int)Id < 0 || (int)Id >= staticObjectToCopy.size())
 		return NULL;
-	return objectToCopy[(int)Id]->clone();
+	return staticObjectToCopy[(int)Id]->clone();
+}
+
+GameObject* cloneDynamicObject(DynamicObjectID Id)
+{
+	if ((int)Id < 0 || (int)Id >= dynamicObjectToCopy.size())
+		return NULL;
+	return dynamicObjectToCopy[(int)Id]->clone();
 }

@@ -2,6 +2,7 @@
 #include "../../Engine/Game.h"
 #include "../Powers/PowerMushroom.h"
 #include "../Powers/PowerFlower.h"
+#include "../Powers/Coin.h"
 
 PowerBlock::PowerBlock(Rectangle pos, std::string path, Game* game,PowerType powerType):Block(pos,path,game)
 {
@@ -42,7 +43,7 @@ void PowerBlock::destory(int power)
 	switch (powerType)
 	{
 	case PowerType::Coin:
-		
+		o = new Coin(pos, "res/Coin.png", game,false);
 		break;
 	case PowerType::Mushroom:
 		o = new PowerMushroom(pos, "res/Mushroom.png", game);
@@ -59,7 +60,7 @@ void PowerBlock::destory(int power)
 	sprite = 1;
 	game->removeBlock(this);
 	game->addToDelete(this);
-	o=cloneObject(ObjectID::Steal);
+	o=cloneStaticObject(StaticObjectID::Steal);
 	if (o)
 	{
 		Rectangle pos = getPos();
