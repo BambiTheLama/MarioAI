@@ -161,7 +161,17 @@ void Player::update(float deltaTime)
 		{
 			game->setWin();
 		}
-		
+		obj = getObjectsAt({ pos.x + 3,pos.y + pos.height,pos.width - 6,1 }, ObjectType::Enemy);
+		if (obj.size() > 0)
+		{
+			for (auto o : obj)
+			{
+				Hitable* h = dynamic_cast<Hitable*>(o);
+				if (!h)
+					continue;
+				h->hitObj();
+			}
+		}
 
 	}
 	moveTo(pos.x, pos.y);

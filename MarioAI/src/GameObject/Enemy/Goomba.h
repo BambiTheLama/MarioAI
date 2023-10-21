@@ -1,11 +1,13 @@
 #pragma once
 #include "../GameObject.h"
-
+#include "../ObjType/Hitable.h"
 class Goomba :
-    public GameObject
+    public GameObject,public Hitable
 {
     float sprite = 0;
     bool left = true;
+    bool alive = true;
+    float lifeTime = 1;
 public:
     Goomba(Rectangle pos, std::string path, Game* game);
 
@@ -20,5 +22,7 @@ public:
     ObjectType getType() { return ObjectType::Enemy; }
 
     Goomba* clone() { return new Goomba(*this); }
+
+    void hitObj();
 };
 

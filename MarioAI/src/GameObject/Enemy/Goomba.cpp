@@ -19,13 +19,25 @@ Goomba::Goomba(nlohmann::json toRead) :GameObject(toRead)
 
 void Goomba::update(float deltaTime)
 {
+	if (!alive)
+	{
+		lifeTime -= deltaTime;
+		if (lifeTime <= 0)
+		{
+			deleteObject();
+		}
+		return;
+	}
+	sprite += deltaTime * 10;
+	sprite -= (int)sprite / 2 * 2;
 	Rectangle pos = getPos();
-	const float speed = 100;
+	const float speed = 160;
 	const float fallSpeed = 300;
 	if (left)
 	{
 
-		if (isObjectAt({ pos.x - deltaTime * speed,pos.y,pos.width,pos.height - 1 }, ObjectType::Block))
+		if (isObjectAt({ pos.x - deltaTime * speed,pos.y,pos.width,pos.height - 1 }, ObjectType::Block) ||
+			isObjectAt({ pos.x - deltaTime * speed,pos.y,pos.width,pos.height - 1 }, ObjectType::Enemy))
 		{
 			left = false;
 		}
@@ -36,7 +48,8 @@ void Goomba::update(float deltaTime)
 	}
 	else
 	{
-		if (isObjectAt({ pos.x + deltaTime * speed,pos.y,pos.width,pos.height - 1 }, ObjectType::Block))
+		if (isObjectAt({ pos.x + deltaTime * speed,pos.y,pos.width,pos.height - 1 }, ObjectType::Block) || 
+			isObjectAt({ pos.x + deltaTime * speed,pos.y,pos.width,pos.height - 1 }, ObjectType::Enemy))
 		{
 			left = true;
 		}
@@ -68,6 +81,13 @@ void Goomba::draw()
 {
 	Texture2D texture = getTexture().texture;
 	Rectangle pos = getPos();
-	Rectangle spritePos = { texture.height * ((int)sprite % 2),0,texture.height,texture.height };
+	Rectangle spritePos = { texture.height * (int)sprite,0,texture.height,texture.height };
 	DrawTexturePro(texture, spritePos, pos, { 0,0 }, 0, WHITE);
+}
+
+void Goomba::hitObj()
+{
+	alive = false;
+	sprite = 2;
+
 }
