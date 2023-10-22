@@ -3,6 +3,7 @@
 #include "Blocks/Block.h"
 #include "ObjType/Destoryable.h"
 #include "ObjType/PowerType.h"
+#include "Flame.h"
 Player::Player(Rectangle pos,Game *g):GameObject(pos, "res/CzesiekSmall.png",g)
 {
 	bigPlayer.texture = LoadTexture("res/CzesiekBig.png");
@@ -55,6 +56,8 @@ void Player::update(float deltaTime)
 {
 	if (invisibleFrames > 0)
 		invisibleFrames -= deltaTime;
+	if (flameCdr > 0)
+		flameCdr -= deltaTime;
 	deltaTime *= 21.37;
 	Rectangle pos = getPos();
 
@@ -92,6 +95,13 @@ void Player::update(float deltaTime)
 	{
 		distance = 0;
 		sprite = 0;
+	}
+	if (hp == 3 && flameCdr <=0 && IsKeyDown(KEY_LEFT_CONTROL))
+	{
+		Flame* f = new Flame({ pos.x + pos.width / 2,pos.y + pos.height / 2,32,32 }, "res/Shot.png", game, moveLeft);
+		game->addObj(f);
+		flameCdr = 1;
+
 	}
 	if (IsKeyDown(KEY_SPACE) || jumpFromEnemy)
 	{
@@ -163,7 +173,7 @@ void Player::update(float deltaTime)
 		{
 			game->setWin();
 		}
-		obj = getObjectsAt({ pos.x + 3,pos.y + pos.height,pos.width - 6,1 }, ObjectType::Enemy);
+		obj = getObjectsAt({ pos.x + 3,pos.y + pos.height,pos.width - 6,2 }, ObjectType::Enemy);
 		if (obj.size() > 0)
 		{
 			for (auto o : obj)

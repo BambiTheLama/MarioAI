@@ -24,7 +24,7 @@ Chunk::Chunk(int chunk, Game* game)
 			blocks[y][x]->setGame(game);
 		}
 	this->game = game;
-	blocks[7][10] = cloneStaticObject(StaticObjectID::PowerBlockCoin);
+	blocks[7][10] = cloneStaticObject(StaticObjectID::PowerBlockFlower);
 	blocks[7][10]->moveTo(startX + 10 * blockSize, 7 * blockSize);
 	blocks[7][10]->setGame(game);
 
@@ -118,6 +118,10 @@ void Chunk::update(float deltaTime)
 		o->update(deltaTime);
 	for (auto o : toRemove)
 		objects.remove(o);
+	for (auto o : toAdd)
+		objects.push_back(o);
+	toAdd.clear();
+	toRemove.clear();
 
 }
 

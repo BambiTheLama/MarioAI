@@ -13,7 +13,8 @@ enum class ObjectType
 	Player=4,
 	Lava=5,
 	PowerUp=6,
-	Finish
+	Finish,
+	PlayerProjectal,
 };
 
 struct TextureSource

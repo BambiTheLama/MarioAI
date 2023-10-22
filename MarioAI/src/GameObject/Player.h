@@ -21,6 +21,7 @@ class Player :
     TextureSource powerPlayer;
     bool moveLeft = false;
     bool jumpFromEnemy = false;
+    float flameCdr=0;
 public:
     Player(Rectangle pos, Game* g);
 
