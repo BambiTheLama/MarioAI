@@ -43,7 +43,7 @@ void Player::draw()
 		texturePos.width *= -1;
 	Rectangle pos = getPos();
 	//DrawRectangleRec(pos, RED);
-	if (invisibleFrames <= 0 || (int)(invisibleFrames*10)%10>5)
+	if (invisibleFrames <= 0 || (int)(invisibleFrames*10)%10>3)
 	{
 		DrawTexturePro(texture, texturePos, pos, { 0,0 }, 0, WHITE);
 	}
@@ -93,7 +93,7 @@ void Player::update(float deltaTime)
 		distance = 0;
 		sprite = 0;
 	}
-	if (IsKeyDown(KEY_SPACE))
+	if (IsKeyDown(KEY_SPACE) || jumpFromEnemy)
 	{
 		float t = 0;
 		jumping = true;
@@ -107,12 +107,14 @@ void Player::update(float deltaTime)
 			t = pressJumpTime;
 			pressJumpTime = 0;
 			jumping = false;
+			jumpFromEnemy = false;
 		}
 		pos.y -= t /pressJumpTimeMax*jumpHeight;
 		
 	}
 	else 
 	{
+
 		jumping = false;
 		if (pressJumpTime != pressJumpTimeMax)
 			pressJumpTime = 0;
@@ -169,7 +171,12 @@ void Player::update(float deltaTime)
 				Hitable* h = dynamic_cast<Hitable*>(o);
 				if (!h)
 					continue;
-				h->hitObj();
+				if (h->hitObj())
+				{
+					pressJumpTime = 2;
+					jumpFromEnemy = true;
+				}
+
 			}
 		}
 
@@ -214,7 +221,7 @@ void Player::checkPowerUps()
 	}
 }
 
-void Player::hitObj() 
+bool Player::hitObj() 
 { 
 	if (invisibleFrames <= 0)
 	{
@@ -227,7 +234,7 @@ void Player::hitObj()
 		invisibleFrames = 2;
 		if (hp <= 0 && game)
 			game->lostGame();
-
+		return true;
 	}
-
+	return false;
 }

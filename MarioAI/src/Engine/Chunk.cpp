@@ -48,6 +48,10 @@ Chunk::Chunk(int chunk, Game* game)
 	o->moveTo(startX + (mapW - 6) * blockSize, (mapH-5) * blockSize);
 	o->setGame(game);
 	addObj(o);
+	o = cloneDynamicObject(DynamicObjectID::CoopaRed);
+	o->moveTo(startX + (mapW - 4) * blockSize, (mapH - 5) * blockSize);
+	o->setGame(game);
+	addObj(o);
 
 }
 

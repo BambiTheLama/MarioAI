@@ -2,6 +2,6 @@
 class Hitable
 {
 public:
-	virtual void hitObj()=0;
+	virtual bool hitObj()=0;
 };
 

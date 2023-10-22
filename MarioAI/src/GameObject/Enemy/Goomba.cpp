@@ -85,9 +85,14 @@ void Goomba::draw()
 	DrawTexturePro(texture, spritePos, pos, { 0,0 }, 0, WHITE);
 }
 
-void Goomba::hitObj()
+bool Goomba::hitObj()
 {
-	alive = false;
-	sprite = 2;
+	if (alive)
+	{
+		alive = false;
+		sprite = 2;
+		return true;
+	}
+	return false;
 
 }

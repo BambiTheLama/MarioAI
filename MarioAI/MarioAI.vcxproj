@@ -30,6 +30,7 @@
     <ClCompile Include="src\GameObject\Blocks\Flag.cpp" />
     <ClCompile Include="src\GameObject\Blocks\Lava.cpp" />
     <ClCompile Include="src\GameObject\Blocks\PowerBlock.cpp" />
+    <ClCompile Include="src\GameObject\Enemy\Coopa.cpp" />
     <ClCompile Include="src\GameObject\Enemy\Goomba.cpp" />
     <ClCompile Include="src\GameObject\GameObject.cpp" />
     <ClCompile Include="src\GameObject\ParticleSystem.cpp" />
@@ -53,6 +54,7 @@
     <ClInclude Include="src\GameObject\Blocks\Flag.h" />
     <ClInclude Include="src\GameObject\Blocks\Lava.h" />
     <ClInclude Include="src\GameObject\Blocks\PowerBlock.h" />
+    <ClInclude Include="src\GameObject\Enemy\Coopa.h" />
     <ClInclude Include="src\GameObject\Enemy\Goomba.h" />
     <ClInclude Include="src\GameObject\GameObject.h" />
     <ClInclude Include="src\GameObject\ObjType\Destoryable.h" />

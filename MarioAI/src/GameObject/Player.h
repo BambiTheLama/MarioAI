@@ -20,6 +20,7 @@ class Player :
     TextureSource bigPlayer;
     TextureSource powerPlayer;
     bool moveLeft = false;
+    bool jumpFromEnemy = false;
 public:
     Player(Rectangle pos, Game* g);
 
@@ -35,7 +36,7 @@ public:
 
     Player* clone() { return new Player(*this); }
 
-    void hitObj();
+    bool hitObj();
 
 };
 

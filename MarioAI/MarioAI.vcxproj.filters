@@ -84,6 +84,9 @@
     <ClCompile Include="src\GameObject\Enemy\Goomba.cpp">
       <Filter>src\GameObject\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObject\Enemy\Coopa.cpp">
+      <Filter>src\GameObject\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\NN.h">
@@ -154,6 +157,9 @@
       <Filter>src\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\Enemy\Goomba.h">
+      <Filter>src\GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Enemy\Coopa.h">
       <Filter>src\GameObject\Enemy</Filter>
     </ClInclude>
   </ItemGroup>

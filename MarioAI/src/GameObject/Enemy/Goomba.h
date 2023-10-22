@@ -23,6 +23,6 @@ public:
 
     Goomba* clone() { return new Goomba(*this); }
 
-    void hitObj();
+    bool hitObj();
 };
 
