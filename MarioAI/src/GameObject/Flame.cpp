@@ -32,6 +32,7 @@ void Flame::update(float deltaTime)
 	{
 		sprite = (int)timer % 4;
 		move(deltaTime);
+
 	}
 }
 
@@ -81,6 +82,7 @@ void Flame::move(float deltaTime)
 
 	}
 	moveTo(pos.x, pos.y);
+	updatePos();
 	std::list<GameObject*> objs = getObjectsAt(pos, ObjectType::Enemy);
 	if (objs.size() > 0)
 	{

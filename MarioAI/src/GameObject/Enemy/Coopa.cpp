@@ -95,7 +95,7 @@ void Coopa::moveShell(float deltaTime)
 
 void Coopa::playerHit()
 {
-	std::list<GameObject*> objs = getObjectsAt(pos, ObjectType::Player);
+	std::list<GameObject*> objs = getObjectsAt({pos.x,pos.y+pos.height/3,pos.width,pos.height*2/3}, ObjectType::Player);
 	if (objs.size() > 0)
 	{
 		for (auto o : objs)

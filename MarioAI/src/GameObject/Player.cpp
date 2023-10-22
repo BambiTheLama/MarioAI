@@ -146,8 +146,8 @@ void Player::update(float deltaTime)
 				pos.y += deltaTime / pressJumpTimeMax * jumpHeight/times;
 				times++;
 			}
-			while (isObjectAt(pos, ObjectType::Block) && times<10);
-			if (times >= 10)
+			while (isObjectAt(pos, ObjectType::Block) && times<5);
+			if (times >= 5)
 			{
 				pos.y = y;
 				pressJumpTime = pressJumpTimeMax;
