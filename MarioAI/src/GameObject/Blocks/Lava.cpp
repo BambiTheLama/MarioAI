@@ -14,3 +14,8 @@ void Lava::update(float deltaTime)
 {
 
 }
+
+void Lava::draw()
+{
+	DrawRectangleRec(pos, RED);
+}

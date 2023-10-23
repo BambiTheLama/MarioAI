@@ -26,7 +26,7 @@ class Game;
 
 class GameObject
 {
-
+	int ID = 0;
 	TextureSource texture;
 	static std::list<TextureSource> texturesLoaded;
 protected:
@@ -67,7 +67,12 @@ public:
 
 	virtual void saveToFile(nlohmann::json& saveFile);
 
+	void setPos(Rectangle pos) { this->pos = pos; }
+
+	int getID() { return ID; }
+
 	friend class Engine;
+	friend void createObjectToCopy();
 
 };
 

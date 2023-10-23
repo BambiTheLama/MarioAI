@@ -30,8 +30,12 @@ void createObjectToCopy()
 		new Flag({0,0,blockSize,blockSize * 6},"res/Flag.png",NULL),
 		new Goomba({0,0,blockSize,blockSize},"res/Goomba.png",NULL),
 		new Coopa({0,0,blockSize,blockSize},"res/RedCoopa.png",NULL),
-		new Coopa({0,0,blockSize,blockSize},"res/GrennCoopa.png",NULL),
+		new Coopa({0,0,blockSize,blockSize},"res/GreenCoopa.png",NULL),
 	};
+	for (int i = 0; i < staticObjectToCopy.size(); i++)
+		staticObjectToCopy[i]->ID = i;
+	for (int i = 0; i < dynamicObjectToCopy.size(); i++)
+		dynamicObjectToCopy[i]->ID = i;
 }
 void deleteObjectToCopy()
 {

@@ -54,7 +54,24 @@ Chunk::Chunk(int chunk, Game* game)
 	addObj(o);
 
 }
-
+Chunk::Chunk(int chunk)
+{
+	float startX = chunk * mapW * blockSize;
+	for (int y = 0; y < mapH; y++)
+		for (int x = 0; x < mapW; x++)
+			blocks[y][x] = NULL;
+	for (int y = mapH - 1; y < mapH; y++)
+		for (int x = 0; x < mapW; x++)
+		{
+			blocks[y][x] = cloneStaticObject(StaticObjectID::Lava);
+			blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
+			blocks[y][x]->setGame(game);
+		}
+	objects = std::list<GameObject*>();
+	toRemove = std::list<GameObject*>();
+	toDelete = std::list<GameObject*>();
+	toAdd = std::list<GameObject*>();
+}
 Chunk::Chunk(int chunk, Game* game, nlohmann::json map)
 {
 	this->chunk = chunk;
@@ -105,6 +122,11 @@ Chunk::~Chunk()
 				delete blocks[y][x];
 	for (auto o : objects)
 		delete o;
+	for (auto o : toDelete)
+		delete o;
+	toAdd.clear();
+	toRemove.clear();
+	toDelete.clear();
 }
 
 void Chunk::update(float deltaTime)
@@ -114,14 +136,33 @@ void Chunk::update(float deltaTime)
 			if (blocks[y][x])
 				blocks[y][x]->update(deltaTime);
 
-	for (auto o : objects)
-		o->update(deltaTime);
-	for (auto o : toRemove)
-		objects.remove(o);
-	for (auto o : toAdd)
-		objects.push_back(o);
-	toAdd.clear();
-	toRemove.clear();
+	if (objects.size() > 0)
+	{
+		for (auto o : objects)
+			o->update(deltaTime);
+	}
+	if (toRemove.size() > 0)
+	{
+		for (auto o : toRemove)
+			objects.remove(o);
+		toRemove.clear();
+	}
+	if (toDelete.size() > 0)
+	{
+		for (auto o : toDelete)
+			delete o;
+		toDelete.clear();
+	}
+	if (toAdd.size() > 0)
+	{
+		for (auto o : toAdd)
+			objects.push_back(o);
+		toAdd.clear();
+	}
+
+
+
+
 
 }
 
@@ -166,6 +207,16 @@ void Chunk::getObjs(Rectangle pos, std::list<GameObject*>* obj)
 			if(blocks[y][x])
 				obj->push_back(blocks[y][x]);
 }
+
+void Chunk::addObj(GameObject* o, Vector2 pos)
+{
+	objects.push_back(o);
+	pos.x -= chunk * mapW * 64.0f;
+	int x = (int)pos.x / 64;
+	int y = (int)pos.y / 64;
+	o->moveTo(chunk * mapW * 64.0f + x * 64, y * 64);
+}
+
 bool Chunk::addBlock(GameObject* o)
 {
 	Rectangle pos = o->getPos();
@@ -178,6 +229,23 @@ bool Chunk::addBlock(GameObject* o)
 	blocks[y][x] = o;
 	return true;
 }
+
+bool Chunk::addBlock(GameObject* o, Vector2 pos)
+{
+	pos.x -= chunk * mapW * 64.0f;
+	int x = (int)pos.x/64;
+	int y = (int)pos.y/64;
+	if (x < 0 || x >= mapW || y < 0 || y >= mapH)
+		return false;
+	o->moveTo(chunk * mapW * 64.0f + x * 64, y * 64);
+	if (blocks[y][x])
+	{
+		return false;
+	}
+	blocks[y][x] = o;
+	return true;
+}
+
 void Chunk::removeBlock(GameObject* o)
 {
 	Rectangle pos = o->getPos();
@@ -185,7 +253,7 @@ void Chunk::removeBlock(GameObject* o)
 	int y = pos.y / 64;
 	if (x < 0 || x >= mapW || y < 0 || y >= mapH)
 		return;
-	//delete blocks[y][x];
+	toDelete.push_back(blocks[y][x]);
 	blocks[y][x] = NULL;
 }
 bool Chunk::hasObj(GameObject* o)
@@ -205,27 +273,29 @@ void Chunk::saveToJson(nlohmann::json& saveFile)
 		for (int x = 0; x < mapW; x++)
 		{
 			int newId = ID;
-			if (!blocks[y][x])
+			if (blocks[y][x])
 			{
-				if (ID == -1)
-				{
-					times++;
-				}
-				else
-				{
-					newId = -1;
-				}
+				newId = blocks[y][x]->getID();
 			}
 			else
 			{
-
+				newId = -1;
 			}
-			if (newId != ID)
+			if (newId == ID)
+			{
+				times++;
+			}
+			else
 			{
 				saveFile[chunk]["Blocks"][i][0] = ID;
-				saveFile[chunk]["Blocks"][i][0] = times;
+				saveFile[chunk]["Blocks"][i][1] = times;
+				ID = newId;
+				times = 1;
+				i++;
 			}
 		}
+	saveFile[chunk]["Blocks"][i][0] = ID;
+	saveFile[chunk]["Blocks"][i][1] = times;
 	i = 0;
 	for (auto o : objects)
 	{
@@ -233,5 +303,10 @@ void Chunk::saveToJson(nlohmann::json& saveFile)
 		i++;
 
 	}
+	for (auto o : toAdd)
+	{
+		o->saveToFile(saveFile[chunk]["Objects"][i]);
+		i++;
 
+	}
 }

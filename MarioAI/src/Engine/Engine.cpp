@@ -3,17 +3,20 @@
 #include "ObjectToClone.h"
 #include "../GameObject/GameObject.h"
 #include "Game.h"
+#include "MapEdytor.h"
 
 Engine::Engine()
 {
 	InitWindow(1600, 900, "MARIO");
 	SetTargetFPS(60);
 	createObjectToCopy();
-	s = new Game();
+	s = new MapEdytor();
 }
 
 Engine::~Engine()
 {
+
+	delete s;
 	for (auto t : GameObject::texturesLoaded)
 		UnloadTexture(t.texture);
 	GameObject::texturesLoaded.clear();

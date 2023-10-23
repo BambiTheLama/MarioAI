@@ -12,6 +12,8 @@ public:
 
 	virtual void update(float deltaTime);
 
+	virtual void draw();
+
 	virtual ObjectType getType() { return ObjectType::Lava; }
 
 	virtual Lava* clone() { return new Lava(*this); }

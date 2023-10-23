@@ -14,7 +14,7 @@ enum class StaticObjectID
 	PowerBlockFlower,	//Power blok w ktorym jest kwiatek
 	Coin,				//Coin na mapie ktory mozemy podnosc
 
-
+	size
 };
 
 enum class DynamicObjectID
@@ -26,6 +26,7 @@ enum class DynamicObjectID
 	CoopaRed,			//Ten zó³wik czerwony
 	CoopaGreen,			//Ten zó³wik zielony
 
+	size
 };
 
 void createObjectToCopy();
