@@ -3,15 +3,33 @@
 #include "../GameObject/Blocks/Block.h"
 #include "../GameObject/Player.h"
 #include "ObjectToClone.h"
+#include "Engine.h"
+#include "MainMenu.h"
+#include <fstream>
 Game::Game()
 {
+	std::ifstream reader("Map1.json");
+	if (reader.is_open())
+	{
+		nlohmann::json j;
+		reader >> j;
+		for (int i = 0; i < j.size(); i++)
+		{
+			chunks.push_back(new Chunk(i, this,j));
+		}
+	}
+	else
+	{
+		Chunk* chunk = new Chunk(0, this);
+		chunks.push_back(chunk);
+	}
 
-	Chunk* chunk = new Chunk(0,this);
 	target = new Player({ 128,500,64,64 }, this);
-	chunks.push_back(chunk);
+
 	camera.offset = { GetScreenWidth() / 2.0f,GetScreenHeight() / 2.0f };
 	camera.target.y = 880 / 2;
 	camera.zoom = 1;
+	SetExitKey(0);
 }
 
 Game::~Game()
@@ -46,7 +64,8 @@ void Game::update(float deltaTime)
 	for (auto o : toDelete)
 		delete o;
 	toDelete.clear();
-
+	if (IsKeyPressed(KEY_ESCAPE))
+		Engine::getEngine()->setScene(new MainMenu());
 }
 
 

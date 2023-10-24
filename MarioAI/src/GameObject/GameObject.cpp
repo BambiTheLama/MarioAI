@@ -32,6 +32,7 @@ GameObject::GameObject(GameObject& o)
 	pos = o.pos;
 	texture = o.texture;
 	game = o.game;
+	ID = o.ID;	
 }
 
 void GameObject::draw()
@@ -46,7 +47,6 @@ void GameObject::readFromFile(nlohmann::json& readFile)
 	pos.y = readFile["Pos"][1];
 	pos.width = readFile["Pos"][2];
 	pos.height = readFile["Pos"][3];
-	fromStaticObjList = readFile["StaticObjList"];
 	ID = readFile["ID"];
 }
 
@@ -97,12 +97,16 @@ bool GameObject::isObjectAt(Rectangle pos, ObjectType type)
 
 void GameObject::updatePos()
 {
-	game->updatePos(this);
+	if(game)
+		game->updatePos(this);
 }
 void GameObject::deleteObject()
 {
-	game->removeObj(this);
-	game->addToDelete(this);
+	if (game)
+	{
+		game->removeObj(this);
+		game->addToDelete(this);
+	}
 }
 
 void GameObject::saveToFile(nlohmann::json& saveFile)
@@ -111,6 +115,5 @@ void GameObject::saveToFile(nlohmann::json& saveFile)
 	saveFile["Pos"][1] = pos.y;
 	saveFile["Pos"][2] = pos.width;
 	saveFile["Pos"][3] = pos.height;
-	saveFile["StaticObjList"] = fromStaticObjList;
 	saveFile["ID"] = ID;
 }

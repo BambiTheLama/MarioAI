@@ -1,6 +1,9 @@
 #include "MapEdytor.h"
 #include <fstream>
 #include <iostream>
+#include "MainMenu.h"
+#include "Engine.h"
+
 MapEdytor::MapEdytor()
 {
 	camera.offset = { GetScreenWidth() / 2.0f,GetScreenHeight() / 2.0f };
@@ -24,7 +27,24 @@ MapEdytor::MapEdytor()
 		o->setPos({ menuPos.x + 20 + 84 * (i % 2),menuPos.y + 20 + 84 * (i / 2),64,64 });
 		otherObjects.push_back(o);
 	}
-	chunks.push_back(new Chunk(0));
+
+	SetExitKey(0);
+	std::ifstream reader("Map1.json");
+	if (reader.is_open())
+	{
+		nlohmann::json j;
+		reader >> j;
+		for (int i = 0; i < j.size(); i++)
+		{
+			chunks.push_back(new Chunk(i, NULL, j));
+		}
+	}
+	else
+	{
+		chunks.push_back(new Chunk(0));
+	}
+	for (auto c : chunks)
+		c->showGrid = true;
 }
 
 MapEdytor::~MapEdytor()
@@ -52,12 +72,21 @@ void MapEdytor::update(float delataTime)
 		camera.target.x += 64;
 	if (IsKeyPressed(KEY_D))
 		camera.target.x -= 64;
+	if (IsKeyPressed(KEY_ENTER))
+		newChunk();
+	if (IsKeyPressed(KEY_DELETE))
+		deleteChunk();
 
 	if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 	{
 		pressMouse();
 	}
-
+	if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+	{
+		removeObject();
+	}
+	if (IsKeyPressed(KEY_ESCAPE))
+		Engine::getEngine()->setScene(new MainMenu());
 
 }
 
@@ -89,9 +118,16 @@ void MapEdytor::pressMouse()
 			if (usingObj)
 				delete usingObj;
 			if (displayBlock)
+			{
+				usingBlock = true;
 				usingObj = cloneStaticObject((StaticObjectID)i);
+			}
 			else
+			{
+				usingBlock = false;
 				usingObj = cloneDynamicObject((DynamicObjectID)i);
+			}
+
 		}
 	} 
 	if (!usingObj || pressedAtMenu)
@@ -118,10 +154,41 @@ void MapEdytor::pressMouse()
 
 	}
 }
+void MapEdytor::removeObject()
+{
+	bool pressedAtMenu = false;
+	if (menuLeft)
+	{
+		if (CheckCollisionPointRec(GetMousePosition(), menuPos))
+			pressedAtMenu = true;
+	}
+	if (pressedAtMenu)
+		return;
+	Vector2 mousePos = GetScreenToWorld2D(GetMousePosition(), camera);
+	for (auto c : chunks)
+	{
+		if (!CheckCollisionPointRec(mousePos, c->getPos()))
+		{
+			continue;
+		}
+		c->removeAt(mousePos);
+		c->update(0);
 
+	}
+
+}
 void MapEdytor::newChunk()
 {
 	chunks.push_back(new Chunk(chunks.size()));
+}
+
+void MapEdytor::deleteChunk()
+{
+	if (chunks.size() <= 0)
+		return;
+	Chunk* c = chunks.back();
+	chunks.pop_back();
+	delete c;
 }
 
 void MapEdytor::saveMap()

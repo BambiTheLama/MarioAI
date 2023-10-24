@@ -206,8 +206,11 @@ void Player::checkPowerUps()
 		{
 		case PowerType::Coin:
 			points++;
+			game->removeBlock(o);
 			break;
 		case PowerType::Mushroom:
+			game->removeObj(o);
+			game->addToDelete(o);
 			if (hp < 2)
 			{
 				hp = 2;
@@ -216,6 +219,8 @@ void Player::checkPowerUps()
 			}
 			break;
 		case PowerType::Plant:
+			game->removeObj(o);
+			game->addToDelete(o);
 			if (hp < 2)
 			{
 				hp = 2;
@@ -226,8 +231,8 @@ void Player::checkPowerUps()
 				hp = 3;
 			break;
 		}
-		game->removeObj(o);
-		game->addToDelete(o);
+
+
 	}
 }
 

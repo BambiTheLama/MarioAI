@@ -4,6 +4,7 @@
 
 Chunk::Chunk(int chunk, Game* game)
 {
+
 	this->chunk = chunk;
 	for (int y = 0; y < mapH; y++)
 		for (int x = 0; x < mapW; x++)
@@ -56,6 +57,7 @@ Chunk::Chunk(int chunk, Game* game)
 }
 Chunk::Chunk(int chunk)
 {
+	this->chunk = chunk;
 	float startX = chunk * mapW * blockSize;
 	for (int y = 0; y < mapH; y++)
 		for (int x = 0; x < mapW; x++)
@@ -75,55 +77,60 @@ Chunk::Chunk(int chunk)
 }
 Chunk::Chunk(int chunk, Game* game, nlohmann::json map)
 {
+	this->game = game;
 	this->chunk = chunk;
 	for (int y = 0; y < mapH; y++)
 		for (int x = 0; x < mapW; x++)
 			blocks[y][x] = NULL;
-	if (map.size() > chunk)
-	{
-		return;
-	}
+
 	float startX = chunk * mapW * blockSize;
 	int i = 0;
-	if (map[chunk]["Blocks"].size() >= i)
-		return;
-	int blockId = map[chunk]["Blocks"][i][0];
-	int times = map[chunk]["Blocks"][i][1];
-	for (int y = 0; y < mapH; y++)
-		for (int x = 0; x < mapW; x++)
-		{
-			blocks[y][x] = cloneStaticObject((StaticObjectID)blockId);
-			blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
-			blocks[y][x]->setGame(game);
-			times--;
-			if (times <= 0)
+	if (map[chunk]["Blocks"].size() > i)
+	{
+		int blockId = map[chunk]["Blocks"][i][0];
+		int times = map[chunk]["Blocks"][i][1];
+		for (int y = 0; y < mapH; y++)
+			for (int x = 0; x < mapW; x++)
 			{
-				i++;
-				if (map[chunk]["Blocks"].size() >= i)
-					return;
-				blockId = map[chunk]["Blocks"][i][0];
-				times = map[chunk]["Blocks"][i][1];
+				blocks[y][x] = cloneStaticObject((StaticObjectID)blockId);
+				if (blocks[y][x])
+				{
+					blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
+					blocks[y][x]->setGame(game);
+				}
+
+				times--;
+				if (times <= 0)
+				{
+					i++;
+					if (map[chunk]["Blocks"].size() <= i)
+						break;
+					blockId = map[chunk]["Blocks"][i][0];
+					times = map[chunk]["Blocks"][i][1];
+				}
 			}
-		}
-	for (int y = mapH - 1; y < mapH; y++)
-		for (int x = 0; x < mapW; x++)
-		{
-			blocks[y][x] = cloneStaticObject(StaticObjectID::Lava);
-			blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
-			blocks[y][x]->setGame(game);
-		}
+		for (int y = mapH - 1; y < mapH; y++)
+			for (int x = 0; x < mapW; x++)
+			{
+				blocks[y][x] = cloneStaticObject(StaticObjectID::Lava);
+				blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
+				blocks[y][x]->setGame(game);
+			}
+	}
+
+
 
 	for (int i = 0; i < map[chunk]["Objects"].size(); i++)
 	{
-		bool staticObj = map[chunk]["Objects"][i]["StaticObjList"];
+
 		int ID = map[chunk]["Objects"][i]["ID"];
 		GameObject* o=NULL;
-		if (staticObj)
-			o = cloneStaticObject((StaticObjectID)ID);
-		else
-			o = cloneDynamicObject((DynamicObjectID)ID);
+
+		o = cloneDynamicObject((DynamicObjectID)ID);
+
 		if (o)
 		{
+			o->setGame(game);
 			o->readFromFile(map[chunk]["Objects"][i]);
 			objects.push_back(o);
 		}
@@ -170,7 +177,10 @@ void Chunk::update(float deltaTime)
 	if (toDelete.size() > 0)
 	{
 		for (auto o : toDelete)
+		{
+			objects.remove(o);
 			delete o;
+		}
 		toDelete.clear();
 	}
 	if (toAdd.size() > 0)
@@ -282,9 +292,35 @@ void Chunk::removeBlock(GameObject* o)
 	int y = pos.y / 64;
 	if (x < 0 || x >= mapW || y < 0 || y >= mapH)
 		return;
+	if (o != blocks[y][x])
+		return;
 	toDelete.push_back(blocks[y][x]);
 	blocks[y][x] = NULL;
 }
+
+void Chunk::removeAt(Vector2 pos)
+{
+	int x = (pos.x - (chunk * mapW * 64)) / 64;
+	int y = pos.y / 64;
+	if (x < 0 || x >= mapW || y < 0 || y >= mapH)
+		return;
+	if (blocks[y][x])
+	{
+		toDelete.push_back(blocks[y][x]);
+		blocks[y][x] = NULL;
+	}
+	else
+	{
+		for (auto o : objects)
+		{
+			if (CheckCollisionPointRec(pos, o->getPos()))
+			{
+				toDelete.push_back(o);	
+			}
+		}
+	}
+}
+
 bool Chunk::hasObj(GameObject* o)
 { 
 	for (auto obj : objects)

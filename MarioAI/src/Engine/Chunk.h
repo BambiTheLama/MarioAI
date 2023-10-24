@@ -48,6 +48,8 @@ public:
 
 	void removeBlock(GameObject* o);
 
+	void removeAt(Vector2 pos);
+
 	Rectangle getPos() { return { chunk * mapW * 64.0f,0,64.0f * mapW,64 * mapH }; }
 
 	int getChunk() { return chunk; }
@@ -55,5 +57,7 @@ public:
 	bool hasObj(GameObject* o);
 
 	void saveToJson(nlohmann::json &saveFile);
+
+	friend class MapEdytor;
 };
 

@@ -4,13 +4,16 @@
 #include "../GameObject/GameObject.h"
 #include "Game.h"
 #include "MapEdytor.h"
+#include "MainMenu.h"
+Engine* Engine::e = NULL;
 
 Engine::Engine()
 {
 	InitWindow(1600, 900, "MARIO");
 	SetTargetFPS(60);
 	createObjectToCopy();
-	s = new MapEdytor();
+	s = new MainMenu();
+	e = this;
 }
 
 Engine::~Engine()

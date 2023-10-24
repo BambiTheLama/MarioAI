@@ -26,7 +26,6 @@ class Game;
 
 class GameObject
 {
-	bool fromStaticObjList = false;
 	int ID = 0;
 	TextureSource texture;
 	static std::list<TextureSource> texturesLoaded;

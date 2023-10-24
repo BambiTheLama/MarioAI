@@ -3,6 +3,7 @@
 
 class Engine
 {
+	static Engine* e;
 	Scene* s;
 public:
 	Engine();
@@ -12,5 +13,7 @@ public:
 	void start();
 
 	void setScene(Scene* s);
+
+	static Engine* getEngine() { return e; }
 };
 

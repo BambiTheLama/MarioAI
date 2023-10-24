@@ -90,6 +90,9 @@
     <ClCompile Include="src\GameObject\Flame.cpp">
       <Filter>src\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\MainMenu.cpp">
+      <Filter>src\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\NN.h">
@@ -150,9 +153,6 @@
       <Filter>src\GameObject\Blocks</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="src\Engine\Scene.h">
-      <Filter>src\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="src\Engine\Engine.h">
       <Filter>src\Engine</Filter>
     </ClInclude>
@@ -167,6 +167,12 @@
     </ClInclude>
     <ClInclude Include="src\GameObject\Flame.h">
       <Filter>src\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Scene.h">
+      <Filter>src\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\MainMenu.h">
+      <Filter>src\Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

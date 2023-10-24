@@ -25,7 +25,11 @@ public:
 
     void pressMouse();
 
+    void removeObject();
+
     void newChunk();
+
+    void deleteChunk();
 
     void saveMap();
 
