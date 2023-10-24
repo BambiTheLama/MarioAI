@@ -20,7 +20,7 @@ class Chunk
 	std::list<GameObject*> toDelete;
 	std::list<GameObject*> toAdd;
 	Game* game;
-
+	bool showGrid = false;
 public:
 	Chunk(int chunk,Game* game);
 

@@ -11,11 +11,6 @@ Coopa::Coopa(Coopa& g) :GameObject(g)
 
 }
 
-Coopa::Coopa(nlohmann::json toRead) :GameObject(toRead)
-{
-
-}
-
 void Coopa::update(float deltaTime)
 {
 	timer += deltaTime * 10;

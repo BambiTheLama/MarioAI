@@ -13,8 +13,6 @@ public:
 
     Goomba(Goomba& g);
 
-    Goomba(nlohmann::json toRead);
-
     void update(float deltaTime);
 
     void draw();

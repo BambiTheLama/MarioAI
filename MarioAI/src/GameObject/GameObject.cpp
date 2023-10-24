@@ -34,36 +34,20 @@ GameObject::GameObject(GameObject& o)
 	game = o.game;
 }
 
-GameObject::GameObject(nlohmann::json readFile)
+void GameObject::draw()
+{
+	Rectangle source = { 0,0,(float)texture.texture.width,(float)texture.texture.height };
+	DrawTexturePro(texture.texture, source, pos, { 0,0 }, 0, WHITE);
+}
+
+void GameObject::readFromFile(nlohmann::json& readFile)
 {
 	pos.x = readFile["Pos"][0];
 	pos.y = readFile["Pos"][1];
 	pos.width = readFile["Pos"][2];
 	pos.height = readFile["Pos"][3];
-	texture.path = readFile["Texture0"];
-	bool loaded = false;
-	if (texturesLoaded.size() > 0)
-	{
-		for (auto t : texturesLoaded)
-			if (texture.path.compare(t.path) == 0)
-			{
-				this->texture = t;
-				loaded = true;
-			}
-	}
-	if (!loaded)
-	{
-		texture.texture = LoadTexture(texture.path.c_str());
-		if (texture.texture.id > 0)
-			texturesLoaded.push_back(texture);
-	}
-	game = NULL;
-}
-
-void GameObject::draw()
-{
-	Rectangle source = { 0,0,(float)texture.texture.width,(float)texture.texture.height };
-	DrawTexturePro(texture.texture, source, pos, { 0,0 }, 0, WHITE);
+	fromStaticObjList = readFile["StaticObjList"];
+	ID = readFile["ID"];
 }
 
 std::list<GameObject*> GameObject::getObjectsAt(Rectangle pos, ObjectType type)
@@ -127,5 +111,6 @@ void GameObject::saveToFile(nlohmann::json& saveFile)
 	saveFile["Pos"][1] = pos.y;
 	saveFile["Pos"][2] = pos.width;
 	saveFile["Pos"][3] = pos.height;
-	saveFile["Texture0"] = texture.path;
+	saveFile["StaticObjList"] = fromStaticObjList;
+	saveFile["ID"] = ID;
 }

@@ -26,6 +26,7 @@ class Game;
 
 class GameObject
 {
+	bool fromStaticObjList = false;
 	int ID = 0;
 	TextureSource texture;
 	static std::list<TextureSource> texturesLoaded;
@@ -37,8 +38,6 @@ public:
 
 	GameObject(GameObject& o);
 
-	GameObject(nlohmann::json readFile);
-
 	virtual ~GameObject(){}
 
 	virtual void update(float deltaTime) = 0;
@@ -46,6 +45,8 @@ public:
 	virtual ObjectType getType() = 0;
 
 	virtual void draw();
+
+	virtual void readFromFile(nlohmann::json& readFile);
 
 	virtual GameObject* clone() = 0;
 

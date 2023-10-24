@@ -8,7 +8,6 @@ MapEdytor::MapEdytor()
 	camera.target.x = GetScreenWidth() / 2.0f;
 	camera.zoom = 1;
 	menuPos = { (float)(GetScreenWidth() - 200),0,200,800 };
-	printf("\n\n%d\n\n", sizeof(StaticObjectID));
 	for (int i = 0; i < (int)StaticObjectID::size; i++)
 	{
 		GameObject* o = cloneStaticObject((StaticObjectID)i);
@@ -49,6 +48,11 @@ void MapEdytor::update(float delataTime)
 		displayBlock = false;
 	if (IsKeyPressed(KEY_TWO))
 		displayBlock = true;
+	if (IsKeyPressed(KEY_A))
+		camera.target.x += 64;
+	if (IsKeyPressed(KEY_D))
+		camera.target.x -= 64;
+
 	if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 	{
 		pressMouse();
@@ -61,6 +65,11 @@ void MapEdytor::pressMouse()
 {
 	bool pressedAtMenu = false;
 	if (menuLeft)
+	{
+		if (CheckCollisionPointRec(GetMousePosition(), menuPos))
+			pressedAtMenu = true;
+	}
+	if (pressedAtMenu)
 	{
 		std::vector<GameObject*> l;
 		if (displayBlock)
@@ -77,7 +86,6 @@ void MapEdytor::pressMouse()
 			{
 				continue;
 			}
-			pressedAtMenu = true;
 			if (usingObj)
 				delete usingObj;
 			if (displayBlock)
@@ -85,8 +93,8 @@ void MapEdytor::pressMouse()
 			else
 				usingObj = cloneDynamicObject((DynamicObjectID)i);
 		}
-	}
-	if (pressedAtMenu || !usingObj)
+	} 
+	if (!usingObj || pressedAtMenu)
 		return;
 	Vector2 mousePos = GetScreenToWorld2D(GetMousePosition(), camera);
 	for (auto c : chunks)

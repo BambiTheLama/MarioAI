@@ -12,11 +12,6 @@ Goomba::Goomba(Goomba& g) :GameObject(g)
 
 }
 
-Goomba::Goomba(nlohmann::json toRead) :GameObject(toRead)
-{
-
-}
-
 void Goomba::update(float deltaTime)
 {
 	if (!alive)

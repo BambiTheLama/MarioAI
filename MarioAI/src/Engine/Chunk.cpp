@@ -71,6 +71,7 @@ Chunk::Chunk(int chunk)
 	toRemove = std::list<GameObject*>();
 	toDelete = std::list<GameObject*>();
 	toAdd = std::list<GameObject*>();
+	showGrid = true;
 }
 Chunk::Chunk(int chunk, Game* game, nlohmann::json map)
 {
@@ -111,6 +112,25 @@ Chunk::Chunk(int chunk, Game* game, nlohmann::json map)
 			blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
 			blocks[y][x]->setGame(game);
 		}
+
+	for (int i = 0; i < map[chunk]["Objects"].size(); i++)
+	{
+		bool staticObj = map[chunk]["Objects"][i]["StaticObjList"];
+		int ID = map[chunk]["Objects"][i]["ID"];
+		GameObject* o=NULL;
+		if (staticObj)
+			o = cloneStaticObject((StaticObjectID)ID);
+		else
+			o = cloneDynamicObject((DynamicObjectID)ID);
+		if (o)
+		{
+			o->readFromFile(map[chunk]["Objects"][i]);
+			objects.push_back(o);
+		}
+
+	}
+
+
 	this->game = game;
 }
 
@@ -174,6 +194,15 @@ void Chunk::draw()
 				blocks[y][x]->draw();
 	for (auto o : objects)
 		o->draw();
+	if (!showGrid)
+		return;
+	float startX = chunk * mapW * blockSize;
+
+	for (int y = 0; y < mapH+1; y++)
+		DrawLine(startX, y * blockSize, startX + mapW * blockSize, y * blockSize, BLACK);
+	for (int x = 0; x < mapW+1; x++)
+		DrawLine(startX + x * blockSize, 0, startX + x * blockSize, mapH * blockSize, BLACK);
+	DrawText(TextFormat("%d", chunk), startX, 0, 20, RED);
 }
 
 void Chunk::getObjs(Rectangle pos, std::list<GameObject*>* obj)
