@@ -77,11 +77,20 @@ void MapEdytor::update(float delataTime)
 	if (IsKeyPressed(KEY_DELETE))
 		deleteChunk();
 
-	if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 	{
 		pressMouse();
 	}
+	else if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+	{
+		placeBlock();
+	}
+
 	if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+	{
+		removeObject();
+	}
+	else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))
 	{
 		removeObject();
 	}
@@ -130,7 +139,13 @@ void MapEdytor::pressMouse()
 
 		}
 	} 
-	if (!usingObj || pressedAtMenu)
+	placeBlock();
+}
+
+void MapEdytor::placeBlock()
+{
+
+	if (!usingObj || CheckCollisionPointRec(GetMousePosition(), menuPos))
 		return;
 	Vector2 mousePos = GetScreenToWorld2D(GetMousePosition(), camera);
 	for (auto c : chunks)
@@ -154,6 +169,7 @@ void MapEdytor::pressMouse()
 
 	}
 }
+
 void MapEdytor::removeObject()
 {
 	bool pressedAtMenu = false;

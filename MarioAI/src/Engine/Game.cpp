@@ -42,8 +42,10 @@ Game::~Game()
 void Game::draw()
 {
 	BeginMode2D(camera);
-	for(auto chunk:chunks)
-		chunk->draw();
+	for (auto chunk : chunks)
+		if (CheckCollisionRecs(cameraArea, chunk->getPos()))
+			chunk->draw();
+		
 	if (target)
 		target->draw();
 	EndMode2D();
@@ -55,9 +57,12 @@ void Game::update(float deltaTime)
 	{
 		target->update(deltaTime);
 		camera.target.x = target->getPos().x;
+		cameraArea = { camera.target.x - GetScreenWidth() / 2,0,(float)GetScreenWidth(),(float)GetScreenHeight() };
 	}
+
 	for (auto chunk : chunks)
-		chunk->update(deltaTime);
+		if(CheckCollisionRecs(cameraArea,chunk->getPos()))
+			chunk->update(deltaTime);
 
 	if (IsKeyPressed(KEY_F1))
 		loadChunk(i++);

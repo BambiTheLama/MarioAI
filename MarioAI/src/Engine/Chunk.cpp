@@ -231,6 +231,10 @@ void Chunk::getObjs(Rectangle pos, std::list<GameObject*>* obj)
 	int h = y + pos.height / 64 +2;
 	int startX = mapW-1;
 	int startY = mapH-1;
+	if (x < 0)
+		startX = 0;
+	if (y < 0)
+		startY = 0;
 	if (x >= 0 && x < mapW)
 		startX = x;
 	if (y >= 0 && y < mapH)

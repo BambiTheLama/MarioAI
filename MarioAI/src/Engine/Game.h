@@ -9,6 +9,7 @@
 class Game:
 	public Scene
 {
+	Rectangle cameraArea;
 	std::list<Chunk*> chunks;
 	GameObject* target;
 	nlohmann::json map;

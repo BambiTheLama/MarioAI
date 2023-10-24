@@ -25,6 +25,8 @@ public:
 
     void pressMouse();
 
+    void placeBlock();
+
     void removeObject();
 
     void newChunk();
