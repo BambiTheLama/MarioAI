@@ -164,7 +164,10 @@ void MapEdytor::placeBlock()
 		}
 		else
 		{
-			c->addObj(o, mousePos);
+			if (!c->addObj(o, mousePos))
+			{
+				delete o;
+			}
 		}
 
 	}

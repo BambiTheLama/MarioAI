@@ -22,6 +22,8 @@ class Player :
     bool moveLeft = false;
     bool jumpFromEnemy = false;
     float flameCdr=0;
+    bool AI = false;
+    float deltaTime=0;
 public:
     Player(Rectangle pos, Game* g);
 
@@ -30,6 +32,18 @@ public:
     void draw();
 
     void update(float deltaTime);
+
+    void objectInteration();
+
+    void pressA();
+
+    void pressD();
+
+    void pressSpace();
+
+    void pressS();
+
+    void pressControl();
 
     void checkPowerUps();
 

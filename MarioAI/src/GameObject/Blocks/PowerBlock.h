@@ -7,7 +7,6 @@ class PowerBlock :
 {
     float sprite = 0;
     PowerType powerType;
-    bool used = false;
 public:
     PowerBlock(Rectangle pos, std::string path, Game* game, PowerType type);
 

@@ -53,22 +53,24 @@ void Game::draw()
 int i = 1;
 void Game::update(float deltaTime)
 {
-	if (target)
+	if (play)
 	{
-		target->update(deltaTime);
-		camera.target.x = target->getPos().x;
-		cameraArea = { camera.target.x - GetScreenWidth() / 2,0,(float)GetScreenWidth(),(float)GetScreenHeight() };
+		if (target)
+		{
+			target->update(deltaTime);
+			camera.target.x = target->getPos().x;
+			cameraArea = { camera.target.x - GetScreenWidth() / 2,0,(float)GetScreenWidth(),(float)GetScreenHeight() };
+		}
+
+		for (auto chunk : chunks)
+			if (CheckCollisionRecs(cameraArea, chunk->getPos()))
+				chunk->update(deltaTime);
+		for (auto o : toDelete)
+			delete o;
+		toDelete.clear();
 	}
 
-	for (auto chunk : chunks)
-		if(CheckCollisionRecs(cameraArea,chunk->getPos()))
-			chunk->update(deltaTime);
 
-	if (IsKeyPressed(KEY_F1))
-		loadChunk(i++);
-	for (auto o : toDelete)
-		delete o;
-	toDelete.clear();
 	if (IsKeyPressed(KEY_ESCAPE))
 		Engine::getEngine()->setScene(new MainMenu());
 }

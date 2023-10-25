@@ -251,13 +251,19 @@ void Chunk::getObjs(Rectangle pos, std::list<GameObject*>* obj)
 				obj->push_back(blocks[y][x]);
 }
 
-void Chunk::addObj(GameObject* o, Vector2 pos)
+bool Chunk::addObj(GameObject* o, Vector2 pos)
 {
-	objects.push_back(o);
+
 	pos.x -= chunk * mapW * 64.0f;
 	int x = (int)pos.x / 64;
 	int y = (int)pos.y / 64;
 	o->moveTo(chunk * mapW * 64.0f + x * 64, y * 64);
+	for (auto obj : objects)
+		if (CheckCollisionRecs(o->getPos(), obj->getPos()))
+			return false;
+
+	objects.push_back(o);
+	return true;
 }
 
 bool Chunk::addBlock(GameObject* o)

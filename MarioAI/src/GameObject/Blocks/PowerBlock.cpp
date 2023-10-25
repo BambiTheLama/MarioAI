@@ -16,13 +16,8 @@ PowerBlock::PowerBlock(PowerBlock& d):Block(d)
 
 void PowerBlock::update(float deltaTime)
 {
-	if (!used)
-	{
-		sprite += deltaTime;
-		sprite -= ((int)sprite/2 )*2;
-	}
-
-
+	sprite += deltaTime;
+	sprite -= ((int)sprite / 2) * 2;
 }
 
 void PowerBlock::draw()
@@ -35,8 +30,6 @@ void PowerBlock::draw()
 
 void PowerBlock::destory(int power)
 {
-	if (used)
-		return;
 	GameObject* o=NULL;
 	Rectangle pos = getPos();
 	pos.y -= pos.height;
@@ -56,10 +49,8 @@ void PowerBlock::destory(int power)
 	}
 	if (o)
 		game->addObj(o);
-	used = true;
 	sprite = 1;
 	game->removeBlock(this);
-	game->addToDelete(this);
 	o=cloneStaticObject(StaticObjectID::Steal);
 	if (o)
 	{

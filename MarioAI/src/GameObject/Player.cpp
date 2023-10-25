@@ -54,42 +54,23 @@ void Player::draw()
 
 void Player::update(float deltaTime)
 {
+	this->deltaTime = deltaTime*20;
 	if (invisibleFrames > 0)
 		invisibleFrames -= deltaTime;
 	if (flameCdr > 0)
 		flameCdr -= deltaTime;
-	deltaTime *= 21.37;
-	Rectangle pos = getPos();
 
 	if (IsKeyDown(KEY_D))
 	{
-		if (!isObjectAt({ pos.x + speed * deltaTime,pos.y,pos.width,pos.height - 1 }, ObjectType::Block))
-		{
-			pos.x += speed * deltaTime;
-		}
-		moveLeft = false;
-		distance += deltaTime / 2;
-		sprite = 1 + (int)distance % 5;
-		if (hp > 1)
-			sprite++;
+		pressD();
 	}
 	else if(IsKeyDown(KEY_A))
 	{
-		if (!isObjectAt({ pos.x - speed * deltaTime,pos.y,pos.width,pos.height - 1 }, ObjectType::Block))
-		{
-			pos.x -= speed * deltaTime;
-		}
-		moveLeft = true;
-		distance += deltaTime / 2;
-		sprite = 1 + (int)distance % 5;
-		if (hp > 1)
-			sprite++;
+		pressA();
 	}
 	else if (IsKeyDown(KEY_S))
 	{
-		sprite = 0;
-		if (hp > 1)
-			sprite++;
+		pressS();
 	}
 	else
 	{
@@ -98,29 +79,11 @@ void Player::update(float deltaTime)
 	}
 	if (hp == 3 && flameCdr <=0 && IsKeyDown(KEY_LEFT_CONTROL))
 	{
-		Flame* f = new Flame({ pos.x + pos.width / 2,pos.y + pos.height / 2,32,32 }, "res/Shot.png", game, moveLeft);
-		game->addObj(f);
-		flameCdr = 1;
-
+		pressControl();
 	}
 	if (IsKeyDown(KEY_SPACE) || jumpFromEnemy)
-	{
-		float t = 0;
-		jumping = true;
-		if (deltaTime < pressJumpTime)
-		{
-			pressJumpTime -= deltaTime;
-			t = deltaTime;
-		}
-		else
-		{
-			t = pressJumpTime;
-			pressJumpTime = 0;
-			jumping = false;
-			jumpFromEnemy = false;
-		}
-		pos.y -= t /pressJumpTimeMax*jumpHeight;
-		
+	{	
+		pressSpace();
 	}
 	else 
 	{
@@ -129,9 +92,15 @@ void Player::update(float deltaTime)
 		if (pressJumpTime != pressJumpTimeMax)
 			pressJumpTime = 0;
 	}
+	objectInteration();
+	checkPowerUps();
+}
+
+void Player::objectInteration()
+{
 	if (game)
 	{
-		if (isObjectAt({ pos.x+3,pos.y + pos.height,pos.width-6,1 }, ObjectType::Block))
+		if (isObjectAt({ pos.x + 3,pos.y + pos.height,pos.width - 6,1 }, ObjectType::Block))
 		{
 			pressJumpTime = pressJumpTimeMax;
 
@@ -143,10 +112,9 @@ void Player::update(float deltaTime)
 			do
 			{
 				pos.y = y;
-				pos.y += deltaTime / pressJumpTimeMax * jumpHeight/times;
+				pos.y += deltaTime / pressJumpTimeMax * jumpHeight / times;
 				times++;
-			}
-			while (isObjectAt(pos, ObjectType::Block) && times<5);
+			} while (isObjectAt(pos, ObjectType::Block) && times < 5);
 			if (times >= 5)
 			{
 				pos.y = y;
@@ -158,7 +126,7 @@ void Player::update(float deltaTime)
 			}
 
 		}
-		std::list<GameObject*> obj = getObjectsAt({ pos.x+3,pos.y - 1,pos.width-6,1 },ObjectType::Block);
+		std::list<GameObject*> obj = getObjectsAt({ pos.x + 3,pos.y - 1,pos.width - 6,1 }, ObjectType::Block);
 		for (auto o : obj)
 		{
 			Destoryable* d = dynamic_cast<Destoryable*>(o);
@@ -191,9 +159,67 @@ void Player::update(float deltaTime)
 		}
 
 	}
-	moveTo(pos.x, pos.y);
-	checkPowerUps();
 }
+
+void Player::pressA()
+{
+	if (!isObjectAt({ pos.x - speed * deltaTime,pos.y,pos.width,pos.height - 1 }, ObjectType::Block))
+	{
+		pos.x -= speed * deltaTime;
+	}
+	moveLeft = true;
+	distance += deltaTime / 2;
+	sprite = 1 + (int)distance % 5;
+	if (hp > 1)
+		sprite++;
+}
+
+void Player::pressD()
+{
+	if (!isObjectAt({ pos.x + speed * deltaTime,pos.y,pos.width,pos.height - 1 }, ObjectType::Block))
+	{
+		pos.x += speed * deltaTime;
+	}
+	moveLeft = false;
+	distance += deltaTime / 2;
+	sprite = 1 + (int)distance % 5;
+	if (hp > 1)
+		sprite++;
+}
+
+void Player::pressSpace()
+{
+	float t = 0;
+	jumping = true;
+	if (deltaTime < pressJumpTime)
+	{
+		pressJumpTime -= deltaTime;
+		t = deltaTime;
+	}
+	else
+	{
+		t = pressJumpTime;
+		pressJumpTime = 0;
+		jumping = false;
+		jumpFromEnemy = false;
+	}
+	pos.y -= t / pressJumpTimeMax * jumpHeight;
+}
+
+void Player::pressS()
+{
+	sprite = 0;
+	if (hp > 1)
+		sprite++;
+}
+
+void Player::pressControl()
+{
+	Flame* f = new Flame({ pos.x + pos.width / 2,pos.y + pos.height / 2,32,32 }, "res/Shot.png", game, moveLeft);
+	game->addObj(f);
+	flameCdr = 1;
+}
+
 void Player::checkPowerUps()
 {
 	std::list<GameObject*> obj = getObjectsAt(getPos(), ObjectType::PowerUp);

@@ -38,7 +38,7 @@ public:
 
 	void addObj(GameObject* o) { toAdd.remove(o); toAdd.push_back(o); }
 
-	void addObj(GameObject* o, Vector2 pos);
+	bool addObj(GameObject* o, Vector2 pos);
 
 	void removeObj(GameObject* o) { toRemove.remove(o); toRemove.push_back(o); }
 
