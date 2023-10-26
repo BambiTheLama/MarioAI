@@ -136,6 +136,11 @@ void Player::objectInteration()
 			}
 			pressJumpTime = 0;
 		}
+		obj = getObjectsAt(pos, ObjectType::Lava);
+		for (auto o : obj)
+		{
+			game->lostGame();
+		}
 		obj = getObjectsAt(pos, ObjectType::Finish);
 		if (obj.size() > 0)
 		{

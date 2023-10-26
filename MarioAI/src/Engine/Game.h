@@ -5,6 +5,7 @@
 #include "../json.hpp"
 #include "Chunk.h"
 #include "Scene.h"
+#include "../NN.h"
 
 class Game:
 	public Scene
@@ -18,6 +19,7 @@ class Game:
 	bool win = false;
 	std::list<GameObject*> toDelete;
 	int points = 0;
+	NN nn;
 public:
 	Game();
 
