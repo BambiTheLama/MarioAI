@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "ObjType/Hitable.h"
-
+#include "../NN.h"
 class Game;
 
 class Player :
@@ -22,8 +22,9 @@ class Player :
     bool moveLeft = false;
     bool jumpFromEnemy = false;
     float flameCdr=0;
-    bool AI = false;
+    bool AI = true;
     float deltaTime=0;
+    NN nn;
 public:
     Player(Rectangle pos, Game* g);
 
@@ -31,7 +32,13 @@ public:
 
     void draw();
 
+    void drawInterface();
+
     void update(float deltaTime);
+
+    void aiControll();
+
+    void playerControll();
 
     void objectInteration();
 

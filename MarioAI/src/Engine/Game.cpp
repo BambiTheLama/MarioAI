@@ -49,13 +49,14 @@ void Game::draw()
 	if (target)
 		target->draw();
 	EndMode2D();
-	nn.draw(0, 0);
+	if (target)
+		target->drawInterface();
+
 }
 int i = 1;
 void Game::update(float deltaTime)
 {
-	if (IsKeyPressed(KEY_UP))
-		nn.mutate();
+
 	if (play)
 	{
 		if (target)

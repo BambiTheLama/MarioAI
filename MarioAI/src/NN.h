@@ -14,13 +14,24 @@ struct Node {
 	int ID;
 	float value;
 	NodeType type;
-	int x, y;
+	float x, y;
+
+	bool compare(Node n)
+	{
+		return n.x == x && n.y == y && n.ID == ID;
+	}
 };
 
 struct Conection {
 	int from, to;
 	float w;
 	bool active;
+	
+	bool compare(Conection c)
+	{
+		return c.from == from && c.to == to;
+	}
+
 };
 
 class NN
@@ -37,12 +48,21 @@ public:
 
 	void addConection();
 
+	NN combineNNs(NN n);
+
 	void addNode();
+
+	void sortConnections();
+
+	void generateOutput();
+
+	void changeValue();
 
 	void setInputs(int* inputs);
 
 	bool* getOutputs();
 
 	void draw(int x, int y);
+
 };
 

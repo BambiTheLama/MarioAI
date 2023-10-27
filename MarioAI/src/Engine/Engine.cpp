@@ -5,10 +5,12 @@
 #include "Game.h"
 #include "MapEdytor.h"
 #include "MainMenu.h"
+#include <time.h>
 Engine* Engine::e = NULL;
 
 Engine::Engine()
 {
+	srand(time(NULL));
 	InitWindow(1600, 900, "MARIO");
 	SetTargetFPS(60);
 	createObjectToCopy();

@@ -52,19 +52,85 @@ void Player::draw()
 
 }
 
+void Player::drawInterface()
+{
+	nn.draw(0, 0);
+}
+
 void Player::update(float deltaTime)
 {
+
 	this->deltaTime = deltaTime*20;
 	if (invisibleFrames > 0)
 		invisibleFrames -= deltaTime;
 	if (flameCdr > 0)
 		flameCdr -= deltaTime;
+	if (AI)
+	{
+		aiControll();
+	}
+	else
+	{
+		playerControll();
+	}
+	
+	objectInteration();
+	checkPowerUps();
+}
 
+void Player::aiControll()
+{
+	int inputs[inputsSize];
+
+	nn.setInputs(inputs);
+	if (IsKeyPressed(KEY_UP))
+		nn.mutate();
+
+	nn.generateOutput();
+
+	bool* outputs = nn.getOutputs();
+
+	if (outputs[0])
+	{
+		pressA();
+	}
+	else if (outputs[1])
+	{
+		pressD();
+	}
+	else if (outputs[2])
+	{
+		pressS();
+	}
+	else
+	{
+		distance = 0;
+		sprite = 0;
+	}
+	if (hp == 3 && flameCdr <= 0 && outputs[3])
+	{
+		pressControl();
+	}
+	if (outputs[4] || jumpFromEnemy)
+	{
+		pressSpace();
+	}
+	else
+	{
+
+		jumping = false;
+		if (pressJumpTime != pressJumpTimeMax)
+			pressJumpTime = 0;
+	}
+}
+
+void Player::playerControll()
+{
 	if (IsKeyDown(KEY_D))
 	{
 		pressD();
 	}
-	else if(IsKeyDown(KEY_A))
+	else if (IsKeyDown(KEY_A))
 	{
 		pressA();
 	}
@@ -77,23 +143,21 @@ void Player::update(float deltaTime)
 		distance = 0;
 		sprite = 0;
 	}
-	if (hp == 3 && flameCdr <=0 && IsKeyDown(KEY_LEFT_CONTROL))
+	if (hp == 3 && flameCdr <= 0 && IsKeyDown(KEY_LEFT_CONTROL))
 	{
 		pressControl();
 	}
 	if (IsKeyDown(KEY_SPACE) || jumpFromEnemy)
-	{	
+	{
 		pressSpace();
 	}
-	else 
+	else
 	{
 
 		jumping = false;
 		if (pressJumpTime != pressJumpTimeMax)
 			pressJumpTime = 0;
 	}
-	objectInteration();
-	checkPowerUps();
 }
 
 void Player::objectInteration()

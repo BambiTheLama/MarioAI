@@ -6,20 +6,20 @@
 #include "Chunk.h"
 #include "Scene.h"
 #include "../NN.h"
-
+#include "../GameObject/Player.h"
 class Game:
 	public Scene
 {
 	Rectangle cameraArea;
 	std::list<Chunk*> chunks;
-	GameObject* target;
+	Player* target;
 	nlohmann::json map;
 	Camera2D camera;
 	bool play = true;
 	bool win = false;
 	std::list<GameObject*> toDelete;
 	int points = 0;
-	NN nn;
+
 public:
 	Game();
 
