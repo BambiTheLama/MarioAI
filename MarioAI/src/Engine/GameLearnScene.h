@@ -21,5 +21,9 @@ public:
 
     void draw();
 
+    void saveNNToFile();
+
+    void readFromFile();
+
 };
 

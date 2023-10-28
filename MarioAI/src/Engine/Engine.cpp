@@ -12,7 +12,7 @@ Engine::Engine()
 {
 	srand(time(NULL));
 	InitWindow(1600, 900, "MARIO");
-	SetTargetFPS(60);
+	//SetTargetFPS(60);
 	createObjectToCopy();
 	s = new MainMenu();
 	e = this;
@@ -38,7 +38,7 @@ void Engine::start()
 	while (!WindowShouldClose())
 	{
 		time = time2;
-		time2 = GetTime();
+		time2 = GetTime()*32;
 		deltaTime = time2 - time;
 		if(s)
 			s->update(deltaTime);

@@ -4,22 +4,9 @@
 #include <fstream>
 GameLearnScene::GameLearnScene()
 {
-	int g = 0;
-	std::ifstream reader;
-	reader.open("NN.json");
-	if (reader)
-	{
-		nlohmann::json j;
-		reader >> j;
-		for (; g < GenerationSize && g < j.size(); g++)
-			games[g] = new Game(new NN(j[g]));
-	}
-	if (g < GenerationSize)
-	{
-		for (; g < GenerationSize; g++)
-			games[g] = new Game();
-	}
-
+	for (int g = 0; g < GenerationSize; g++)
+		games[g] = new Game();
+	readFromFile();
 	currentGame = NULL;
 	i = 0;
 	SetExitKey(0);
@@ -86,7 +73,7 @@ void GameLearnScene::newGeneration()
 		gamesTmp[index + 1] = games[i];
 		index += 2;
 	}
-	for (int i = index; i < GenerationSize && index < GenerationSize; i++)
+	for (int i = n*2; i < GenerationSize && index < GenerationSize; i++)
 	{
 		gamesTmp[index] = games[i];
 		index++;
@@ -111,14 +98,8 @@ void GameLearnScene::newGeneration()
 		games[g] = new Game(nns[g]);
 	i = 0;
 	generationNumber++;
-	nlohmann::json j;
-	for (int i = 0; i < GenerationSize; i++)
-		games[i]->getNN()->saveToFile(j[i]);
-	std::ofstream writer;
-	writer.open("NN.json");
-	writer << j.dump(1);
-	writer.close();
-	
+
+	saveNNToFile();
 }
 
 void GameLearnScene::draw()
@@ -126,4 +107,35 @@ void GameLearnScene::draw()
 	if (currentGame)
 		currentGame->draw();
 	DrawText(TextFormat("Generation : %d (Game : %d) ",generationNumber,i), 0, GetScreenHeight() - 50, 20, BLACK);
+}
+
+void GameLearnScene::saveNNToFile()
+{
+	nlohmann::json j;
+	j["Generation"] = generationNumber;
+	for (int i = 0; i < GenerationSize; i++)
+		games[i]->getNN()->saveToFile(j["NEURONS"][i]);
+	std::ofstream writer;
+	writer.open("NN.json");
+	writer << j.dump(1);
+	writer.close();
+}
+
+void GameLearnScene::readFromFile()
+{
+	std::ifstream reader;
+	reader.open("NN.json");
+	if (reader.is_open())
+	{
+		nlohmann::json j;
+		reader >> j;
+		for (int g = 0; g < GenerationSize && g < j["NEURONS"].size(); g++)
+		{
+			if (games[g])
+				delete games[g];
+			games[g] = new Game(new NN(j["NEURONS"][g]));
+		}
+		generationNumber = j["Generation"];
+
+	}
 }
