@@ -7,23 +7,7 @@ GameObject::GameObject(Rectangle pos, std::string path,Game* game)
 {
 	this->pos = pos;
 	bool loaded = false;
-	if (texturesLoaded.size() > 0)
-	{
-		for (auto t : texturesLoaded)
-			if (path.compare(t.path) == 0)
-			{
-				this->texture = t;
-				loaded = true;
-			}
-	}
-
-	if (!loaded)
-	{
-		texture.texture = LoadTexture(path.c_str());
-		texture.path = path;
-		if (texture.texture.id > 0)
-			texturesLoaded.push_back(texture);
-	}
+	texture = loadTexture(path);
 	this->game = game;
 }
 
@@ -133,4 +117,29 @@ void GameObject::saveToFile(nlohmann::json& saveFile)
 	saveFile["Pos"][2] = pos.width;
 	saveFile["Pos"][3] = pos.height;
 	saveFile["ID"] = ID;
+}
+TextureSource GameObject::loadTexture(std::string path)
+{
+	TextureSource texture;
+	texture.path = path;
+	bool loaded = false;
+	if (texturesLoaded.size() > 0)
+	{
+		for (auto t : texturesLoaded)
+			if (path.compare(t.path) == 0)
+			{
+				texture = t;
+
+				loaded = true;
+			}
+	}
+
+	if (!loaded)
+	{
+		texture.texture = LoadTexture(path.c_str());
+		texture.path = path;
+		if (texture.texture.id > 0)
+			texturesLoaded.push_back(texture);
+	}
+	return texture;
 }

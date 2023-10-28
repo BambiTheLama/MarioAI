@@ -73,6 +73,8 @@ public:
 
 	int getID() { return ID; }
 
+	TextureSource loadTexture(std::string path);
+
 	friend class Engine;
 	friend void createObjectToCopy();
 

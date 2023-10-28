@@ -7,33 +7,28 @@
 
 Player::Player(Rectangle pos,Game *g):GameObject(pos, "res/CzesiekSmall.png",g)
 {
-	bigPlayer.texture = LoadTexture("res/CzesiekBig.png");
-	bigPlayer.path = "res/CzesiekBig.png";
-	powerPlayer.texture = LoadTexture("res/CzesiekExtra.png");;
-	powerPlayer.path = "res/CzesiekExtra.png";
+	bigPlayer = loadTexture("res/CzesiekBig.png");
+	powerPlayer = loadTexture("res/CzesiekExtra.png");
 	nn = new NN();
 }
 
 Player::Player(Rectangle pos, Game* g,NN* n) :GameObject(pos, "res/CzesiekSmall.png", g)
 {
-	bigPlayer.texture = LoadTexture("res/CzesiekBig.png");
-	bigPlayer.path = "res/CzesiekBig.png";
-	powerPlayer.texture = LoadTexture("res/CzesiekExtra.png");;
-	powerPlayer.path = "res/CzesiekExtra.png";
+	bigPlayer = loadTexture("res/CzesiekBig.png");
+	powerPlayer = loadTexture("res/CzesiekExtra.png");
 	nn = n;
 }
 
 Player::Player(Player& m) :GameObject(m)
 {
-	bigPlayer.texture = LoadTexture("res/CzesiekBig.png");
-	bigPlayer.path = "res/CzesiekBig.png";
-	powerPlayer.texture = LoadTexture("res/CzesiekExtra.png");;
-	powerPlayer.path = "res/CzesiekExtra.png";
+	bigPlayer.texture = m.bigPlayer.texture;
+	bigPlayer.path = m.bigPlayer.path;
+	powerPlayer.texture = m.powerPlayer.texture;
+	powerPlayer.path = m.powerPlayer.path;
 	nn = new NN(*m.nn);
 }
 Player::~Player()
 {
-	printf("USUNIÊTO");
 	delete nn;
 }
 

@@ -38,7 +38,6 @@ Game::Game(NN* n):Game()
 		delete target;
 	target = new Player({ 128,500,64,64 }, this,n);
 }
-
 Game::~Game()
 {
 	for (auto chunk : chunks)
@@ -46,6 +45,7 @@ Game::~Game()
 	for (auto d : toDelete)
 		delete d;
 	delete target;
+
 }
 
 void Game::draw()

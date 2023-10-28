@@ -67,7 +67,7 @@ void GameLearnScene::newGeneration()
 	{
 		gamesTmp[i] = games[i - n];
 	}
-	printf("Ustalono gry\n");
+
 	for (int i = 0; i < GenerationSize; i++)
 	{
 		int g1 = rand() % GenerationSize;
@@ -80,13 +80,12 @@ void GameLearnScene::newGeneration()
 		nns[i] = n1->combineNNs(n2);
 		nns[i]->mutate();
 	}
-	printf("Zrobiono neurony\n");
+
 
 	for (int g = 0; g < GenerationSize; g++)
 		delete games[g];
 	for (int g = 0; g < GenerationSize; g++)
 		games[g] = new Game(nns[g]);
-	printf("Usuniêto gry i zrobiono nowe\n");
 	i = 0;
 	generationNumber++;
 }
