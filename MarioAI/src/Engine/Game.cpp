@@ -62,7 +62,13 @@ void Game::draw()
 		target->drawInterface();
 
 }
-int i = 1;
+
+void Game::drawPlayerOnly()
+{
+	if (target)
+		target->draw();
+}
+
 void Game::update(float deltaTime)
 {
 

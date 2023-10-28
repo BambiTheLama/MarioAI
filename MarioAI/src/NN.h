@@ -96,5 +96,7 @@ public:
 
 	void saveToFile(nlohmann::json &j);
 
+	bool hasConnection(Connection c);
+
 };
 

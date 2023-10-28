@@ -38,7 +38,7 @@ void Engine::start()
 	while (!WindowShouldClose())
 	{
 		time = time2;
-		time2 = GetTime()*32;
+		time2 = GetTime();
 		deltaTime = time2 - time;
 		if(s)
 			s->update(deltaTime);

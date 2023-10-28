@@ -31,6 +31,8 @@ public:
 
 	void draw();
 
+	void drawPlayerOnly();
+
 	void update(float deltaTime);
 
 	void deleteChunk(int i);
@@ -64,5 +66,9 @@ public:
 	bool isPlaing() { return play; }
 
 	float getFitnes() { return target->getFitnes(); }
+
+	void beginCamareMode(){ BeginMode2D(camera); }
+
+	void endCameraMode() { EndMode2D(); }
 };
 

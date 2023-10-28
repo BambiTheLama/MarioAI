@@ -21,7 +21,17 @@ GameLearnScene::~GameLearnScene()
 
 void GameLearnScene::update(float deltaTime)
 {
+	if (fastModeOn)
+		fastMode(deltaTime);
+	else
+		allGamesMode(deltaTime);
 
+	if (IsKeyPressed(KEY_ESCAPE))
+		Engine::getEngine()->setScene(new MainMenu());
+}
+void GameLearnScene::fastMode(float deltaTime)
+{
+	deltaTime *= 32;
 	if (currentGame)
 	{
 		currentGame->update(deltaTime);
@@ -50,16 +60,58 @@ void GameLearnScene::update(float deltaTime)
 	{
 		currentGame = games[i];
 	}
-	if (IsKeyPressed(KEY_ESCAPE))
-		Engine::getEngine()->setScene(new MainMenu());
 }
 
+void GameLearnScene::allGamesMode(float deltaTime)
+{
+	/*
+
+	if (IsKeyPressed(KEY_A))
+	{
+		i = (i + GenerationSize - 1) % GenerationSize;
+		if (i < 0)
+			i = GenerationSize - 1;
+		else if (i >= GenerationSize)
+			i = 0;
+	}
+	if (IsKeyPressed(KEY_D))
+	{
+		i = (i + 1) % GenerationSize;
+		if (i < 0)
+			i = GenerationSize - 1;
+		else if (i >= GenerationSize)
+			i = 0;
+	}
+	if (IsKeyPressed(KEY_W))
+	{
+		
+	}
+		*/
+	setTheFarestGame();
+	for (int i = 0; i < GenerationSize; i++)
+		if(games[i]->isPlaing())
+			games[i]->update(deltaTime);
+	if (isAllGamesEnd())
+	{
+		for (int i = 0; i < generationNumber; i++)
+			for (int j = 0; j < generationNumber-1; j++)
+			{
+				if (games[j]->getFitnes() < games[j + 1]->getFitnes())
+				{
+					Game* g = games[j];
+					games[j] = games[j + 1];
+					games[j + 1] = g;
+				}
+			}
+		newGeneration();
+	}
+}
 void GameLearnScene::newGeneration()
 {
 	NN* nns[GenerationSize];
 	Game* gamesTmp[GenerationSize];
 	int index = 0;
-	int n = 10;
+	int n = generationNumber / 10;
 	for (int i = 0; i < n && i < GenerationSize && index < GenerationSize; i++)
 	{
 		gamesTmp[index] = games[i];
@@ -104,8 +156,22 @@ void GameLearnScene::newGeneration()
 
 void GameLearnScene::draw()
 {
-	if (currentGame)
-		currentGame->draw();
+	if (fastModeOn)
+	{
+		if (currentGame)
+			currentGame->draw();
+	}
+	else
+	{
+		games[i]->draw();
+		games[i]->beginCamareMode();
+		for (int i = 0; i < this->i; i++)
+			games[i]->drawPlayerOnly();
+		for (int i = this->i + 1; i < GenerationSize; i++)
+			games[i]->drawPlayerOnly();
+		games[i]->endCameraMode();
+	}
+
 	DrawText(TextFormat("Generation : %d (Game : %d) ",generationNumber,i), 0, GetScreenHeight() - 50, 20, BLACK);
 }
 
@@ -138,4 +204,34 @@ void GameLearnScene::readFromFile()
 		generationNumber = j["Generation"];
 
 	}
+}
+
+bool GameLearnScene::isAllGamesEnd()
+{
+	for (int i = 0; i < GenerationSize; i++)
+		if (games[i]->isPlaing())
+			return false;
+	return true;
+}
+
+void GameLearnScene::setTheFarestGame()
+{
+	int f = games[0]->getFitnes();
+	i = 0;
+	for(int i=1;i<GenerationSize;i++)
+		if (games[i]->getFitnes() > f)
+		{
+			this->i = i;
+			f = games[i]->getFitnes();
+		}
+
+}
+
+int GameLearnScene::activesGames()
+{
+	int n = 0;
+	for (int i = 0; i < GenerationSize; i++)
+		if (games[i]->isPlaing())
+			n++;
+	return n;
 }

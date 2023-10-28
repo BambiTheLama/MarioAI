@@ -72,7 +72,8 @@ void NN::addConnection()
 	c.to = to.ID;
 	c.w = (rand() % 20000) / 10000.0f - 1.0f;
 	c.active = true;
-	connections.push_back(c);
+	if(!hasConnection(c))
+		connections.push_back(c);
 }
 
 struct NodesID {
@@ -382,4 +383,11 @@ void NN::saveToFile(nlohmann::json &j)
 		c.saveToFile(j["Connections"][k]);
 		k++;
 	}
+}
+bool NN::hasConnection(Connection c)
+{
+	for (auto con : connections)
+		if (c.compare(c))
+			return true;
+	return false;
 }
