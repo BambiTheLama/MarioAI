@@ -56,7 +56,6 @@ void Coopa::update(float deltaTime)
 
 void Coopa::moveShell(float deltaTime)
 {
-	Rectangle pos = getPos();
 	const float speed = 500;
 	const float fallSpeed = 300;
 	if (left)
@@ -81,11 +80,10 @@ void Coopa::moveShell(float deltaTime)
 			pos.x += deltaTime * speed;
 		}
 	}
-	if (!isObjectAt({ pos.x,pos.y + pos.height,pos.width,deltaTime * fallSpeed }, ObjectType::Block))
+	if (!isObjectAt({ pos.x+3,pos.y + pos.height,pos.width-6,deltaTime * fallSpeed }, ObjectType::Block))
 	{
 		pos.y += deltaTime * fallSpeed;
 	}
-	moveTo(pos.x, pos.y);
 }
 
 void Coopa::playerHit()
@@ -122,7 +120,6 @@ void Coopa::hitAllObjects()
 }
 void Coopa::moveNormal(float deltaTime)
 {
-	Rectangle pos = getPos();
 	const float speed = 160;
 	const float fallSpeed = 300;
 	if (left)
@@ -150,11 +147,10 @@ void Coopa::moveNormal(float deltaTime)
 			pos.x += deltaTime * speed;
 		}
 	}
-	if (!isObjectAt({ pos.x,pos.y + pos.height,pos.width,deltaTime * fallSpeed }, ObjectType::Block))
+	if (!isObjectAt({ pos.x+3,pos.y + pos.height,pos.width-6,deltaTime * fallSpeed }, ObjectType::Block))
 	{
 		pos.y += deltaTime * fallSpeed;
 	}
-	moveTo(pos.x, pos.y);
 }
 
 void Coopa::draw()

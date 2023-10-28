@@ -22,7 +22,7 @@ class Player :
     bool moveLeft = false;
     bool jumpFromEnemy = false;
     float flameCdr=0;
-    bool AI = true;
+    bool AI = false;
     float deltaTime=0;
     NN nn;
 public:

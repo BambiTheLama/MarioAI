@@ -53,7 +53,7 @@ void Goomba::update(float deltaTime)
 			pos.x += deltaTime * speed;
 		}
 	}
-	if (!isObjectAt({ pos.x,pos.y+pos.height,pos.width,deltaTime*fallSpeed }, ObjectType::Block))
+	if (!isObjectAt({ pos.x + 3,pos.y + pos.height,pos.width - 6,deltaTime * fallSpeed }, ObjectType::Block))
 	{
 		pos.y += deltaTime * fallSpeed;
 	}

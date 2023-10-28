@@ -18,6 +18,5 @@ void DestoryAbleBlock::destory(int power)
 		ParticleSystem* particleSystem = new ParticleSystem(getPos(), getTexture().path, game);
 		game->addObj(particleSystem);
 		game->removeBlock(this);
-		game->addToDelete(this);
 	}
 }

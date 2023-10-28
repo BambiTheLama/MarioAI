@@ -7,9 +7,6 @@
     <Filter Include="src\GameObject">
       <UniqueIdentifier>{634c3b0c-4b09-4cc3-a11f-e0f545409cfa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\GameObject\ObjType">
-      <UniqueIdentifier>{0462fbe2-5f47-4518-b2cc-8a67afe24938}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\GameObject\Powers">
       <UniqueIdentifier>{005bf7d9-d6ff-4b10-ac62-5fea616ef822}</UniqueIdentifier>
     </Filter>
@@ -21,6 +18,9 @@
     </Filter>
     <Filter Include="src\GameObject\Enemy">
       <UniqueIdentifier>{73656395-2fdf-40c6-91b0-8d76ebeac301}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\GameObject\Enemy\ObjType">
+      <UniqueIdentifier>{0462fbe2-5f47-4518-b2cc-8a67afe24938}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -108,16 +108,16 @@
       <Filter>src\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\ObjType\Hitable.h">
-      <Filter>src\GameObject\ObjType</Filter>
+      <Filter>src\GameObject\Enemy\ObjType</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\ObjType\Destoryable.h">
-      <Filter>src\GameObject\ObjType</Filter>
+      <Filter>src\GameObject\Enemy\ObjType</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\ParticleSystem.h">
       <Filter>src\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\ObjType\PowerType.h">
-      <Filter>src\GameObject\ObjType</Filter>
+      <Filter>src\GameObject\Enemy\ObjType</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\Powers\Coin.h">
       <Filter>src\GameObject\Powers</Filter>

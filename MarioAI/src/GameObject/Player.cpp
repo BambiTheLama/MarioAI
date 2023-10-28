@@ -153,7 +153,6 @@ void Player::playerControll()
 	}
 	else
 	{
-
 		jumping = false;
 		if (pressJumpTime != pressJumpTimeMax)
 			pressJumpTime = 0;
@@ -164,7 +163,7 @@ void Player::objectInteration()
 {
 	if (game)
 	{
-		if (isObjectAt({ pos.x + 3,pos.y + pos.height,pos.width - 6,1 }, ObjectType::Block))
+		if (isObjectAt({ pos.x + 6,pos.y + pos.height,pos.width - 12,1 }, ObjectType::Block))
 		{
 			pressJumpTime = pressJumpTimeMax;
 
@@ -178,7 +177,7 @@ void Player::objectInteration()
 				pos.y = y;
 				pos.y += deltaTime / pressJumpTimeMax * jumpHeight / times;
 				times++;
-			} while (isObjectAt(pos, ObjectType::Block) && times < 5);
+			} while (isObjectAt({ pos.x + 6,pos.y + pos.height,pos.width - 12,1 }, ObjectType::Block) && times < 5);
 			if (times >= 5)
 			{
 				pos.y = y;
@@ -190,7 +189,7 @@ void Player::objectInteration()
 			}
 
 		}
-		std::list<GameObject*> obj = getObjectsAt({ pos.x + 3,pos.y - 1,pos.width - 6,1 }, ObjectType::Block);
+		std::list<GameObject*> obj = getObjectsAt({ pos.x + 6,pos.y - 1,pos.width - 12,1 }, ObjectType::Block);
 		for (auto o : obj)
 		{
 			Destoryable* d = dynamic_cast<Destoryable*>(o);
@@ -210,7 +209,7 @@ void Player::objectInteration()
 		{
 			game->setWin();
 		}
-		obj = getObjectsAt({ pos.x + 3,pos.y + pos.height,pos.width - 6,2 }, ObjectType::Enemy);
+		obj = getObjectsAt({ pos.x,pos.y + pos.height,pos.width,2 }, ObjectType::Enemy);
 		if (obj.size() > 0)
 		{
 			for (auto o : obj)
@@ -232,7 +231,7 @@ void Player::objectInteration()
 
 void Player::pressA()
 {
-	if (!isObjectAt({ pos.x - speed * deltaTime,pos.y,pos.width,pos.height - 1 }, ObjectType::Block))
+	if (!isObjectAt({ pos.x - speed * deltaTime,pos.y+4,pos.width,pos.height - 8 }, ObjectType::Block))
 	{
 		pos.x -= speed * deltaTime;
 	}
@@ -245,7 +244,7 @@ void Player::pressA()
 
 void Player::pressD()
 {
-	if (!isObjectAt({ pos.x + speed * deltaTime,pos.y,pos.width,pos.height - 1 }, ObjectType::Block))
+	if (!isObjectAt({ pos.x + speed * deltaTime,pos.y+4,pos.width,pos.height - 8 }, ObjectType::Block))
 	{
 		pos.x += speed * deltaTime;
 	}
