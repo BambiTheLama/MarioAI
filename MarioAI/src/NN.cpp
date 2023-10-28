@@ -173,13 +173,13 @@ void NN::addNode()
 {
 	int v = rand() % connections.size();
 	Connection c = connections[v];
+	connections[v].active = false;
 	Node from = nodes[c.from];
 	Node to = nodes[c.to];
 	Node newNode;
 	newNode.x = (from.x + to.x) / 2;
 	newNode.y = (from.y + to.y) / 2;
 	newNode.ID = nodes.size();
-	c.active = false;
 	Connection newC1;
 	newC1.from = from.ID;
 	newC1.to = newNode.ID;
