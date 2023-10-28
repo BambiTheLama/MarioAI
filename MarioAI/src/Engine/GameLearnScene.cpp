@@ -117,7 +117,7 @@ void GameLearnScene::saveNNToFile()
 		games[i]->getNN()->saveToFile(j["NEURONS"][i]);
 	std::ofstream writer;
 	writer.open("NN.json");
-	writer << j.dump(1);
+	writer << j;
 	writer.close();
 }
 

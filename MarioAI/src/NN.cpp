@@ -59,11 +59,12 @@ void NN::addConnection()
 	Node from;
 	if (value < inputsSize + 1)
 	{
+
 		from = nodes[value];
 	}
 	else
 	{
-		from = nodes[value - outputsSize + hidenStart];
+		from = nodes[value + outputsSize];
 	}
 	Node to = findNodeToConect(from);
 	Connection c;
@@ -110,14 +111,17 @@ NN* NN::combineNNs(NN *n)
 	NN* toRet=new NN();
 	std::vector<NodesID> doubleNodes = std::vector<NodesID>();
 	std::vector<Node> nnnodes = std::vector<Node>();
+	///Dodanie wszystkich Nodów z pierwszej sieci neuronowej
 	for (int i = inputsSize + 1 + outputsSize; i < nodes.size(); i++)
 	{
 		nnnodes.push_back(nodes[i]);
 	}
+	///Dodanie wszystkich Nodów z drugiej sieci neuronowej
 	for (int i = inputsSize + 1 + outputsSize; i < n->nodes.size(); i++)
 	{
 		nnnodes.push_back(n->nodes[i]);
 	}
+	///Usuniecie duplikatów
 	for (int i = 0; i < nnnodes.size(); i++)
 	{
 		for (int j = nnnodes.size() - 1; j > i; j--)
@@ -133,6 +137,7 @@ NN* NN::combineNNs(NN *n)
 		}
 
 	}
+	///Ustalenie ID Nodów dla nowej sici
 	if (nnnodes.size() > 0)
 	{
 		int ID = toRet->nodes.size();
@@ -150,11 +155,13 @@ NN* NN::combineNNs(NN *n)
 		}
 
 	}
-	
+	///Dodanie po³aczeñ z pierwszej sieci neuronowej
 	for (int i = 0; i < connections.size(); i++)
 	{
-		toRet->connections.push_back(connections[i]);
+		if (connections[i].from < toRet->nodes.size() && connections[i].to < toRet->nodes.size())
+			toRet->connections.push_back(connections[i]);
 	}
+	///Dodanie po³aczeñ z drugiej sieci oraz usuniêcie duplikatów
 	for (int i = 0; i < n->connections.size(); i++)
 	{
 		Connection con;
@@ -165,7 +172,6 @@ NN* NN::combineNNs(NN *n)
 		if (!randomSwapConnetions(con, toRet->connections) && con.from < toRet->nodes.size() && con.to < toRet->nodes.size())
 			toRet->connections.push_back(con);
 	}
-
 	return toRet;
 }
 
@@ -289,6 +295,7 @@ void NN::mutate()
 	else if(mutationType<=100)
 	{
 		changeValue();
+
 	}
 }
 
