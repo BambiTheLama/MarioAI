@@ -120,8 +120,8 @@ NN* NN::combineNNs(NN *n)
 	}
 	if (nnnodes.size() > 0)
 	{
-		int ID = nnnodes[0].ID;
-		for (int i = 1; i < nnnodes.size(); i++)
+		int ID = toRet->nodes.size();
+		for (int i = 0; i < nnnodes.size(); i++)
 		{
 			if (nnnodes[i].ID != ID + i)
 			{
@@ -131,13 +131,14 @@ NN* NN::combineNNs(NN *n)
 				doubleNodes.push_back(s);
 				nnnodes[i].ID = ID + i;
 			}
-
+			toRet->nodes.push_back(nnnodes[i]);
 		}
+
 	}
-	std::vector<Connection> c;
+	
 	for (int i = 0; i < connections.size(); i++)
 	{
-		c.push_back(connections[i]);
+		toRet->connections.push_back(connections[i]);
 	}
 	for (int i = 0; i < n->connections.size(); i++)
 	{
@@ -146,13 +147,10 @@ NN* NN::combineNNs(NN *n)
 		con.to = getNewID(n->connections[i].to, doubleNodes);
 		con.active = n->connections[i].active;
 		con.w = n->connections[i].w;
-		if (!randomSwapConnetions(con, c))
-			c.push_back(con);
+		if (!randomSwapConnetions(con, toRet->connections) && con.from < toRet->nodes.size() && con.to < toRet->nodes.size())
+			toRet->connections.push_back(con);
 	}
-	for (auto n : nnnodes)
-		toRet->nodes.push_back(n);
-	for (int i = 0; i < c.size(); i++)
-		toRet->connections.push_back(c[i]);
+
 	return toRet;
 }
 
@@ -263,7 +261,7 @@ Node NN::findNodeToConect(Node from)
 
 void NN::mutate()
 {
-	int mutationType = rand() % 100;
+	int mutationType = rand() % 200;
 	if (connections.size() <= 0 || mutationType <= 55)
 	{
 		addConnection();
@@ -273,7 +271,7 @@ void NN::mutate()
 		addNode();
 		sortConnections();
 	}
-	else
+	else if(mutationType<=100)
 	{
 		changeValue();
 	}

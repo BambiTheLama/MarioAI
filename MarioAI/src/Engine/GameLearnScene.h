@@ -1,7 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "Game.h"
-#define GenerationSize 50
+#define GenerationSize 100
 
 class GameLearnScene :
     public Scene

@@ -26,7 +26,7 @@ class Player :
     float deltaTime = 0;
     float fitnes = 0;
     float endProcesTimer = 1;
-    float endProcesTimerMax = 1;
+    float endProcesTimerMax = 3;
     NN *nn;
 public:
     Player(Rectangle pos, Game* g);

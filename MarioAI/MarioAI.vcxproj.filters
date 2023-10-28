@@ -93,7 +93,9 @@
     <ClCompile Include="src\Engine\MainMenu.cpp">
       <Filter>src\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\GameLearnScene.cpp" />
+    <ClCompile Include="src\Engine\GameLearnScene.cpp">
+      <Filter>src\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\NN.h">
@@ -175,7 +177,9 @@
     <ClInclude Include="src\Engine\MainMenu.h">
       <Filter>src\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\GameLearnScene.h" />
+    <ClInclude Include="src\Engine\GameLearnScene.h">
+      <Filter>src\Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

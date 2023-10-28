@@ -31,8 +31,8 @@ void Goomba::update(float deltaTime)
 	if (left)
 	{
 
-		if (isObjectAt({ pos.x - deltaTime * speed,pos.y,pos.width,pos.height - 1 }, ObjectType::Block) ||
-			isObjectAt({ pos.x - deltaTime * speed,pos.y,pos.width,pos.height - 1 }, ObjectType::Enemy))
+		if (isObjectAt({ pos.x - deltaTime * speed,pos.y-3,pos.width,pos.height - 5 }, ObjectType::Block) ||
+			isObjectAt({ pos.x - deltaTime * speed,pos.y-3,pos.width,pos.height - 5 }, ObjectType::Enemy))
 		{
 			left = false;
 		}
@@ -43,8 +43,8 @@ void Goomba::update(float deltaTime)
 	}
 	else
 	{
-		if (isObjectAt({ pos.x + deltaTime * speed,pos.y,pos.width,pos.height - 1 }, ObjectType::Block) || 
-			isObjectAt({ pos.x + deltaTime * speed,pos.y,pos.width,pos.height - 1 }, ObjectType::Enemy))
+		if (isObjectAt({ pos.x + deltaTime * speed,pos.y-3,pos.width,pos.height - 5 }, ObjectType::Block) || 
+			isObjectAt({ pos.x + deltaTime * speed,pos.y-3,pos.width,pos.height - 5 }, ObjectType::Enemy))
 		{
 			left = true;
 		}
