@@ -18,16 +18,16 @@ struct Node {
 
 	bool compare(Node n)
 	{
-		return n.x == x && n.y == y && n.ID == ID;
+		return n.x == x && n.y == y;
 	}
 };
 
-struct Conection {
+struct Connection {
 	int from, to;
 	float w;
 	bool active;
 	
-	bool compare(Conection c)
+	bool compare(Connection c)
 	{
 		return c.from == from && c.to == to;
 	}
@@ -38,7 +38,7 @@ class NN
 {
 	const int cellSize = 16;
 	std::vector<Node> nodes;
-	std::vector<Conection> conections;
+	std::vector<Connection> connections;
 public:
 	NN();
 
@@ -46,7 +46,7 @@ public:
 
 	Node findNodeToConect(Node from);
 
-	void addConection();
+	void addConnection();
 
 	NN combineNNs(NN n);
 

@@ -35,7 +35,7 @@ NN::NN()
 
 }
 
-void NN::addConection()
+void NN::addConnection()
 {
 	int n = inputsSize + 1;
 	int hidenStart = inputsSize + outputsSize + 1;
@@ -54,83 +54,109 @@ void NN::addConection()
 		from = nodes[value + outputsSize];
 	}
 	Node to = findNodeToConect(from);
-	Conection c;
+	Connection c;
 	c.from = from.ID;
 	c.to = to.ID;
 	c.w = (rand() % 20000) / 10000.0f - 1.0f;
 	c.active = true;
-	conections.push_back(c);
+	connections.push_back(c);
+}
+
+struct NodesID {
+	int ID1, ID2;
+};
+
+int getNewID(int lastID, std::vector<NodesID> newIDs)
+{
+	for (int i = 0; i < newIDs.size(); i++)
+		if (lastID == newIDs[i].ID2)
+			return newIDs[i].ID1;
+	return lastID;
+}
+bool randomSwapConnetions(Connection c, std::vector<Connection>& connections)
+{
+	for(int i=0;i< connections.size();i++)
+		if (c.compare(connections[i]))
+		{
+			if (c.active == connections[i].active)
+			{
+				bool swap = rand() % 2;
+				if (swap)
+					connections[i] = c;
+			}
+			else
+			{
+				if (!c.active)
+					connections[i] = c;
+			}
+			return true;
+		}
+	return false;
 }
 NN NN::combineNNs(NN n)
 {
 	NN toRet=NN();
+	std::vector<NodesID> doubleNodes;
+	std::vector<Node> nnnodes;
 	for (int i = inputsSize + 1 + outputsSize; i < nodes.size(); i++)
 	{
-		toRet.nodes.push_back(nodes[i]);
+		nnnodes.push_back(nodes[i]);
 	}
 	for (int i = inputsSize + 1 + outputsSize; i < n.nodes.size(); i++)
 	{
-		if (toRet.nodes.size() <= i)
-		{
-			toRet.nodes.push_back(n.nodes[i]);
-		}
-		else if (!n.nodes[i].compare(toRet.nodes[i]))
-		{
-			Node node = n.nodes[i];
-			node.ID = toRet.nodes.size();
-			toRet.nodes.push_back(node);
-		}
+		nnnodes.push_back(n.nodes[i]);
 	}
-
-	for (auto c1 : conections)
+	for (int i = 0; i < nnnodes.size(); i++)
 	{
-		bool breaked = false;
-		for (auto c2 : n.conections)
+		for (int j = nnnodes.size() - 1; j > i; j--)
 		{
-			if (c1.compare(c2) && c1.active == c2.active)
+			if (nnnodes[i].compare(nnnodes[j]))
 			{
-				breaked = true;
-				if (rand() % 2)
-					toRet.conections.push_back(c1);
-				else
-					toRet.conections.push_back(c2);
-				break;
-			}
-			else if (c1.active != c2.active)
-			{
-				if(c1.active)
-					toRet.conections.push_back(c2);
-				else
-					toRet.conections.push_back(c1);
-				breaked = true;
-				break;
+				NodesID s;
+				s.ID1 = nnnodes[i].ID;
+				s.ID2 = nnnodes[j].ID;
+				doubleNodes.push_back(s);
+				nnnodes.erase(nnnodes.begin()+j);
 			}
 		}
-		if(!breaked)
-			toRet.conections.push_back(c1);
+		toRet.nodes.push_back(nnnodes[i]);
 	}
-	for (auto c1 : n.conections)
+	int ID = nnnodes[0].ID;
+	for (int i = 1; i < nnnodes.size(); i++)
 	{
-		bool breaked = false;
-		for (auto c2 : toRet.conections)
+		if (nnnodes[i].ID != ID + i)
 		{
-			if (c1.compare(c2))
-			{
-				breaked = true;
-				break;
-			}
+			NodesID s;
+			s.ID1 = ID + i;
+			s.ID2 = nnnodes[i].ID;
+			doubleNodes.push_back(s);
+			nnnodes[i].ID = ID + i;
 		}
-		if (!breaked);
-
 	}
-
+	std::vector<Connection> c;
+	for (int i = 0; i < connections.size(); i++)
+	{
+		c.push_back(connections[i]);
+	}
+	for (int i = 0; i < n.connections.size(); i++)
+	{
+		Connection con;
+		con.from = getNewID(n.connections[i].from, doubleNodes);
+		con.to = getNewID(n.connections[i].to, doubleNodes);
+		con.active = n.connections[i].active;
+		con.w = n.connections[i].w;
+		if (!randomSwapConnetions(con, c))
+			c.push_back(con);
+	}
+	for (int i = 0; i < c.size(); i++)
+		toRet.connections.push_back(c[i]);
 	return toRet;
 }
 
 void NN::addNode()
 {
-	int v = rand() % conections.size();
-	Conection c = conections[v];
+	int v = rand() % connections.size();
+	Connection c = connections[v];
 	Node from = nodes[c.from];
 	Node to = nodes[c.to];
 	Node newNode;
@@ -138,19 +164,19 @@ void NN::addNode()
 	newNode.y = (from.y + to.y) / 2;
 	newNode.ID = nodes.size();
 	c.active = false;
-	Conection newC1;
+	Connection newC1;
 	newC1.from = from.ID;
 	newC1.to = newNode.ID;
 	newC1.w = c.w;
 	newC1.active = true;
-	Conection newC2;
+	Connection newC2;
 	newC2.from = newNode.ID;
 	newC2.to = to.ID;
 	newC2.w = c.w;
 	newC2.active = true;
 	nodes.push_back(newNode);
-	conections.push_back(newC1);
-	conections.push_back(newC2);
+	connections.push_back(newC1);
+	connections.push_back(newC2);
 }
 
 void NN::sortConnections()
@@ -176,18 +202,18 @@ void NN::sortConnections()
 	for (int j = 0; j < nodes.size(); j++)
 	{
 		int ID = nodes[j].ID;
-		for (int i = k; i < conections.size(); i++)
+		for (int i = k; i < connections.size(); i++)
 		{
-			if (conections[i].to == ID)
+			if (connections[i].to == ID)
 			{
 				if (k != i)
 				{
-					Conection c = conections[i];
-					conections[i] = conections[k];
-					conections[k] = c;
+					Connection c = connections[i];
+					connections[i] = connections[k];
+					connections[k] = c;
 				}
 				k++;
-				if (k >= conections.size())
+				if (k >= connections.size())
 					return;
 			}
 		}
@@ -200,16 +226,17 @@ void NN::generateOutput()
 {
 	for (int i = inputsSize + 1; i < nodes.size(); i++)
 		nodes[i].value = 0;
-	for (auto c : conections)
+	for (auto c : connections)
 	{
-		nodes[c.to].value += nodes[c.from].value * c.w;
+		if(c.active)
+			nodes[c.to].value += nodes[c.from].value * c.w;
 	}
 }
 
 void NN::changeValue()
 {
-	int i = rand() % conections.size();
-	conections[i].w *= ((rand() % 4001) / 1000) - 1;
+	int i = rand() % connections.size();
+	connections[i].w *= ((rand() % 4001) / 1000) - 1;
 }
 
 Node NN::findNodeToConect(Node from)
@@ -234,9 +261,9 @@ Node NN::findNodeToConect(Node from)
 void NN::mutate()
 {
 	int mutationType = rand() % 100;
-	if (conections.size() <= 0 || mutationType <= 55)
+	if (connections.size() <= 0 || mutationType <= 55)
 	{
-		addConection();
+		addConnection();
 	}
 	else if(mutationType <= 85)
 	{
@@ -291,7 +318,7 @@ Color getColorLineFromValue(float v)
 void NN::draw(int x, int y)
 {
 	int size = cellSize / 2;
-	for (auto c : conections)
+	for (auto c : connections)
 	{
 		if (!c.active)
 			continue;
