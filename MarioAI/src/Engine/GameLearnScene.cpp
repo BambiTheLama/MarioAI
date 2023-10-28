@@ -59,20 +59,20 @@ void GameLearnScene::newGeneration()
 	Game* gamesTmp[GenerationSize];
 	int index = 0;
 	int n = 10;
-	for (int i = 0; i < n && i < GenerationSize; i++)
+	for (int i = 0; i < n && i < GenerationSize && index < GenerationSize; i++)
 	{
 		gamesTmp[index] = games[i];
 		gamesTmp[index + 1] = games[i];
 		gamesTmp[index + 2] = games[i];
 		index += 3;
 	}
-	for (int i = n; i < n * 2 && i < GenerationSize; i++)
+	for (int i = n; i < n * 2 && i < GenerationSize && index < GenerationSize; i++)
 	{
 		gamesTmp[index] = games[i];
 		gamesTmp[index + 1] = games[i];
 		index += 2;
 	}
-	for (int i = n*2; i < GenerationSize; i++)
+	for (int i = index; i < GenerationSize && index < GenerationSize; i++)
 	{
 		gamesTmp[index] = games[i];
 		index++;
