@@ -313,7 +313,7 @@ bool* NN::getOutputs()
 	bool outputs[outputsSize];
 	for (int i = 0; i < outputsSize; i++)
 	{
-		outputs[i] = (nodes[i + inputsSize + 1].value > 0.5f);
+		outputs[i] = (nodes[i + inputsSize + 1].value > 0.0f);
 	}
 	return outputs;
 }

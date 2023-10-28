@@ -31,7 +31,7 @@ void GameLearnScene::update(float deltaTime)
 }
 void GameLearnScene::fastMode(float deltaTime)
 {
-	deltaTime *= 32;
+	deltaTime *= 10;
 	if (currentGame)
 	{
 		currentGame->update(deltaTime);
@@ -111,25 +111,21 @@ void GameLearnScene::newGeneration()
 	NN* nns[GenerationSize];
 	Game* gamesTmp[GenerationSize];
 	int index = 0;
-	int n = generationNumber / 10;
-	for (int i = 0; i < n && i < GenerationSize && index < GenerationSize; i++)
+	int n = GenerationSize / 16;
+	printf("///////////////////////////////////////////////////\n");
+	for (int i = 0; i < GenerationSize && index < GenerationSize; i++)
 	{
-		gamesTmp[index] = games[i];
-		gamesTmp[index + 1] = games[i];
-		gamesTmp[index + 2] = games[i];
-		index += 3;
+		for (int k = 0; k < n && index < GenerationSize; k++)
+		{
+			gamesTmp[index] = games[i];
+			index++;
+		}
+		printf("%lf\n", games[i]->getFitnes());
+		n--;
+		if (n < 1)
+			n = 1;
 	}
-	for (int i = n; i < n * 2 && i < GenerationSize && index < GenerationSize; i++)
-	{
-		gamesTmp[index] = games[i];
-		gamesTmp[index + 1] = games[i];
-		index += 2;
-	}
-	for (int i = n*2; i < GenerationSize && index < GenerationSize; i++)
-	{
-		gamesTmp[index] = games[i];
-		index++;
-	}
+
 	for (int i = 0; i < GenerationSize; i++)
 	{
 		int g1 = rand() % GenerationSize;

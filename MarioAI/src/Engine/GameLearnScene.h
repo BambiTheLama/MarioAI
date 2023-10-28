@@ -3,7 +3,7 @@
 #include "Game.h"
 #include <thread>
 
-#define GenerationSize 400
+#define GenerationSize 200
 
 class GameLearnScene :
     public Scene

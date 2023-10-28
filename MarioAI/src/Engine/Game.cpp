@@ -24,7 +24,7 @@ Game::Game()
 		chunks.push_back(chunk);
 	}
 
-	target = new Player({ 128,500,64,64 }, this);
+	target = new Player({ 128,blockSize * (mapH - 4),64,64 }, this);
 
 	camera.offset = { GetScreenWidth() / 2.0f,GetScreenHeight() / 2.0f };
 	camera.target.y = 880 / 2;
@@ -36,7 +36,7 @@ Game::Game(NN* n):Game()
 {
 	if (target)
 		delete target;
-	target = new Player({ 128,500,64,64 }, this,n);
+	target = new Player({ 128,blockSize * (mapH - 4),64,64 }, this,n);
 }
 Game::~Game()
 {
