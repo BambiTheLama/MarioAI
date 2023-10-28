@@ -1,11 +1,25 @@
 #include "GameLearnScene.h"
 #include "Engine.h"
 #include "MainMenu.h"
-
+#include <fstream>
 GameLearnScene::GameLearnScene()
 {
-	for (int g = 0; g < GenerationSize; g++)
-		games[g] = new Game();
+	int g = 0;
+	std::ifstream reader;
+	reader.open("NN.json");
+	if (reader)
+	{
+		nlohmann::json j;
+		reader >> j;
+		for (; g < GenerationSize && g < j.size(); g++)
+			games[g] = new Game(new NN(j[g]));
+	}
+	if (g < GenerationSize)
+	{
+		for (; g < GenerationSize; g++)
+			games[g] = new Game();
+	}
+
 	currentGame = NULL;
 	i = 0;
 	SetExitKey(0);
@@ -97,6 +111,14 @@ void GameLearnScene::newGeneration()
 		games[g] = new Game(nns[g]);
 	i = 0;
 	generationNumber++;
+	nlohmann::json j;
+	for (int i = 0; i < GenerationSize; i++)
+		games[i]->getNN()->saveToFile(j[i]);
+	std::ofstream writer;
+	writer.open("NN.json");
+	writer << j.dump(1);
+	writer.close();
+	
 }
 
 void GameLearnScene::draw()

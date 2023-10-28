@@ -34,6 +34,21 @@ NN::NN()
 	}
 
 }
+NN::NN(nlohmann::json& j):NN()
+{
+	for (int i = 0; i < j["NODES"].size(); i++)
+	{
+		Node n;
+		n.readFromFile(j["NODES"][i]);
+		nodes.push_back(n);
+	}
+	for (int i = 0; i < j["Connections"].size(); i++)
+	{
+		Connection c;
+		c.readFromFile(j["Connections"][i]);
+		connections.push_back(c);
+	}
+}
 
 void NN::addConnection()
 {
@@ -344,4 +359,20 @@ void NN::draw(int x, int y)
 
 	}
 
+}
+
+void NN::saveToFile(nlohmann::json &j)
+{
+	int k = 0;
+	for (int i = inputsSize + 1 + outputsSize; i < nodes.size(); i++)
+	{
+		nodes[i].saveToFile(j["NODES"][k]);
+		k++;
+	}
+	k = 0;
+	for (auto c:connections)
+	{
+		c.saveToFile(j["Connections"][k]);
+		k++;
+	}
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "json.hpp"
 #define inputsSizeH 11
 #define inputsSizeW 17
 #define inputsSize 187
@@ -20,6 +21,20 @@ struct Node {
 	{
 		return n.x == x && n.y == y;
 	}
+	void saveToFile(nlohmann::json& j)
+	{
+		j["ID"] = ID;
+		j["v"] = value;
+		j["x"] = x;
+		j["y"] = y;
+	}
+	void readFromFile(nlohmann::json& j)
+	{
+		ID = j["ID"];
+		value = j["v"];
+		x = j["x"];
+		y = j["y"];
+	}
 };
 
 struct Connection {
@@ -31,7 +46,20 @@ struct Connection {
 	{
 		return c.from == from && c.to == to;
 	}
-
+	void saveToFile(nlohmann::json& j)
+	{
+		j["from"] = from;
+		j["to"] = to;
+		j["w"] = w;
+		j["active"] = active;
+	}
+	void readFromFile(nlohmann::json& j)
+	{
+		from = j["from"];
+		to = j["to"];
+		w = j["w"];
+		active = j["active"];
+	}
 };
 
 class NN
@@ -41,6 +69,8 @@ class NN
 	std::vector<Connection> connections;
 public:
 	NN();
+
+	NN(nlohmann::json& j);
 
 	void mutate();
 
@@ -63,6 +93,8 @@ public:
 	bool* getOutputs();
 
 	void draw(int x, int y);
+
+	void saveToFile(nlohmann::json &j);
 
 };
 
