@@ -39,11 +39,8 @@ void NN::addConnection()
 {
 	int n = inputsSize + 1;
 	int hidenStart = inputsSize + outputsSize + 1;
-	for (int i = hidenStart; i < nodes.size(); i++)
-	{
-		n++;
-	}
-	int value = rand() % n;
+
+	int value = rand() % (nodes.size() - outputsSize);
 	Node from;
 	if (value < inputsSize + 1)
 	{
@@ -51,7 +48,7 @@ void NN::addConnection()
 	}
 	else
 	{
-		from = nodes[value + outputsSize];
+		from = nodes[value - outputsSize + hidenStart];
 	}
 	Node to = findNodeToConect(from);
 	Connection c;
@@ -119,7 +116,7 @@ NN* NN::combineNNs(NN *n)
 				nnnodes.erase(nnnodes.begin()+j);
 			}
 		}
-		toRet->nodes.push_back(nnnodes[i]);
+
 	}
 	if (nnnodes.size() > 0)
 	{
@@ -134,9 +131,9 @@ NN* NN::combineNNs(NN *n)
 				doubleNodes.push_back(s);
 				nnnodes[i].ID = ID + i;
 			}
+
 		}
 	}
-
 	std::vector<Connection> c;
 	for (int i = 0; i < connections.size(); i++)
 	{
@@ -152,6 +149,8 @@ NN* NN::combineNNs(NN *n)
 		if (!randomSwapConnetions(con, c))
 			c.push_back(con);
 	}
+	for (auto n : nnnodes)
+		toRet->nodes.push_back(n);
 	for (int i = 0; i < c.size(); i++)
 		toRet->connections.push_back(c[i]);
 	return toRet;

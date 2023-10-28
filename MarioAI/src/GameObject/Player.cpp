@@ -33,6 +33,7 @@ Player::Player(Player& m) :GameObject(m)
 }
 Player::~Player()
 {
+	printf("USUNIÊTO");
 	delete nn;
 }
 

@@ -39,9 +39,7 @@ void GameLearnScene::update(float deltaTime)
 			i++;
 			if (i >= GenerationSize)
 			{
-				printf("PRZED GENEROWANIU\n");
 				newGeneration();
-				printf("PO GENEROWANIU\n");
 				i = 0;
 			}
 			currentGame = NULL;
@@ -59,8 +57,8 @@ void GameLearnScene::newGeneration()
 {
 	NN* nns[GenerationSize];
 	Game* gamesTmp[GenerationSize];
-	int n = 25;
-	for (int i = 0; i < n; i++)
+	int n = 10;
+	for (int i= 0; i < n; i++)
 	{
 		gamesTmp[i * 2] = games[i];
 		gamesTmp[i * 2 + 1] = games[i];
@@ -85,11 +83,9 @@ void GameLearnScene::newGeneration()
 	printf("Zrobiono neurony\n");
 
 	for (int g = 0; g < GenerationSize; g++)
-	{
-		if (games[g])
-			delete games[g];
+		delete games[g];
+	for (int g = 0; g < GenerationSize; g++)
 		games[g] = new Game(nns[g]);
-	}
 	printf("Usuniêto gry i zrobiono nowe\n");
 	i = 0;
 	generationNumber++;

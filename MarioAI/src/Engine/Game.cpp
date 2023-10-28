@@ -43,7 +43,9 @@ Game::~Game()
 {
 	for (auto chunk : chunks)
 		delete chunk;
-
+	for (auto d : toDelete)
+		delete d;
+	delete target;
 }
 
 void Game::draw()
