@@ -78,6 +78,23 @@ std::list<GameObject*> GameObject::getObjectsAt(Rectangle pos, ObjectType type)
 	return retList;
 }
 
+std::list<GameObject*> GameObject::getObjectsAt(Rectangle pos)
+{
+	if (!game)
+		return std::list<GameObject*>();
+	std::list<GameObject*> obj = game->getObjectsAt(pos);
+	obj.remove(this);
+	std::list<GameObject*> retList;
+	for (auto o : obj)
+	{
+		if (!CheckCollisionRecs(o->getPos(), pos))
+			continue;
+		retList.push_back(o);
+	}
+	
+	return retList;
+}
+
 bool GameObject::isObjectAt(Rectangle pos, ObjectType type)
 {
 	if (!game)

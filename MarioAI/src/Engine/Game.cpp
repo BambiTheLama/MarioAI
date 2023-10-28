@@ -29,7 +29,14 @@ Game::Game()
 	camera.offset = { GetScreenWidth() / 2.0f,GetScreenHeight() / 2.0f };
 	camera.target.y = 880 / 2;
 	camera.zoom = 1;
-	SetExitKey(0);
+
+}
+
+Game::Game(NN* n):Game()
+{
+	if (target)
+		delete target;
+	target = new Player({ 128,500,64,64 }, this,n);
 }
 
 Game::~Game()
@@ -75,8 +82,7 @@ void Game::update(float deltaTime)
 	}
 
 
-	if (IsKeyPressed(KEY_ESCAPE))
-		Engine::getEngine()->setScene(new MainMenu());
+
 }
 
 

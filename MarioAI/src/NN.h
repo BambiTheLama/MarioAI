@@ -48,7 +48,7 @@ public:
 
 	void addConnection();
 
-	NN combineNNs(NN n);
+	NN* combineNNs(NN *n);
 
 	void addNode();
 

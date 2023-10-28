@@ -22,13 +22,20 @@ class Player :
     bool moveLeft = false;
     bool jumpFromEnemy = false;
     float flameCdr=0;
-    bool AI = false;
-    float deltaTime=0;
-    NN nn;
+    bool AI = true;
+    float deltaTime = 0;
+    float fitnes = 0;
+    float endProcesTimer = 4;
+    float endProcesTimerMax = 4;
+    NN *nn;
 public:
     Player(Rectangle pos, Game* g);
 
+    Player(Rectangle pos, Game* g, NN* n);
+
     Player(Player& m);
+
+    ~Player();
 
     void draw();
 
@@ -60,5 +67,10 @@ public:
 
     bool hitObj();
 
+    void setNeuronNetwork(NN* nn);
+
+    NN* getNeuronNetwork() { return nn; }
+
+    float getFitnes() { return fitnes; }
 };
 

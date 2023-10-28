@@ -57,6 +57,8 @@ public:
 
 	std::list<GameObject*> getObjectsAt(Rectangle pos, ObjectType type);
 
+	std::list<GameObject*> getObjectsAt(Rectangle pos);
+
 	bool isObjectAt(Rectangle pos, ObjectType type);
 
 	TextureSource getTexture() { return texture; }

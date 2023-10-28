@@ -17,19 +17,19 @@ void PowerMushroom::update(float deltaTime)
 	const float downSpeed = 500;
 	if (left)
 	{
-		if (!isObjectAt({ pos.x - speed * deltaTime,pos.y,pos.width,pos.height - 2 }, ObjectType::Block))
+		if (!isObjectAt({ pos.x - speed * deltaTime,pos.y,pos.width,pos.height - 3 }, ObjectType::Block))
 			pos.x -= speed * deltaTime;
 		else
 			left = false;
 	}
 	else
 	{
-		if (!isObjectAt({ pos.x + speed * deltaTime,pos.y,pos.width,pos.height - 2 }, ObjectType::Block))
+		if (!isObjectAt({ pos.x + speed * deltaTime,pos.y,pos.width,pos.height - 3 }, ObjectType::Block))
 			pos.x += speed * deltaTime;
 		else
 			left = true;
 	}
-	if (!isObjectAt({ pos.x,pos.y + pos.height,pos.width,2 }, ObjectType::Block))
+	if (!isObjectAt({ pos.x + 3,pos.y + pos.height,pos.width - 6,2 }, ObjectType::Block))
 	{
 		pos.y += downSpeed * deltaTime;
 	}

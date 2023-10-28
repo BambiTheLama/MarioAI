@@ -23,6 +23,8 @@ class Game:
 public:
 	Game();
 
+	Game(NN* n);
+
 	~Game();
 
 	void start();
@@ -55,6 +57,12 @@ public:
 
 	void addPoints(int p) { points += p; }
 
-	GameObject* getPlayer() { return target; }
+	Player* getPlayer() { return target; }
+
+	NN* getNN() { return target->getNeuronNetwork(); }
+
+	bool isPlaing() { return play; }
+
+	float getFitnes() { return target->getFitnes(); }
 };
 

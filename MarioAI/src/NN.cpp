@@ -93,18 +93,18 @@ bool randomSwapConnetions(Connection c, std::vector<Connection>& connections)
 		}
 	return false;
 }
-NN NN::combineNNs(NN n)
+NN* NN::combineNNs(NN *n)
 {
-	NN toRet=NN();
-	std::vector<NodesID> doubleNodes;
-	std::vector<Node> nnnodes;
+	NN* toRet=new NN();
+	std::vector<NodesID> doubleNodes = std::vector<NodesID>();
+	std::vector<Node> nnnodes = std::vector<Node>();
 	for (int i = inputsSize + 1 + outputsSize; i < nodes.size(); i++)
 	{
 		nnnodes.push_back(nodes[i]);
 	}
-	for (int i = inputsSize + 1 + outputsSize; i < n.nodes.size(); i++)
+	for (int i = inputsSize + 1 + outputsSize; i < n->nodes.size(); i++)
 	{
-		nnnodes.push_back(n.nodes[i]);
+		nnnodes.push_back(n->nodes[i]);
 	}
 	for (int i = 0; i < nnnodes.size(); i++)
 	{
@@ -119,37 +119,41 @@ NN NN::combineNNs(NN n)
 				nnnodes.erase(nnnodes.begin()+j);
 			}
 		}
-		toRet.nodes.push_back(nnnodes[i]);
+		toRet->nodes.push_back(nnnodes[i]);
 	}
-	int ID = nnnodes[0].ID;
-	for (int i = 1; i < nnnodes.size(); i++)
+	if (nnnodes.size() > 0)
 	{
-		if (nnnodes[i].ID != ID + i)
+		int ID = nnnodes[0].ID;
+		for (int i = 1; i < nnnodes.size(); i++)
 		{
-			NodesID s;
-			s.ID1 = ID + i;
-			s.ID2 = nnnodes[i].ID;
-			doubleNodes.push_back(s);
-			nnnodes[i].ID = ID + i;
+			if (nnnodes[i].ID != ID + i)
+			{
+				NodesID s;
+				s.ID1 = ID + i;
+				s.ID2 = nnnodes[i].ID;
+				doubleNodes.push_back(s);
+				nnnodes[i].ID = ID + i;
+			}
 		}
 	}
+
 	std::vector<Connection> c;
 	for (int i = 0; i < connections.size(); i++)
 	{
 		c.push_back(connections[i]);
 	}
-	for (int i = 0; i < n.connections.size(); i++)
+	for (int i = 0; i < n->connections.size(); i++)
 	{
 		Connection con;
-		con.from = getNewID(n.connections[i].from, doubleNodes);
-		con.to = getNewID(n.connections[i].to, doubleNodes);
-		con.active = n.connections[i].active;
-		con.w = n.connections[i].w;
+		con.from = getNewID(n->connections[i].from, doubleNodes);
+		con.to = getNewID(n->connections[i].to, doubleNodes);
+		con.active = n->connections[i].active;
+		con.w = n->connections[i].w;
 		if (!randomSwapConnetions(con, c))
 			c.push_back(con);
 	}
 	for (int i = 0; i < c.size(); i++)
-		toRet.connections.push_back(c[i]);
+		toRet->connections.push_back(c[i]);
 	return toRet;
 }
 
@@ -300,8 +304,18 @@ Color getColorFromValue(float v)
 {
 	if (v == 0)
 		return { 0,0,0,0 };
-	if (v >= 0)
+	if (v == 1)
 		return { 255,255,255,255 };
+	if (v == -1)
+		return { 255,0,0,255 };
+	if (v == 2)
+		return { 0,255,0,255 };
+	if (v < 1 && v>-1)
+		return { (unsigned char)(255 * (-v)),(unsigned char)(255 * v),0,255 };
+	if(v>1)
+		return { 0,(255),0,255 };
+	if (v < -1)
+		return { 255,0,0,255 };
 	return { 0,0,0,255 };
 }
 
@@ -324,12 +338,13 @@ void NN::draw(int x, int y)
 			continue;
 		Node form = nodes[c.from];
 		Node to = nodes[c.to];
-		DrawLine(form.x + size, form.y + size, to.x + size, to.y + size, getColorLineFromValue(c.w));
+		DrawLine(form.x + size + x, form.y + size + y, to.x + size + x, to.y + size + y, getColorLineFromValue(c.w));
 	}
 	for (auto n : nodes)
 	{
-		DrawRectangleLines(n.x + x, n.y + y, cellSize, cellSize, BLACK);
 		DrawRectangle(n.x + x, n.y + y, cellSize, cellSize, getColorFromValue(n.value));
+		DrawRectangleLines(n.x + x, n.y + y, cellSize, cellSize, BLACK);
+
 	}
 
 }

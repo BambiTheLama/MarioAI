@@ -4,17 +4,36 @@
 #include "ObjType/Destoryable.h"
 #include "ObjType/PowerType.h"
 #include "Flame.h"
+
 Player::Player(Rectangle pos,Game *g):GameObject(pos, "res/CzesiekSmall.png",g)
 {
 	bigPlayer.texture = LoadTexture("res/CzesiekBig.png");
 	bigPlayer.path = "res/CzesiekBig.png";
 	powerPlayer.texture = LoadTexture("res/CzesiekExtra.png");;
 	powerPlayer.path = "res/CzesiekExtra.png";
+	nn = new NN();
+}
+
+Player::Player(Rectangle pos, Game* g,NN* n) :GameObject(pos, "res/CzesiekSmall.png", g)
+{
+	bigPlayer.texture = LoadTexture("res/CzesiekBig.png");
+	bigPlayer.path = "res/CzesiekBig.png";
+	powerPlayer.texture = LoadTexture("res/CzesiekExtra.png");;
+	powerPlayer.path = "res/CzesiekExtra.png";
+	nn = n;
 }
 
 Player::Player(Player& m) :GameObject(m)
 {
-
+	bigPlayer.texture = LoadTexture("res/CzesiekBig.png");
+	bigPlayer.path = "res/CzesiekBig.png";
+	powerPlayer.texture = LoadTexture("res/CzesiekExtra.png");;
+	powerPlayer.path = "res/CzesiekExtra.png";
+	nn = new NN(*m.nn);
+}
+Player::~Player()
+{
+	delete nn;
 }
 
 void Player::draw()
@@ -54,7 +73,8 @@ void Player::draw()
 
 void Player::drawInterface()
 {
-	nn.draw(0, 0);
+	nn->draw(0, 60);
+	DrawText(TextFormat("Fitnes: %lf\nTimer: %lf", fitnes, endProcesTimer), 0, 0, 20, BLACK);
 }
 
 void Player::update(float deltaTime)
@@ -68,6 +88,9 @@ void Player::update(float deltaTime)
 	if (AI)
 	{
 		aiControll();
+		endProcesTimer -= deltaTime;
+		if (endProcesTimer <= 0)
+			game->lostGame();
 	}
 	else
 	{
@@ -80,23 +103,50 @@ void Player::update(float deltaTime)
 
 void Player::aiControll()
 {
+
 	int inputs[inputsSize];
+	int startX = (pos.x + pos.width / 2) - inputsSizeW / 2 * blockSize;
+	int startY = (pos.y + pos.height / 2) - inputsSizeH / 2 * blockSize;
+	for (int x = 0; x < inputsSizeW; x++)
+		for (int y = 0; y < inputsSizeH; y++)
+		{
+			std::list<GameObject*> objs = getObjectsAt({ (float)startX+x* blockSize,(float)startY+ blockSize*y,1.0f,1.0f });
+			inputs[x + y * inputsSizeW] = 0;
+			for (auto o : objs)
+			{
+				if (o->getType() == ObjectType::Block)
+				{
+					inputs[x + y * inputsSizeW] = 1;
+					break;
+				}
+				if (o->getType() == ObjectType::Bullet || o->getType() == ObjectType::Lava || o->getType() == ObjectType::Enemy)
+				{
+					inputs[x + y * inputsSizeW] = -1;
+					break;
+				}
+				if (o->getType() == ObjectType::PowerUp)
+				{
+					inputs[x + y * inputsSizeW] = 2;
+					break;
+				}
+			}
 
-	nn.setInputs(inputs);
+		}
+	nn->setInputs(inputs);
 	if (IsKeyPressed(KEY_UP))
-		nn.mutate();
+		nn->mutate();
 
-	nn.generateOutput();
+	nn->generateOutput();
 
-	bool* outputs = nn.getOutputs();
+	bool* outputs = nn->getOutputs();
 
-	if (outputs[0])
-	{
-		pressA();
-	}
-	else if (outputs[1])
+	if (outputs[1])
 	{
 		pressD();
+	}
+	else if (outputs[0])
+	{
+		pressA();
 	}
 	else if (outputs[2])
 	{
@@ -122,6 +172,13 @@ void Player::aiControll()
 		if (pressJumpTime != pressJumpTimeMax)
 			pressJumpTime = 0;
 	}
+	float newFitnes = pos.x;
+	if (newFitnes > fitnes)
+	{
+		fitnes = newFitnes;
+		endProcesTimer = endProcesTimerMax;
+	}
+
 }
 
 void Player::playerControll()
@@ -170,22 +227,16 @@ void Player::objectInteration()
 		}
 		else if (!jumping)
 		{
-			float y = pos.y;
-			float times = 1;
-			do
+			const float fallSpeed = 40;
+
+			if (!isObjectAt({ pos.x + 3,pos.y + pos.height,pos.width - 6,deltaTime * fallSpeed }, ObjectType::Block))
 			{
-				pos.y = y;
-				pos.y += deltaTime / pressJumpTimeMax * jumpHeight / times;
-				times++;
-			} while (isObjectAt({ pos.x + 6,pos.y + pos.height,pos.width - 12,1 }, ObjectType::Block) && times < 5);
-			if (times >= 5)
-			{
-				pos.y = y;
-				pressJumpTime = pressJumpTimeMax;
+				pos.y += deltaTime * fallSpeed;
+				pressJumpTime = 0;
 			}
 			else
 			{
-				pressJumpTime = 0;
+				pressJumpTime = pressJumpTimeMax;
 			}
 
 		}
@@ -209,7 +260,7 @@ void Player::objectInteration()
 		{
 			game->setWin();
 		}
-		obj = getObjectsAt({ pos.x,pos.y + pos.height,pos.width,2 }, ObjectType::Enemy);
+		obj = getObjectsAt({ pos.x,pos.y + pos.height+1,pos.width,4 }, ObjectType::Enemy);
 		if (obj.size() > 0)
 		{
 			for (auto o : obj)
@@ -346,4 +397,13 @@ bool Player::hitObj()
 		return true;
 	}
 	return false;
+}
+void Player::setNeuronNetwork(NN* nn)
+{
+	if (nn)
+	{
+		if (this->nn)
+			delete nn;
+		this->nn = nn;
+	}
 }
