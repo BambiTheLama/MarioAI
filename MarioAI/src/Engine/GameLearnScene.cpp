@@ -111,7 +111,11 @@ void GameLearnScene::newGeneration()
 	NN* nns[GenerationSize];
 	Game* gamesTmp[GenerationSize];
 	int index = 0;
-	int n = GenerationSize / 16;
+	int n = GenerationSize / 11;
+
+
+	nlohmann::json j;
+	j["Generation"] = generationNumber;
 	printf("///////////////////////////////////////////////////\n");
 	for (int i = 0; i < GenerationSize && index < GenerationSize; i++)
 	{
@@ -121,11 +125,19 @@ void GameLearnScene::newGeneration()
 			index++;
 		}
 		printf("%lf\n", games[i]->getFitnes());
+
+		j["NNS"][i]["Fit"] = (int)games[i]->getFitnes();
+		games[i]->getNN()->saveToFile(j["NNS"][i]);
+		
+
 		n--;
 		if (n < 1)
 			n = 1;
 	}
-
+	std::ofstream writer;
+	writer.open("NN.json");
+	writer << j;
+	writer.close();
 	for (int i = 0; i < GenerationSize; i++)
 	{
 		int g1 = rand() % GenerationSize;
@@ -147,7 +159,7 @@ void GameLearnScene::newGeneration()
 	i = 0;
 	generationNumber++;
 
-	saveNNToFile();
+	//saveNNToFile();
 }
 
 void GameLearnScene::draw()
@@ -191,11 +203,11 @@ void GameLearnScene::readFromFile()
 	{
 		nlohmann::json j;
 		reader >> j;
-		for (int g = 0; g < GenerationSize && g < j["NEURONS"].size(); g++)
+		for (int g = 0; g < GenerationSize && g < j["NNS"].size(); g++)
 		{
 			if (games[g])
 				delete games[g];
-			games[g] = new Game(new NN(j["NEURONS"][g]));
+			games[g] = new Game(new NN(j["NNS"][g]));
 		}
 		generationNumber = j["Generation"];
 

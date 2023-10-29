@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include <math.h>
 #include "json.hpp"
 #define inputsSizeH 11
 #define inputsSizeW 17
@@ -48,7 +47,7 @@ struct Connection {
 	void saveToFile(nlohmann::json& j)
 	{
 		j["from"] = from;
-		j["to"] = to; 
+		j["to"] = to;
 		j["w"] = std::round(w * 10000) / 10000.0f;
 		j["active"] = active;
 	}
