@@ -29,8 +29,6 @@ public:
 
 	~Game();
 
-	void start();
-
 	void draw();
 
 	void drawPlayerOnly();

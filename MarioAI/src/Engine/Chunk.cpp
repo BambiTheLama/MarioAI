@@ -146,11 +146,22 @@ Chunk::~Chunk()
 	for (int y = 0; y < mapH; y++)
 		for (int x = 0; x < mapW; x++)
 			if (blocks[y][x])
+			{
+				blocks[y][x]->setGame(NULL);
 				delete blocks[y][x];
+			}
+
 	for (auto o : objects)
+	{
+		o->setGame(NULL);
 		delete o;
+	}
+
 	for (auto o : toDelete)
+	{
+		o->setGame(NULL);
 		delete o;
+	}
 	toAdd.clear();
 	toRemove.clear();
 	toDelete.clear();
@@ -169,27 +180,7 @@ void Chunk::update(float deltaTime)
 		for (auto o : objects)
 			o->update(deltaTime);
 	}
-	if (toRemove.size() > 0)
-	{
-		for (auto o : toRemove)
-			objects.remove(o);
-		toRemove.clear();
-	}
-	if (toDelete.size() > 0)
-	{
-		for (auto o : toDelete)
-		{
-			objects.remove(o);
-			delete o;
-		}
-		toDelete.clear();
-	}
-	if (toAdd.size() > 0)
-	{
-		for (auto o : toAdd)
-			objects.push_back(o);
-		toAdd.clear();
-	}
+
 
 
 
@@ -331,6 +322,30 @@ void Chunk::removeAt(Vector2 pos)
 		}
 	}
 }
+void Chunk::updateLists()
+{
+	if (toRemove.size() > 0)
+	{
+		for (auto o : toRemove)
+			objects.remove(o);
+		toRemove.clear();
+	}
+	if (toDelete.size() > 0)
+	{
+		for (auto o : toDelete)
+		{
+			objects.remove(o);
+			delete o;
+		}
+		toDelete.clear();
+	}
+	if (toAdd.size() > 0)
+	{
+		for (auto o : toAdd)
+			objects.push_back(o);
+		toAdd.clear();
+	}
+}
 
 bool Chunk::hasObj(GameObject* o)
 { 
@@ -385,4 +400,36 @@ void Chunk::saveToJson(nlohmann::json& saveFile)
 		i++;
 
 	}
+}
+
+void Chunk::getAllObjects(std::list<GameObject*> objs)
+{
+	for (auto o : toRemove)
+	{
+		objs.remove(o);
+		objs.push_back(o);
+	}
+	for (auto o : toAdd)
+	{
+		objs.remove(o);
+		objs.push_back(o);
+	}
+	for (auto o : toDelete)
+	{
+		objs.remove(o);
+		objs.push_back(o);
+	}
+	for (auto o : objects)
+	{
+		objs.remove(o);
+		objs.push_back(o);
+	}
+}
+
+void Chunk::clearAllObjects()
+{
+	toRemove.clear();
+	objects.clear();
+	toDelete.clear();
+	toAdd.clear();
 }

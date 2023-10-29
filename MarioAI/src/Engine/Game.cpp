@@ -63,11 +63,23 @@ Game::Game(NN* n):Game()
 }
 Game::~Game()
 {
+	std::list<GameObject*> objs;
 	for (auto chunk : chunks)
+	{
+		chunk->getAllObjects(objs);
+		chunk->clearAllObjects();
 		delete chunk;
+	}
+
 	for (auto d : toDelete)
-		delete d;
+	{
+		objs.remove(d);
+		objs.push_back(d);
+	}
+	for (auto o : objs)
+		delete o;
 	delete target;
+	target == NULL;
 
 }
 
@@ -107,6 +119,8 @@ void Game::update(float deltaTime)
 		for (auto chunk : chunks)
 			if (CheckCollisionRecs(cameraArea, chunk->getPos()))
 				chunk->update(deltaTime);
+		for (auto chunk : chunks)
+			chunk->updateLists();
 		for (auto o : toDelete)
 			delete o;
 		toDelete.clear();
@@ -116,25 +130,6 @@ void Game::update(float deltaTime)
 
 }
 
-
-void Game::start()
-{
-	
-	while (IsKeyUp(KEY_ENTER) && win && !WindowShouldClose())
-	{
-		BeginDrawing();
-		ClearBackground(DARKBLUE);
-
-		draw();
-
-		DrawFPS(0, 0);
-
-		DrawText("YOU PASS THE GAME\nPRESS ENDER TO CONTINUE", 100, 100, 69, WHITE);
-	
-		EndDrawing();
-	}
-
-}
 
 void Game::deleteChunk(int i)
 {

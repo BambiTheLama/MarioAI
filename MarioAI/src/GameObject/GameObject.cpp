@@ -19,6 +19,11 @@ GameObject::GameObject(GameObject& o)
 	ID = o.ID;	
 }
 
+GameObject::~GameObject() 
+{
+
+}
+
 void GameObject::draw()
 {
 	Rectangle source = { 0,0,(float)texture.texture.width,(float)texture.texture.height };

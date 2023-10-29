@@ -37,7 +37,7 @@ public:
 
 	GameObject(GameObject& o);
 
-	virtual ~GameObject(){}
+	virtual ~GameObject();
 
 	virtual void update(float deltaTime) = 0;
 

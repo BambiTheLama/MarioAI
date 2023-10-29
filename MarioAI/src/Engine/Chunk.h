@@ -50,13 +50,19 @@ public:
 
 	void removeAt(Vector2 pos);
 
+	void updateLists();
+
 	Rectangle getPos() { return { chunk * mapW * 64.0f,0,64.0f * mapW,64 * mapH }; }
 
 	int getChunk() { return chunk; }
 
 	bool hasObj(GameObject* o);
 
+	void getAllObjects(std::list<GameObject*> objs);
+
 	void saveToJson(nlohmann::json &saveFile);
+
+	void clearAllObjects();
 
 	friend class MapEdytor;
 };
