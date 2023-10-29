@@ -154,6 +154,7 @@ Chunk::~Chunk()
 	toAdd.clear();
 	toRemove.clear();
 	toDelete.clear();
+	objects.clear();
 }
 
 void Chunk::update(float deltaTime)

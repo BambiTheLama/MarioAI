@@ -29,7 +29,7 @@ void PowerMushroom::update(float deltaTime)
 		else
 			left = true;
 	}
-	if (!isObjectAt({ pos.x + 3,pos.y + pos.height,pos.width - 6,2 }, ObjectType::Block))
+	if (!isObjectAt({ pos.x + 3,pos.y + pos.height,pos.width - 6,downSpeed * deltaTime }, ObjectType::Block))
 	{
 		pos.y += downSpeed * deltaTime;
 	}

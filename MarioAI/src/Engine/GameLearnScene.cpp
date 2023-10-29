@@ -162,7 +162,7 @@ void GameLearnScene::newGeneration()
 	nlohmann::json j;
 	j["Generation"] = generationNumber;
 	printf("///////////////////////////////////////////////////\n");
-	for (int i = 0; i < 10 && i < GenerationSize; i++)
+	for (int i = 0; i < 25 && i < GenerationSize; i++)
 	{
 		j["NNS"][i]["Fit"] = (int)games[i]->getFitnes();
 		games[i]->getNN()->saveToFile(j["NNS"][i]);
