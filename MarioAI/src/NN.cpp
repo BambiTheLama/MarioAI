@@ -59,7 +59,6 @@ void NN::addConnection()
 	Node from;
 	if (value < inputsSize + 1)
 	{
-
 		from = nodes[value];
 	}
 	else
@@ -284,16 +283,16 @@ Node NN::findNodeToConect(Node from)
 void NN::mutate()
 {
 	int mutationType = rand() % 200;
-	if (connections.size() <= 0 || mutationType <= 55)
+	if (connections.size() <= 0 || mutationType <= 50)
 	{
 		addConnection();
 	}
-	else if(mutationType <= 85)
+	else if(mutationType <= 100)
 	{
 		addNode();
 		sortConnections();
 	}
-	else if(mutationType<=100)
+	else
 	{
 		changeValue();
 

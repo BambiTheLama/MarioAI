@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "ObjType/Hitable.h"
 #include "../NN.h"
+#include "../Engine/Chunk.h"
 class Game;
 
 class Player :
@@ -9,9 +10,9 @@ class Player :
 {
     float speed = 32;
     bool jumping = false;
-    float jumpHeight = 400;
+    float jumpHeight = blockSize*6;
     float pressJumpTime = 0;
-    float pressJumpTimeMax = 10.0f;
+    float pressJumpTimeMax = 6.0f;
     int hp = 1;
     float invisibleFrames = 0;
     int sprite = 0;
@@ -29,7 +30,7 @@ class Player :
     float endProcesTimerMax = 2;
     NN *nn;
 public:
-    Player(Rectangle pos, Game* g);
+    Player(Rectangle pos, Game* g, bool AI = true);
 
     Player(Rectangle pos, Game* g, NN* n);
 

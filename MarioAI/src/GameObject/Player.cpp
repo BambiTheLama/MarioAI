@@ -5,11 +5,12 @@
 #include "ObjType/PowerType.h"
 #include "Flame.h"
 
-Player::Player(Rectangle pos,Game *g):GameObject(pos, "res/CzesiekSmall.png",g)
+Player::Player(Rectangle pos,Game *g,bool AI):GameObject(pos, "res/CzesiekSmall.png",g)
 {
 	bigPlayer = loadTexture("res/CzesiekBig.png");
 	powerPlayer = loadTexture("res/CzesiekExtra.png");
 	nn = new NN();
+	this->AI = AI;
 }
 
 Player::Player(Rectangle pos, Game* g,NN* n) :GameObject(pos, "res/CzesiekSmall.png", g)
@@ -101,8 +102,8 @@ void Player::aiControll()
 {
 
 	int inputs[inputsSize];
-	int startX = (pos.x + pos.width / 2) - inputsSizeW / 2 * blockSize;
-	int startY = (pos.y + pos.height / 2) - inputsSizeH / 2 * blockSize;
+	int startX = (pos.x ) - inputsSizeW / 2 * blockSize;
+	int startY = (pos.y ) - inputsSizeH / 2 * blockSize;
 	for (int x = 0; x < inputsSizeW; x++)
 		for (int y = 0; y < inputsSizeH; y++)
 		{
@@ -168,7 +169,7 @@ void Player::aiControll()
 		if (pressJumpTime != pressJumpTimeMax)
 			pressJumpTime = 0;
 	}
-	float newFitnes = pos.x;
+	float newFitnes = pos.x + points*10;
 	if (newFitnes > fitnes)
 	{
 		fitnes = newFitnes;
@@ -232,6 +233,17 @@ void Player::objectInteration()
 			}
 			else
 			{
+				float t = 1.0f;
+				while (t>0.01f)
+				{
+					if (!isObjectAt({ pos.x + 3,pos.y + pos.height,pos.width - 6,deltaTime * fallSpeed*t }, ObjectType::Block))
+					{
+						pos.y += deltaTime * fallSpeed*t;
+						pressJumpTime = 0;
+						break;
+					}
+					t /= 2;
+				}
 				pressJumpTime = pressJumpTimeMax;
 			}
 
@@ -255,6 +267,7 @@ void Player::objectInteration()
 		if (obj.size() > 0)
 		{
 			game->setWin();
+			fitnes = 9999999;
 		}
 		obj = getObjectsAt({ pos.x,pos.y + pos.height+1,pos.width,4 }, ObjectType::Enemy);
 		if (obj.size() > 0)
@@ -348,6 +361,7 @@ void Player::checkPowerUps()
 		case PowerType::Coin:
 			points++;
 			game->removeBlock(o);
+			
 			break;
 		case PowerType::Mushroom:
 			game->removeObj(o);

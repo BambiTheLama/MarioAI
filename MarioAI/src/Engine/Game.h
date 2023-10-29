@@ -23,6 +23,8 @@ class Game:
 public:
 	Game();
 
+	Game(bool AI);
+
 	Game(NN* n);
 
 	~Game();
@@ -65,7 +67,7 @@ public:
 
 	bool isPlaing() { return play; }
 
-	float getFitnes() { return target->getFitnes(); }
+	int getFitnes() { return target->getFitnes(); }
 
 	void beginCamareMode(){ BeginMode2D(camera); }
 

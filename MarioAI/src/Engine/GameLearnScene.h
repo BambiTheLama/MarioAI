@@ -13,12 +13,16 @@ class GameLearnScene :
     int i = 0;
     int generationNumber = 0;
     bool fastModeOn = true;
+    float speed = 1;
+    bool drawScene = true;
 public:
     GameLearnScene();
 
     ~GameLearnScene();
 
     void update(float deltaTime);
+
+    void setSpeedMode(int i);
 
     void fastMode(float deltaTime);
 

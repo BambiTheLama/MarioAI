@@ -10,6 +10,7 @@ GameLearnScene::GameLearnScene()
 	currentGame = NULL;
 	i = 0;
 	SetExitKey(0);
+	setSpeedMode(1);
 }
 
 GameLearnScene::~GameLearnScene()
@@ -21,6 +22,8 @@ GameLearnScene::~GameLearnScene()
 
 void GameLearnScene::update(float deltaTime)
 {
+	if (IsKeyPressed(KEY_F1))
+		drawScene = !drawScene;
 	if (fastModeOn)
 		fastMode(deltaTime);
 	else
@@ -29,9 +32,50 @@ void GameLearnScene::update(float deltaTime)
 	if (IsKeyPressed(KEY_ESCAPE))
 		Engine::getEngine()->setScene(new MainMenu());
 }
+void GameLearnScene::setSpeedMode(int mode)
+{
+	if (mode == 0)
+	{
+		speed = 0;
+		SetTargetFPS(30);
+	}
+	if (mode==1)
+	{
+		speed = 1;
+		SetTargetFPS(30);
+	}
+	else if (mode == 2)
+	{
+		speed = 2;
+		SetTargetFPS(60);
+	}
+	else if (mode == 3)
+	{
+		speed = 4;
+		SetTargetFPS(120);
+	}
+	else if (mode == 4)
+	{
+		speed = 8;
+		SetTargetFPS(240);
+	}
+	else if (mode == 5)
+	{
+		speed = 16;
+		SetTargetFPS(580);
+	}
+	else if (mode == 6)
+	{
+		speed = 32;
+		SetTargetFPS(1160);
+	}
+}
 void GameLearnScene::fastMode(float deltaTime)
 {
-	deltaTime *= 10;
+	int k = GetKeyPressed();
+	if (k >= '0' && k <= '6')
+		setSpeedMode(k - '0');
+	deltaTime *= speed;
 	if (currentGame)
 	{
 		currentGame->update(deltaTime);
@@ -106,17 +150,27 @@ void GameLearnScene::allGamesMode(float deltaTime)
 		newGeneration();
 	}
 }
+
 void GameLearnScene::newGeneration()
 {
 	NN* nns[GenerationSize];
 	Game* gamesTmp[GenerationSize];
 	int index = 0;
-	int n = GenerationSize / 11;
+	int n = GenerationSize / sqrt(GenerationSize);
 
 
 	nlohmann::json j;
 	j["Generation"] = generationNumber;
 	printf("///////////////////////////////////////////////////\n");
+	for (int i = 0; i < 10 && i < GenerationSize; i++)
+	{
+		j["NNS"][i]["Fit"] = (int)games[i]->getFitnes();
+		games[i]->getNN()->saveToFile(j["NNS"][i]);
+	}
+	std::ofstream writer;
+	writer.open(std::string("NN/NN" + std::to_string(generationNumber) + ".json"));
+	writer << j;
+	writer.close();
 	for (int i = 0; i < GenerationSize && index < GenerationSize; i++)
 	{
 		for (int k = 0; k < n && index < GenerationSize; k++)
@@ -124,20 +178,16 @@ void GameLearnScene::newGeneration()
 			gamesTmp[index] = games[i];
 			index++;
 		}
-		printf("%lf\n", games[i]->getFitnes());
+		printf("%d\n", games[i]->getFitnes());
 
-		j["NNS"][i]["Fit"] = (int)games[i]->getFitnes();
-		games[i]->getNN()->saveToFile(j["NNS"][i]);
+
 		
 
 		n--;
 		if (n < 1)
 			n = 1;
 	}
-	std::ofstream writer;
-	writer.open("NN.json");
-	writer << j;
-	writer.close();
+
 	for (int i = 0; i < GenerationSize; i++)
 	{
 		int g1 = rand() % GenerationSize;
@@ -164,6 +214,8 @@ void GameLearnScene::newGeneration()
 
 void GameLearnScene::draw()
 {
+	if (!drawScene)
+		return;
 	if (fastModeOn)
 	{
 		if (currentGame)

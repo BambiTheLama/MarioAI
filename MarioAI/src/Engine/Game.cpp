@@ -31,7 +31,30 @@ Game::Game()
 	camera.zoom = 1;
 
 }
+Game::Game(bool AI)
+{
+	std::ifstream reader("Map1.json");
+	if (reader.is_open())
+	{
+		nlohmann::json j;
+		reader >> j;
+		for (int i = 0; i < j.size(); i++)
+		{
+			chunks.push_back(new Chunk(i, this, j));
+		}
+	}
+	else
+	{
+		Chunk* chunk = new Chunk(0, this);
+		chunks.push_back(chunk);
+	}
 
+	target = new Player({ 128,blockSize * (mapH - 4),64,64 }, this,AI);
+
+	camera.offset = { GetScreenWidth() / 2.0f,GetScreenHeight() / 2.0f };
+	camera.target.y = 880 / 2;
+	camera.zoom = 1;
+}
 Game::Game(NN* n):Game()
 {
 	if (target)
