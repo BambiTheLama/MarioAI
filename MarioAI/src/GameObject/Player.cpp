@@ -158,7 +158,7 @@ void Player::aiControll()
 	{
 		pressControl();
 	}
-	if (outputs[4] || jumpFromEnemy)
+	if (outputs[4] || jumpFromEnemy || (pressJumpTime > pressJumpTimeMax - 2 && pressJumpTime != pressJumpTimeMax))
 	{
 		pressSpace();
 	}
@@ -201,7 +201,7 @@ void Player::playerControll()
 	{
 		pressControl();
 	}
-	if (IsKeyDown(KEY_SPACE) || jumpFromEnemy)
+	if (IsKeyDown(KEY_SPACE) || jumpFromEnemy || (pressJumpTime > pressJumpTimeMax - 2 && pressJumpTime != pressJumpTimeMax))
 	{
 		pressSpace();
 	}
