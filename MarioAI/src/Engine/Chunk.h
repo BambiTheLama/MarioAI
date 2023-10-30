@@ -58,7 +58,7 @@ public:
 
 	bool hasObj(GameObject* o);
 
-	void getAllObjects(std::list<GameObject*> objs);
+	void getAllObjects(std::list<GameObject*> &objs);
 
 	void saveToJson(nlohmann::json &saveFile);
 

@@ -402,7 +402,7 @@ void Chunk::saveToJson(nlohmann::json& saveFile)
 	}
 }
 
-void Chunk::getAllObjects(std::list<GameObject*> objs)
+void Chunk::getAllObjects(std::list<GameObject*> &objs)
 {
 	for (auto o : toRemove)
 	{

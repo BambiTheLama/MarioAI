@@ -55,6 +55,7 @@ Game::Game(bool AI)
 	camera.offset = { GetScreenWidth() / 2.0f,GetScreenHeight() / 2.0f };
 	camera.target.y = 880 / 2;
 	camera.zoom = 1;
+	this->AI = AI;
 }
 Game::Game(NN* n):Game()
 {
@@ -107,7 +108,15 @@ void Game::drawPlayerOnly()
 
 void Game::update(float deltaTime)
 {
+	if (!AI)
+	{
+		if (IsKeyPressed(KEY_ESCAPE))
+		{
+			Engine::getEngine()->setScene(new MainMenu());
+			return;
+		}
 
+	}
 	if (play)
 	{
 		if (target)

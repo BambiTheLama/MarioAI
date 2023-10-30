@@ -21,7 +21,11 @@ void MainMenu::update(float deltaTIme)
 		if (CheckCollisionPointRec(GetMousePosition(), AIGame))
 			Engine::getEngine()->setScene(new GameLearnScene());
 		if (CheckCollisionPointRec(GetMousePosition(), startGame))
+		{
+			SetExitKey(0);
 			Engine::getEngine()->setScene(new Game(false));
+		}
+
 		if (CheckCollisionPointRec(GetMousePosition(), mapEdytor))
 			Engine::getEngine()->setScene(new MapEdytor());
 	}

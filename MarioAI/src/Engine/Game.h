@@ -19,6 +19,7 @@ class Game:
 	bool win = false;
 	std::list<GameObject*> toDelete;
 	int points = 0;
+	bool AI = true;
 
 public:
 	Game();
