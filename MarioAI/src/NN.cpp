@@ -331,9 +331,9 @@ Color getColorFromValue(float v)
 		return { 0,255,0,255 };
 	if (v < 1 && v>-1)
 		return { (unsigned char)(255 * (-v)),(unsigned char)(255 * v),0,255 };
-	if(v>1)
+	if (v >= 1)
 		return { 0,(255),0,255 };
-	if (v < -1)
+	if (v <= -1)
 		return { 255,0,0,255 };
 	return { 0,0,0,255 };
 }
@@ -351,6 +351,12 @@ Color getColorLineFromValue(float v)
 void NN::draw(int x, int y)
 {
 	int size = cellSize / 2;
+	for (auto n : nodes)
+	{
+		DrawRectangle(n.x + x, n.y + y, cellSize, cellSize, getColorFromValue(n.value));
+		DrawRectangleLines(n.x + x, n.y + y, cellSize, cellSize, BLACK);
+
+	}
 	for (auto c : connections)
 	{
 		if (!c.active)
@@ -359,12 +365,7 @@ void NN::draw(int x, int y)
 		Node to = nodes[c.to];
 		DrawLine(form.x + size + x, form.y + size + y, to.x + size + x, to.y + size + y, getColorLineFromValue(c.w));
 	}
-	for (auto n : nodes)
-	{
-		DrawRectangle(n.x + x, n.y + y, cellSize, cellSize, getColorFromValue(n.value));
-		DrawRectangleLines(n.x + x, n.y + y, cellSize, cellSize, BLACK);
 
-	}
 
 }
 

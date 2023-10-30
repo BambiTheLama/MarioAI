@@ -3,8 +3,8 @@
 #include <math.h>
 #include "json.hpp"
 #define inputsSizeH 11
-#define inputsSizeW 17
-#define inputsSize 187
+#define inputsSizeW 11
+#define inputsSize 121
 #define outputsSize 5
 
 enum class NodeType
