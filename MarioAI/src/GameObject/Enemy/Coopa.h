@@ -16,8 +16,6 @@ public:
 
     Coopa(Coopa& g);
 
-    Coopa(nlohmann::json toRead);
-
     void update(float deltaTime);
 
     void moveNormal(float deltaTime);

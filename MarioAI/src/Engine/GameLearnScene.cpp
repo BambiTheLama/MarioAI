@@ -16,9 +16,9 @@ GameLearnScene::GameLearnScene()
 GameLearnScene::~GameLearnScene()
 {
 	saveNNToFile();
-	for (auto g : games)
-		if(g)
-			delete g;
+	for (int g = 0; g < GenerationSize; g++)
+		if(games[g])
+			delete games[g];
 
 }
 
@@ -110,29 +110,7 @@ void GameLearnScene::fastMode(float deltaTime)
 
 void GameLearnScene::allGamesMode(float deltaTime)
 {
-	/*
 
-	if (IsKeyPressed(KEY_A))
-	{
-		i = (i + GenerationSize - 1) % GenerationSize;
-		if (i < 0)
-			i = GenerationSize - 1;
-		else if (i >= GenerationSize)
-			i = 0;
-	}
-	if (IsKeyPressed(KEY_D))
-	{
-		i = (i + 1) % GenerationSize;
-		if (i < 0)
-			i = GenerationSize - 1;
-		else if (i >= GenerationSize)
-			i = 0;
-	}
-	if (IsKeyPressed(KEY_W))
-	{
-		
-	}
-		*/
 	setTheFarestGame();
 	for (int i = 0; i < GenerationSize; i++)
 		if(games[i]->isPlaing())
@@ -173,6 +151,7 @@ void GameLearnScene::newGeneration()
 	writer.open(std::string("NN/NN" + std::to_string(generationNumber) + ".json"));
 	writer << j;
 	writer.close();
+	j.clear();
 	for (int i = 0; i < GenerationSize && index < GenerationSize; i++)
 	{
 		for (int k = 0; k < n && index < GenerationSize; k++)
@@ -269,6 +248,7 @@ void GameLearnScene::readFromFile()
 		generationNumber = j["Generation"];
 
 	}
+	reader.close();
 }
 
 bool GameLearnScene::isAllGamesEnd()

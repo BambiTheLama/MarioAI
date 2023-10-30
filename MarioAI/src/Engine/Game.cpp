@@ -17,14 +17,14 @@ Game::Game()
 		{
 			chunks.push_back(new Chunk(i, this,j));
 		}
-		reader.close();
+
 	}
 	else
 	{
 		Chunk* chunk = new Chunk(0, this);
 		chunks.push_back(chunk);
 	}
-
+	reader.close();
 	target = new Player({ 128,blockSize * (mapH - 4),64,64 }, this);
 
 	camera.offset = { GetScreenWidth() / 2.0f,GetScreenHeight() / 2.0f };
@@ -49,7 +49,7 @@ Game::Game(bool AI)
 		Chunk* chunk = new Chunk(0, this);
 		chunks.push_back(chunk);
 	}
-
+	reader.close();
 	target = new Player({ 128,blockSize * (mapH - 4),64,64 }, this,AI);
 
 	camera.offset = { GetScreenWidth() / 2.0f,GetScreenHeight() / 2.0f };

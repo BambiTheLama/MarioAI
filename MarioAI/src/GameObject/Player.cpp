@@ -30,7 +30,8 @@ Player::Player(Player& m) :GameObject(m)
 }
 Player::~Player()
 {
-	delete nn;
+	if(nn)
+		delete nn;
 }
 
 void Player::draw()

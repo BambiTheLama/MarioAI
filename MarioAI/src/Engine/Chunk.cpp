@@ -112,6 +112,8 @@ Chunk::Chunk(int chunk, Game* game, nlohmann::json map)
 		for (int y = mapH - 1; y < mapH; y++)
 			for (int x = 0; x < mapW; x++)
 			{
+				if (blocks[y][x])
+					delete blocks[y][x];
 				blocks[y][x] = cloneStaticObject(StaticObjectID::Lava);
 				blocks[y][x]->moveTo(startX + x * blockSize, y * blockSize);
 				blocks[y][x]->setGame(game);

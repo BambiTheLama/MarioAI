@@ -2,13 +2,14 @@
 #include "../Engine/Game.h"
 
 std::list<TextureSource> GameObject::texturesLoaded=std::list<TextureSource>();
-
 GameObject::GameObject(Rectangle pos, std::string path,Game* game)
 {
 	this->pos = pos;
 	bool loaded = false;
 	texture = loadTexture(path);
 	this->game = game;
+
+	//printf("CREATE OBJ ID %d %s\n", this->ID, texture.path.c_str());
 }
 
 GameObject::GameObject(GameObject& o)
@@ -16,12 +17,15 @@ GameObject::GameObject(GameObject& o)
 	pos = o.pos;
 	texture = o.texture;
 	game = o.game;
-	ID = o.ID;	
+	//ID = o.ID;	
+	this->ID = o.ID;
+
+	//printf("CREATE OBJ ID %d %s\n", this->ID, texture.path.c_str());
 }
 
 GameObject::~GameObject() 
 {
-
+	//printf("DELETE OBJ ID %d %s\n", this->ID, texture.path.c_str());
 }
 
 void GameObject::draw()

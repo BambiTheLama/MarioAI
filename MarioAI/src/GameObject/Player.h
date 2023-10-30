@@ -28,7 +28,7 @@ class Player :
     float fitnes = 0;
     float endProcesTimer = 2;
     float endProcesTimerMax = 2;
-    NN *nn;
+    NN *nn=NULL;
 public:
     Player(Rectangle pos, Game* g, bool AI = true);
 
