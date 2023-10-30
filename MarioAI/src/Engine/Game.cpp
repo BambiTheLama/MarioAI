@@ -17,6 +17,7 @@ Game::Game()
 		{
 			chunks.push_back(new Chunk(i, this,j));
 		}
+		reader.close();
 	}
 	else
 	{
