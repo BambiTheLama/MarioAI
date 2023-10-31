@@ -5,7 +5,7 @@
 #define inputsSizeH 11
 #define inputsSizeW 11
 #define inputsSize 121
-#define outputsSize 5
+#define outputsSize 2
 
 enum class NodeType
 {

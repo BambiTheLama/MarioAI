@@ -138,10 +138,12 @@ void Player::aiControll()
 
 	bool* outputs = nn->getOutputs();
 
-	if (outputs[1])
+	if (outputs[0])
 	{
 		pressD();
 	}
+	/*
+
 	else if (outputs[0])
 	{
 		pressA();
@@ -155,11 +157,13 @@ void Player::aiControll()
 		distance = 0;
 		sprite = 0;
 	}
+
 	if (hp == 3 && flameCdr <= 0 && outputs[3])
 	{
 		pressControl();
 	}
-	if (outputs[4] || jumpFromEnemy || (pressJumpTime > pressJumpTimeMax - 2 && pressJumpTime != pressJumpTimeMax))
+			*/
+	if (outputs[1] || jumpFromEnemy || (pressJumpTime > pressJumpTimeMax - 2 && pressJumpTime != pressJumpTimeMax))
 	{
 		pressSpace();
 	}

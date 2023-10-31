@@ -191,7 +191,7 @@ void MapEdytor::removeObject()
 			continue;
 		}
 		c->removeAt(mousePos);
-		c->update(0);
+		c->updateLists();
 
 	}
 

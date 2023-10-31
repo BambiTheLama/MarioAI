@@ -307,22 +307,26 @@ void Chunk::removeAt(Vector2 pos)
 	int x = (pos.x - (chunk * mapW * 64)) / 64;
 	int y = pos.y / 64;
 	if (x < 0 || x >= mapW || y < 0 || y >= mapH)
-		return;
-	if (blocks[y][x])
 	{
-		toDelete.push_back(blocks[y][x]);
-		blocks[y][x] = NULL;
+
 	}
 	else
 	{
-		for (auto o : objects)
+		if (blocks[y][x])
 		{
-			if (CheckCollisionPointRec(pos, o->getPos()))
-			{
-				toDelete.push_back(o);	
-			}
+			toDelete.push_back(blocks[y][x]);
+			blocks[y][x] = NULL;
 		}
 	}
+
+	for (auto o : objects)
+	{
+		if (CheckCollisionPointRec(pos, o->getPos()))
+		{
+			toDelete.push_back(o);
+		}
+	}
+	
 }
 void Chunk::updateLists()
 {

@@ -25,7 +25,7 @@ enum class DynamicObjectID
 	Goomba,				//Ten Grzyb
 	CoopaRed,			//Ten zó³wik czerwony
 	CoopaGreen,			//Ten zó³wik zielony
-
+	Castle,
 	size
 };
 

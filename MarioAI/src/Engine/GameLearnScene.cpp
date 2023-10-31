@@ -137,7 +137,7 @@ void GameLearnScene::newGeneration()
 	Game* gamesTmp[GenerationSize];
 	int index = 0;
 	//int n = GenerationSize / sqrt(GenerationSize);
-	int n = GenerationSize / 10;
+	int n = GenerationSize / 14;
 
 	nlohmann::json j;
 	j["Generation"] = generationNumber;

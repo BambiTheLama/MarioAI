@@ -31,6 +31,7 @@ void createObjectToCopy()
 		new Goomba({0,0,blockSize,blockSize},"res/Goomba.png",NULL),
 		new Coopa({0,0,blockSize,blockSize},"res/RedCoopa.png",NULL),
 		new Coopa({0,0,blockSize,blockSize},"res/GreenCoopa.png",NULL),
+		new Block({ 0,0,blockSize * 5,blockSize * 5 }, "res/Castle.png",NULL)
 	};
 	for (int i = 0; i < staticObjectToCopy.size(); i++)
 		staticObjectToCopy[i]->ID = i;
