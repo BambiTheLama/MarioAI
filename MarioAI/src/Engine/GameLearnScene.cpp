@@ -39,33 +39,41 @@ void GameLearnScene::setSpeedMode(int mode)
 {
 	if (mode == 0)
 	{
-		SetTargetFPS(30);
+		SetTargetFPS(1);
 	}
-	if (mode==1)
+	else if (mode == 1)
 	{
-		SetTargetFPS(30);
+		SetTargetFPS(15);
 	}
 	else if (mode == 2)
 	{
-		SetTargetFPS(60);
+		SetTargetFPS(30);
 	}
-	else if (mode == 3)
+	else if (mode==3)
 	{
-		SetTargetFPS(120);
+		SetTargetFPS(60);
 	}
 	else if (mode == 4)
 	{
-		SetTargetFPS(240);
+		SetTargetFPS(90);
 	}
 	else if (mode == 5)
 	{
-		SetTargetFPS(580);
+		SetTargetFPS(120);
 	}
 	else if (mode == 6)
 	{
-		SetTargetFPS(1160);
+		SetTargetFPS(240);
 	}
 	else if (mode == 7)
+	{
+		SetTargetFPS(580);
+	}
+	else if (mode == 8)
+	{
+		SetTargetFPS(1160);
+	}
+	else if (mode == 9)
 	{
 		SetTargetFPS(99999999);
 	}
@@ -73,7 +81,7 @@ void GameLearnScene::setSpeedMode(int mode)
 void GameLearnScene::fastMode(float deltaTime)
 {
 	int k = GetKeyPressed();
-	if (k >= '0' && k <= '6')
+	if (k >= '0' && k <= '9')
 		setSpeedMode(k - '0');
 	if (currentGame)
 	{
