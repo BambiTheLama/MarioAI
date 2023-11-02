@@ -104,7 +104,7 @@ void Player::aiControll()
 
 	int inputs[inputsSize];
 	int startX = (pos.x+pos.width) -  blockSize*2;
-	int startY = (pos.y+pos.height) - inputsSizeH *(2.5f/ 4.0f) * blockSize ;
+	int startY = (pos.y+pos.height) - inputsSizeH / 2.0f * blockSize ;
 	for (int x = 0; x < inputsSizeW; x++)
 		for (int y = 0; y < inputsSizeH; y++)
 		{

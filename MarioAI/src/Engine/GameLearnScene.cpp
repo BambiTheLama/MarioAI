@@ -24,7 +24,7 @@ GameLearnScene::~GameLearnScene()
 
 void GameLearnScene::update(float deltaTime)
 {
-	deltaTime = 1.0f / 60.0f;
+	deltaTime = 1.0f / 30.0f;
 	if (IsKeyPressed(KEY_F1))
 		drawScene = !drawScene;
 	if (fastModeOn)
@@ -142,7 +142,7 @@ void GameLearnScene::newGeneration()
 	Game* gamesTmp[GenerationSize];
 	int index = 0;
 	//int n = GenerationSize / sqrt(GenerationSize);
-	int n = GenerationSize / 14;
+	int n = GenerationSize * 5.0f/ 100.0f;
 	LearningData l;
 	l.generationID = generationNumber;
 	l.howManyWin = 0;

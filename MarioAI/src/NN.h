@@ -2,9 +2,9 @@
 #include <vector>
 #include <math.h>
 #include "json.hpp"
-#define inputsSizeH 11
-#define inputsSizeW 11
-#define inputsSize 121
+#define inputsSizeH 7
+#define inputsSizeW 7
+#define inputsSize 49
 #define outputsSize 2
 
 enum class NodeType
