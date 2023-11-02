@@ -15,6 +15,7 @@ Engine::Engine()
 {
 	srand(time(NULL));
 	InitWindow(1600, 900, "Super Czesiek AI");
+	CustomFont::loadFont();
 	//SetTargetFPS(60);
 	createObjectToCopy();
 	s = new MainMenu();
@@ -29,6 +30,7 @@ Engine::~Engine()
 	GameObject::texturesLoaded.clear();
 
 	deleteObjectToCopy();
+	CustomFont::unloadFont();
 	CloseWindow();
 }
 

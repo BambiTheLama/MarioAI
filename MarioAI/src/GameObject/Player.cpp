@@ -74,10 +74,9 @@ void Player::draw()
 
 void Player::drawInterface()
 {
-  customFont = LoadFont("res/PatrickHand.ttf");
 	nn->draw(0, 60);
-	DrawTextEx(customFont, TextFormat("Fitness: %lf ", fitness), Vector2{0,0}, 32, 0, BLACK);
-	DrawTextEx(customFont, TextFormat("Timer: %lf", endProcesTimer), Vector2{ 0,32 }, 32, 0, BLACK);
+	DrawTextEx(CustomFont::customFont, TextFormat("Fitness: %lf ", fitness), Vector2{0,0}, 32, 0, BLACK);
+	DrawTextEx(CustomFont::customFont, TextFormat("Timer: %lf", endProcesTimer), Vector2{ 0,32 }, 32, 0, BLACK);
 
 }
 

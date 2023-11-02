@@ -28,7 +28,6 @@ class Player :
     float fitness = 0;
     float endProcesTimer = 2;
     float endProcesTimerMax = 2;
-    Font customFont;
     NN *nn=NULL;
 public:
     Player(Rectangle pos, Game* g, bool AI = true);

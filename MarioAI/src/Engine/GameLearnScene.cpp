@@ -3,11 +3,8 @@
 #include "MainMenu.h"
 #include <fstream>
 
-Font PatrickFont;
 GameLearnScene::GameLearnScene()
 {
-  PatrickFont = LoadFont("res/PatrickHand.ttf");
-
 	for (int g = 0; g < GenerationSize; g++)
 		games[g] = new Game();
 	readFromFile();
@@ -23,7 +20,6 @@ GameLearnScene::~GameLearnScene()
 	for (int g = 0; g < GenerationSize; g++)
 		if(games[g])
 			delete games[g];
-
 }
 
 void GameLearnScene::update(float deltaTime)
@@ -239,7 +235,7 @@ void GameLearnScene::draw()
 		games[i]->endCameraMode();
 	}
 	DrawRectangle(0, GetScreenHeight() - 60, 300, 40, WHITE);
-	DrawTextEx(PatrickFont, TextFormat("Generation : %d (Game : %d) ", generationNumber, i), Vector2{ 0, (float)GetScreenHeight() - 60 }, 32, 2, BLACK);
+	DrawTextEx(CustomFont::customFont, TextFormat("Generation : %d (Game : %d) ", generationNumber, i), Vector2{ 0, (float)GetScreenHeight() - 60 }, 32, 2, BLACK);
 
 }
 

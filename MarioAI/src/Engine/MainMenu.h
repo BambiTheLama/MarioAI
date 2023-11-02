@@ -7,6 +7,8 @@ public:
 
     MainMenu();
 
+    ~MainMenu();
+
     void update(float deltaTIme);
 
     void draw();

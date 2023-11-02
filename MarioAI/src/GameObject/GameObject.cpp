@@ -2,6 +2,8 @@
 #include "../Engine/Game.h"
 
 std::list<TextureSource> GameObject::texturesLoaded=std::list<TextureSource>();
+Font CustomFont::customFont;
+
 GameObject::GameObject(Rectangle pos, std::string path,Game* game)
 {
 	this->pos = pos;

@@ -4,6 +4,18 @@
 #include <string>
 #include "../json.hpp"
 
+struct CustomFont {
+	static Font customFont;
+	static void loadFont()
+	{
+		customFont = LoadFont("res/PatrickHand.ttf");
+	}
+	static void unloadFont()
+	{
+		UnloadFont(customFont);
+	}
+};
+
 enum class ObjectType
 {
 	NON=0,

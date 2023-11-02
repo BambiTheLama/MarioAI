@@ -10,14 +10,11 @@ Rectangle startGame;
 Rectangle mapEditor;
 Texture2D background;
 Color buttonColor;
-Font customFont;
-
 
 MainMenu::MainMenu() {
   SetExitKey(KEY_ESCAPE);
   background = LoadTexture("res/background.png");
   buttonColor = GetColor(0x2850ffff);
-  customFont = LoadFont("res/PatrickHand.ttf");
 
   // Wyliczenie œrodkowych pozycji przycisków
   const int screenWidth = GetScreenWidth();
@@ -34,6 +31,10 @@ MainMenu::MainMenu() {
   AIGame = { static_cast<float>(buttonX), static_cast<float>(aiGameButtonY), static_cast<float>(buttonWidth), static_cast<float>(buttonHeight) };
   startGame = { static_cast<float>(buttonX), static_cast<float>(startGameButtonY), static_cast<float>(buttonWidth), static_cast<float>(buttonHeight) };
   mapEditor = { static_cast<float>(buttonX), static_cast<float>(mapEditorButtonY), static_cast<float>(buttonWidth), static_cast<float>(buttonHeight) };
+}
+MainMenu::~MainMenu()
+{
+    UnloadTexture(background);
 }
 
 void MainMenu::update(float deltaTime) 
@@ -61,9 +62,9 @@ void MainMenu::draw()
   DrawRectangleRounded(mapEditor, 1.f, 0, buttonColor);
 
   // Tekst na przyciskach
-  DrawTextEx(customFont, "AI GAME", Vector2{ AIGame.x + AIGame.width / 2 - MeasureTextEx(customFont, "AI GAME", 64, 2).x / 2, AIGame.y + AIGame.height / 2 - 32 }, 64, 2, BLACK);
-  DrawTextEx(customFont, "START GAME", Vector2{ startGame.x + startGame.width / 2 - MeasureTextEx(customFont, "START GAME", 64, 2).x / 2, startGame.y + startGame.height / 2 - 32 }, 64, 2, BLACK);
-  DrawTextEx(customFont, "MAP EDITOR", Vector2{ mapEditor.x + mapEditor.width / 2 - MeasureTextEx(customFont, "MAP EDITOR", 64, 2).x / 2, mapEditor.y + mapEditor.height / 2 - 32 }, 64, 2, BLACK);
+  DrawTextEx(CustomFont::customFont, "AI GAME", Vector2{ AIGame.x + AIGame.width / 2 - MeasureTextEx(CustomFont::customFont, "AI GAME", 64, 2).x / 2, AIGame.y + AIGame.height / 2 - 32 }, 64, 2, BLACK);
+  DrawTextEx(CustomFont::customFont, "START GAME", Vector2{ startGame.x + startGame.width / 2 - MeasureTextEx(CustomFont::customFont, "START GAME", 64, 2).x / 2, startGame.y + startGame.height / 2 - 32 }, 64, 2, BLACK);
+  DrawTextEx(CustomFont::customFont, "MAP EDITOR", Vector2{ mapEditor.x + mapEditor.width / 2 - MeasureTextEx(CustomFont::customFont, "MAP EDITOR", 64, 2).x / 2, mapEditor.y + mapEditor.height / 2 - 32 }, 64, 2, BLACK);
 
 
 
