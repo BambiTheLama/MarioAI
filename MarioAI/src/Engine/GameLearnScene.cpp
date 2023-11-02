@@ -2,8 +2,12 @@
 #include "Engine.h"
 #include "MainMenu.h"
 #include <fstream>
+
+Font PatrickFont;
 GameLearnScene::GameLearnScene()
 {
+  PatrickFont = LoadFont("res/PatrickHand.ttf");
+
 	for (int g = 0; g < GenerationSize; g++)
 		games[g] = new Game();
 	readFromFile();
@@ -90,7 +94,7 @@ void GameLearnScene::fastMode(float deltaTime)
 		{
 			for (int g = 0; g < i; g++)
 			{
-				if (games[g]->getFitnes() < currentGame->getFitnes())
+				if (games[g]->getFitness() < currentGame->getFitness())
 				{
 					Game* tmp = currentGame;
 					currentGame = games[g];
@@ -125,7 +129,7 @@ void GameLearnScene::allGamesMode(float deltaTime)
 		for (int i = 0; i < generationNumber; i++)
 			for (int j = 0; j < generationNumber-1; j++)
 			{
-				if (games[j]->getFitnes() < games[j + 1]->getFitnes())
+				if (games[j]->getFitness() < games[j + 1]->getFitness())
 				{
 					Game* g = games[j];
 					games[j] = games[j + 1];
@@ -146,10 +150,10 @@ void GameLearnScene::newGeneration()
 	LearningData l;
 	l.generationID = generationNumber;
 	l.howManyWin = 0;
-	l.maxFitnes = games[0]->getFitnes();
+	l.maxFitness = games[0]->getFitness();
 	for (int i = 0; i < GenerationSize; i++)
 	{
-		if (games[i]->getFitnes() > 90000)
+		if (games[i]->getFitness() > 90000)
 		{
 			l.howManyWin++;
 		}
@@ -163,7 +167,7 @@ void GameLearnScene::newGeneration()
 	printf("///////////////////////////////////////////////////\n");
 	for (int i = 0; i < 25 && i < GenerationSize; i++)
 	{
-		j["NNS"][i]["Fit"] = (int)games[i]->getFitnes();
+		j["NNS"][i]["Fit"] = (int)games[i]->getFitness();
 		games[i]->getNN()->saveToFile(j["NNS"][i]);
 	}
 	std::ofstream writer;
@@ -178,7 +182,7 @@ void GameLearnScene::newGeneration()
 			gamesTmp[index] = games[i];
 			index++;
 		}
-		printf("%d\n", games[i]->getFitnes());
+		printf("%d\n", games[i]->getFitness());
 
 
 		
@@ -235,7 +239,8 @@ void GameLearnScene::draw()
 		games[i]->endCameraMode();
 	}
 	DrawRectangle(0, GetScreenHeight() - 60, 300, 40, WHITE);
-	DrawText(TextFormat("Generation : %d (Game : %d) ",generationNumber,i), 0, GetScreenHeight() - 50, 20, BLACK);
+	DrawTextEx(PatrickFont, TextFormat("Generation : %d (Game : %d) ", generationNumber, i), Vector2{ 0, (float)GetScreenHeight() - 60 }, 32, 2, BLACK);
+
 }
 
 void GameLearnScene::saveNNToFile()
@@ -250,7 +255,7 @@ void GameLearnScene::saveNNToFile()
 	writer.close();
 
 	writer.open("LearnningData.txt");
-	writer << "GenerationID" << " ; " << "maxFitnes" << " ; " << "howManyWin" << "\n";
+	writer << "GenerationID" << " ; " << "maxFitness" << " ; " << "howManyWin" << "\n";
 	for (auto l : learnData)
 		l.save(writer);
 	writer.close();
@@ -301,13 +306,13 @@ bool GameLearnScene::isAllGamesEnd()
 
 void GameLearnScene::setTheFarestGame()
 {
-	int f = games[0]->getFitnes();
+	int f = games[0]->getFitness();
 	i = 0;
 	for(int i=1;i<GenerationSize;i++)
-		if (games[i]->getFitnes() > f)
+		if (games[i]->getFitness() > f)
 		{
 			this->i = i;
-			f = games[i]->getFitnes();
+			f = games[i]->getFitness();
 		}
 
 }

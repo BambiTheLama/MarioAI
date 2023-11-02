@@ -64,6 +64,6 @@ public:
 
 	void clearAllObjects();
 
-	friend class MapEdytor;
+	friend class MapEditor;
 };
 

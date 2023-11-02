@@ -1,4 +1,4 @@
-GenerationID ; maxFitnes ; howManyWin
+GenerationID ; maxFitness ; howManyWin
 0 ; 128 ; 0
 1 ; 1439 ; 0
 2 ; 2036 ; 0
@@ -8,4 +8,17 @@ GenerationID ; maxFitnes ; howManyWin
 6 ; 1e+07 ; 1
 7 ; 1e+07 ; 2
 8 ; 1e+07 ; 6
+9 ; 1e+07 ; 10
+9 ; 1e+07 ; 10
+9 ; 1e+07 ; 10
+9 ; 1e+07 ; 10
+9 ; 1e+07 ; 10
+9 ; 1e+07 ; 10
+9 ; 1e+07 ; 10
+9 ; 1e+07 ; 10
+9 ; 1e+07 ; 10
+9 ; 1e+07 ; 10
+9 ; 1e+07 ; 10
+9 ; 1e+07 ; 10
+9 ; 1e+07 ; 10
 9 ; 1e+07 ; 10

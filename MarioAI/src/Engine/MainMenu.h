@@ -4,6 +4,7 @@ class MainMenu :
     public Scene
 {
 public:
+
     MainMenu();
 
     void update(float deltaTIme);

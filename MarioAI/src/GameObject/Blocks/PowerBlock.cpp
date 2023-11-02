@@ -28,7 +28,7 @@ void PowerBlock::draw()
 	DrawTexturePro(texture, texturePos, pos, { 0,0 }, 0, WHITE);
 }
 
-void PowerBlock::destory(int power)
+void PowerBlock::destroy(int power)
 {
 	GameObject* o=NULL;
 	Rectangle pos = getPos();

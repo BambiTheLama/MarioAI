@@ -4,7 +4,7 @@
 #include "../GameObject/Blocks/Flag.h"
 #include "../GameObject/Blocks/Lava.h"
 #include "../GameObject/Blocks/PowerBlock.h"
-#include "../GameObject/Blocks/DestoryAbleBlock.h"
+#include "../GameObject/Blocks/DestroyableBlock.h"
 #include "../GameObject/ObjType/PowerType.h"
 #include "../GameObject/Powers/Coin.h"
 #include "../GameObject/Enemy/Goomba.h"
@@ -17,7 +17,7 @@ void createObjectToCopy()
 	staticObjectToCopy = std::vector<GameObject*>{
 		new Block({ 0,0,blockSize,blockSize }, "res/Stone.png",NULL),
 		new Lava({ 0,0,blockSize,blockSize }, "res/Lava.png",NULL),
-		new DestoryAbleBlock({0,0,blockSize,blockSize},"res/Brick.png",NULL),
+		new DestroyableBlock({0,0,blockSize,blockSize},"res/Brick.png",NULL),
 		new Block({ 0,0,blockSize,blockSize }, "res/SteelBlock.png",NULL),
 		new PowerBlock({ 0,0,blockSize,blockSize }, "res/CoinBlock.png",NULL,PowerType::Coin),
 		new PowerBlock({ 0,0,blockSize,blockSize }, "res/CoinBlock.png",NULL,PowerType::Mushroom),

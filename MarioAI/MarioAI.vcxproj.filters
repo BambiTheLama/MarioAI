@@ -51,7 +51,7 @@
     <ClCompile Include="src\GameObject\Blocks\Block.cpp">
       <Filter>src\GameObject\Blocks</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\Blocks\DestoryAbleBlock.cpp">
+    <ClCompile Include="src\GameObject\Blocks\DestroyableBlock.cpp">
       <Filter>src\GameObject\Blocks</Filter>
     </ClCompile>
     <ClCompile Include="src\GameObject\Blocks\PowerBlock.cpp">
@@ -78,7 +78,7 @@
     <ClCompile Include="src\Engine\Engine.cpp">
       <Filter>src\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\MapEdytor.cpp">
+    <ClCompile Include="src\Engine\MapEditor.cpp">
       <Filter>src\Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\GameObject\Enemy\Goomba.cpp">
@@ -134,7 +134,7 @@
     <ClInclude Include="src\GameObject\Blocks\Block.h">
       <Filter>src\GameObject\Blocks</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Blocks\DestoryAbleBlock.h">
+    <ClInclude Include="src\GameObject\Blocks\DestroyableBlock.h">
       <Filter>src\GameObject\Blocks</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\Blocks\Lava.h">
@@ -159,7 +159,7 @@
     <ClInclude Include="src\Engine\Engine.h">
       <Filter>src\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\MapEdytor.h">
+    <ClInclude Include="src\Engine\MapEditor.h">
       <Filter>src\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\Enemy\Goomba.h">

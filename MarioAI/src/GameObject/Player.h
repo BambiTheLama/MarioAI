@@ -25,9 +25,10 @@ class Player :
     float flameCdr=0;
     bool AI = true;
     float deltaTime = 0;
-    float fitnes = 0;
+    float fitness = 0;
     float endProcesTimer = 2;
     float endProcesTimerMax = 2;
+    Font customFont;
     NN *nn=NULL;
 public:
     Player(Rectangle pos, Game* g, bool AI = true);
@@ -72,6 +73,6 @@ public:
 
     NN* getNeuronNetwork() { return nn; }
 
-    float getFitnes() { return fitnes; }
+    float getFitness() { return fitness; }
 };
 

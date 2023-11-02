@@ -1,14 +1,16 @@
 #include "Player.h"
 #include "../Engine/Game.h"
 #include "Blocks/Block.h"
-#include "ObjType/Destoryable.h"
+#include "ObjType/Destroyable.h"
 #include "ObjType/PowerType.h"
 #include "Flame.h"
 
 Player::Player(Rectangle pos,Game *g,bool AI):GameObject(pos, "res/CzesiekSmall.png",g)
 {
+
 	bigPlayer = loadTexture("res/CzesiekBig.png");
 	powerPlayer = loadTexture("res/CzesiekExtra.png");
+
 	nn = new NN();
 	this->AI = AI;
 }
@@ -26,6 +28,8 @@ Player::Player(Player& m) :GameObject(m)
 	bigPlayer.path = m.bigPlayer.path;
 	powerPlayer.texture = m.powerPlayer.texture;
 	powerPlayer.path = m.powerPlayer.path;
+	
+
 	nn = new NN(*m.nn);
 }
 Player::~Player()
@@ -60,7 +64,6 @@ void Player::draw()
 	if (moveLeft)
 		texturePos.width *= -1;
 	Rectangle pos = getPos();
-	//DrawRectangleRec(pos, RED);
 	if (invisibleFrames <= 0 || (int)(invisibleFrames*10)%10>3)
 	{
 		DrawTexturePro(texture, texturePos, pos, { 0,0 }, 0, WHITE);
@@ -71,8 +74,11 @@ void Player::draw()
 
 void Player::drawInterface()
 {
+  customFont = LoadFont("res/PatrickHand.ttf");
 	nn->draw(0, 60);
-	DrawText(TextFormat("Fitnes: %lf\nTimer: %lf", fitnes, endProcesTimer), 0, 0, 20, BLACK);
+	DrawTextEx(customFont, TextFormat("Fitness: %lf ", fitness), Vector2{0,0}, 32, 0, BLACK);
+	DrawTextEx(customFont, TextFormat("Timer: %lf", endProcesTimer), Vector2{ 0,32 }, 32, 0, BLACK);
+
 }
 
 void Player::update(float deltaTime)
@@ -174,10 +180,10 @@ void Player::aiControll()
 		if (pressJumpTime != pressJumpTimeMax)
 			pressJumpTime = 0;
 	}
-	float newFitnes = pos.x + points*10;
-	if (newFitnes > fitnes)
+	float newFitness = pos.x + points*10;
+	if (newFitness > fitness)
 	{
-		fitnes = newFitnes;
+		fitness = newFitness;
 		endProcesTimer = endProcesTimerMax;
 	}
 
@@ -256,10 +262,10 @@ void Player::objectInteration()
 		std::list<GameObject*> obj = getObjectsAt({ pos.x + 6,pos.y - 1,pos.width - 12,1 }, ObjectType::Block);
 		for (auto o : obj)
 		{
-			Destoryable* d = dynamic_cast<Destoryable*>(o);
+			Destroyable* d = dynamic_cast<Destroyable*>(o);
 			if (d)
 			{
-				d->destory(hp);
+				d->destroy(hp);
 			}
 			pressJumpTime = 0;
 		}
@@ -272,7 +278,7 @@ void Player::objectInteration()
 		if (obj.size() > 0)
 		{
 			game->setWin();
-			fitnes = 9999999;
+			fitness = 9999999;
 		}
 		obj = getObjectsAt({ pos.x,pos.y + pos.height+1,pos.width,4 }, ObjectType::Enemy);
 		if (obj.size() > 0)

@@ -8,16 +8,16 @@
 struct LearningData
 {
     int generationID;
-    float maxFitnes;
+    float maxFitness;
     int howManyWin;
     void save(std::ofstream &writer)
     {
-        writer << generationID << " ; " << maxFitnes << " ; " << howManyWin << "\n";
+        writer << generationID << " ; " << maxFitness << " ; " << howManyWin << "\n";
     }
     void read(std::ifstream& reader)
     {
         std::string s;
-        reader >> generationID >> s >> maxFitnes >> s >> howManyWin;
+        reader >> generationID >> s >> maxFitness >> s >> howManyWin;
     }
 };
 class GameLearnScene :
@@ -30,6 +30,7 @@ class GameLearnScene :
     bool fastModeOn = true;
     float speed = 1;
     bool drawScene = true;
+
     std::vector<LearningData> learnData;
 public:
     GameLearnScene();

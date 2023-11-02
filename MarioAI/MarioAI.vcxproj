@@ -24,11 +24,11 @@
     <ClCompile Include="src\Engine\Game.cpp" />
     <ClCompile Include="src\Engine\GameLearnScene.cpp" />
     <ClCompile Include="src\Engine\MainMenu.cpp" />
-    <ClCompile Include="src\Engine\MapEdytor.cpp" />
+    <ClCompile Include="src\Engine\MapEditor.cpp" />
     <ClCompile Include="src\Engine\ObjectToClone.cpp" />
     <ClCompile Include="src\Engine\Scene.cpp" />
     <ClCompile Include="src\GameObject\Blocks\Block.cpp" />
-    <ClCompile Include="src\GameObject\Blocks\DestoryAbleBlock.cpp" />
+    <ClCompile Include="src\GameObject\Blocks\DestroyableBlock.cpp" />
     <ClCompile Include="src\GameObject\Blocks\Flag.cpp" />
     <ClCompile Include="src\GameObject\Blocks\Lava.cpp" />
     <ClCompile Include="src\GameObject\Blocks\PowerBlock.cpp" />
@@ -51,11 +51,11 @@
     <ClInclude Include="src\Engine\Game.h" />
     <ClInclude Include="src\Engine\GameLearnScene.h" />
     <ClInclude Include="src\Engine\MainMenu.h" />
-    <ClInclude Include="src\Engine\MapEdytor.h" />
+    <ClInclude Include="src\Engine\MapEditor.h" />
     <ClInclude Include="src\Engine\ObjectToClone.h" />
     <ClInclude Include="src\Engine\Scene.h" />
     <ClInclude Include="src\GameObject\Blocks\Block.h" />
-    <ClInclude Include="src\GameObject\Blocks\DestoryAbleBlock.h" />
+    <ClInclude Include="src\GameObject\Blocks\DestroyableBlock.h" />
     <ClInclude Include="src\GameObject\Blocks\Flag.h" />
     <ClInclude Include="src\GameObject\Blocks\Lava.h" />
     <ClInclude Include="src\GameObject\Blocks\PowerBlock.h" />

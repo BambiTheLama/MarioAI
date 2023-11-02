@@ -1,17 +1,17 @@
-#include "DestoryAbleBlock.h"
+#include "DestroyableBlock.h"
 #include "../../Engine/Game.h"
 #include "../ParticleSystem.h"
-DestoryAbleBlock::DestoryAbleBlock(Rectangle pos, std::string path, Game* game):Block(pos,path,game)
+DestroyableBlock::DestroyableBlock(Rectangle pos, std::string path, Game* game):Block(pos,path,game)
 {
 
 }
 
-DestoryAbleBlock::DestoryAbleBlock(DestoryAbleBlock& d):Block(d)
+DestroyableBlock::DestroyableBlock(DestroyableBlock& d):Block(d)
 {
 
 }
 
-void DestoryAbleBlock::destory(int power)
+void DestroyableBlock::destroy(int power)
 {
 	if (power > 1 && game)
 	{

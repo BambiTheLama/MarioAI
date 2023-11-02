@@ -1,9 +1,9 @@
 #pragma once
 #include "Block.h"
-#include "../ObjType/Destoryable.h"
+#include "../ObjType/Destroyable.h"
 #include "../ObjType/PowerType.h"
 class PowerBlock :
-    public Block,public Destoryable
+    public Block,public Destroyable
 {
     float sprite = 0;
     PowerType powerType;
@@ -18,6 +18,6 @@ public:
 
     virtual void draw();
 
-    virtual void destory(int power);
+    virtual void destroy(int power);
 };
 

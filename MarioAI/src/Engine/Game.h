@@ -66,7 +66,7 @@ public:
 
 	bool isPlaing() { return play; }
 
-	int getFitnes() { return target->getFitnes(); }
+	int getFitness() { return target->getFitness(); }
 
 	void beginCamareMode(){ BeginMode2D(camera); }
 

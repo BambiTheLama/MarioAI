@@ -1,16 +1,27 @@
-#include "MapEdytor.h"
+#include "MapEditor.h"
 #include <fstream>
 #include <iostream>
 #include "MainMenu.h"
 #include "Engine.h"
 
-MapEdytor::MapEdytor()
+
+Color menuColor;
+
+MapEditor::MapEditor()
 {
+
+	menuColor = GetColor(0x2850ffff);
+
+	// Inicjalizacja kamery
 	camera.offset = { GetScreenWidth() / 2.0f,GetScreenHeight() / 2.0f };
 	camera.target.y = 880 / 2;
 	camera.target.x = GetScreenWidth() / 2.0f;
 	camera.zoom = 1;
+
+	// Ustalenie pozycji menu
 	menuPos = { (float)(GetScreenWidth() - 200),0,200,800 };
+	
+	// Inicjalizacja obiektów statycznych w menu
 	for (int i = 0; i < (int)StaticObjectID::size; i++)
 	{
 		GameObject* o = cloneStaticObject((StaticObjectID)i);
@@ -19,6 +30,8 @@ MapEdytor::MapEdytor()
 		o->setPos({ menuPos.x + 20 + 84 * (i % 2),menuPos.y + 20 + 84 * (i / 2),64,64 });
 		blocks.push_back(o);
 	}
+
+	// Inicjalizacja obiektów dynamicznych w menu
 	for (int i = 0; i < (int)DynamicObjectID::size; i++)
 	{
 		GameObject* o = cloneDynamicObject((DynamicObjectID)i);
@@ -29,6 +42,8 @@ MapEdytor::MapEdytor()
 	}
 
 	SetExitKey(0);
+
+	// Wczytanie mapy z pliku JSON
 	std::ifstream reader("Map1.json");
 	if (reader.is_open())
 	{
@@ -47,9 +62,12 @@ MapEdytor::MapEdytor()
 		c->showGrid = true;
 }
 
-MapEdytor::~MapEdytor()
+MapEditor::~MapEditor()
 {
+	// Zapisz mapê przed zakoñczeniem
 	saveMap();
+
+	// Zwolnij pamiêæ z obiektów
 	for (auto o : blocks)
 		delete o;
 	for (auto o : otherObjects)
@@ -60,18 +78,19 @@ MapEdytor::~MapEdytor()
 		delete c;
 }
 
-void MapEdytor::update(float delataTime)
+void MapEditor::update(float delataTime)
 {
+	// Obs³uga klawiszy i myszy
 	if (IsKeyPressed(KEY_TAB))
 		menuLeft = !menuLeft;
 	if (IsKeyPressed(KEY_ONE))
 		displayBlock = false;
 	if (IsKeyPressed(KEY_TWO))
 		displayBlock = true;
-	if (IsKeyPressed(KEY_A))
-		camera.target.x += 64;
 	if (IsKeyPressed(KEY_D))
-		camera.target.x -= 64;
+		camera.target.x += 64*8;
+	if (IsKeyPressed(KEY_A))
+		camera.target.x -= 64*8;
 	if (IsKeyPressed(KEY_ENTER))
 		newChunk();
 	if (IsKeyPressed(KEY_DELETE))
@@ -96,10 +115,9 @@ void MapEdytor::update(float delataTime)
 	}
 	if (IsKeyPressed(KEY_ESCAPE))
 		Engine::getEngine()->setScene(new MainMenu());
-
 }
 
-void MapEdytor::pressMouse()
+void MapEditor::pressMouse()
 {
 	bool pressedAtMenu = false;
 	if (menuLeft)
@@ -136,15 +154,13 @@ void MapEdytor::pressMouse()
 				usingBlock = false;
 				usingObj = cloneDynamicObject((DynamicObjectID)i);
 			}
-
 		}
 	} 
 	placeBlock();
 }
 
-void MapEdytor::placeBlock()
+void MapEditor::placeBlock()
 {
-
 	if (!usingObj || CheckCollisionPointRec(GetMousePosition(), menuPos))
 		return;
 	Vector2 mousePos = GetScreenToWorld2D(GetMousePosition(), camera);
@@ -169,11 +185,10 @@ void MapEdytor::placeBlock()
 				delete o;
 			}
 		}
-
 	}
 }
 
-void MapEdytor::removeObject()
+void MapEditor::removeObject()
 {
 	bool pressedAtMenu = false;
 	if (menuLeft)
@@ -192,16 +207,14 @@ void MapEdytor::removeObject()
 		}
 		c->removeAt(mousePos);
 		c->updateLists();
-
 	}
-
 }
-void MapEdytor::newChunk()
+void MapEditor::newChunk()
 {
 	chunks.push_back(new Chunk(chunks.size()));
 }
 
-void MapEdytor::deleteChunk()
+void MapEditor::deleteChunk()
 {
 	if (chunks.size() <= 0)
 		return;
@@ -210,9 +223,8 @@ void MapEdytor::deleteChunk()
 	delete c;
 }
 
-void MapEdytor::saveMap()
+void MapEditor::saveMap()
 {
-
 	nlohmann::json map;
 	for (auto c : chunks)
 		c->saveToJson(map);
@@ -224,7 +236,7 @@ void MapEdytor::saveMap()
 	writer.close();	
 }
 
-void MapEdytor::draw()
+void MapEditor::draw()
 {
 	BeginMode2D(camera);
 	for (auto c : chunks)
@@ -232,7 +244,7 @@ void MapEdytor::draw()
 	EndMode2D();
 	if (menuLeft)
 	{
-		DrawRectangleRec(menuPos, RED);
+		DrawRectangleRec(menuPos, menuColor);
 		std::vector<GameObject*> l;
 		if (displayBlock)
 		{
