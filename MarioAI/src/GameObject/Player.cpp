@@ -75,8 +75,8 @@ void Player::draw()
 void Player::drawInterface()
 {
 	nn->draw(0, 60);
-	DrawTextEx(CustomFont::customFont, TextFormat("Fitness: %lf ", fitness), Vector2{0,0}, 32, 0, BLACK);
-	DrawTextEx(CustomFont::customFont, TextFormat("Timer: %lf", endProcesTimer), Vector2{ 0,32 }, 32, 0, BLACK);
+	DrawTextEx(CustomFont::customFont, TextFormat("Fitness: %d ", (int)fitness), Vector2{0,0}, 32, 0, BLACK);
+	DrawTextEx(CustomFont::customFont, TextFormat("Timer: %d:%d", (int)endProcesTimer, (int)((endProcesTimer- (int)endProcesTimer)*60)), Vector2{ 0,32 }, 32, 0, BLACK);
 
 }
 

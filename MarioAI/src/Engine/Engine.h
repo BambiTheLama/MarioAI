@@ -1,10 +1,13 @@
 #pragma once
 #include "Scene.h"
+#include "raylib.h"
 
 class Engine
 {
 	static Engine* e;
 	Scene* s;
+	Image icon;
+	Color backgroundColor;
 public:
 	Engine();
 

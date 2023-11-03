@@ -149,12 +149,10 @@ void GameLearnScene::newGeneration()
 	l.maxFitness = games[0]->getFitness();
 	for (int i = 0; i < GenerationSize; i++)
 	{
-		if (games[i]->getFitness() > 90000)
+		if (games[i]->isWin())
 		{
 			l.howManyWin++;
 		}
-		else
-			break;
 	}
 	learnData.push_back(l);
 

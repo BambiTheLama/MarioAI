@@ -6,16 +6,14 @@
 #include "MapEditor.h"
 #include "MainMenu.h"
 #include <time.h>
+
 Engine* Engine::e = NULL;
-
-
-Color backgroundColor;
-Image icon = LoadImage("res/icon.png");
 
 Engine::Engine()
 {
 	srand(time(NULL));
 	InitWindow(1600, 900, "Super Czesiek AI");
+	icon = LoadImage("res/icon.png");
 	SetWindowIcon(icon);
 	CustomFont::loadFont();
 	//SetTargetFPS(60);
@@ -33,6 +31,7 @@ Engine::~Engine()
 
 	deleteObjectToCopy();
 	CustomFont::unloadFont();
+	UnloadImage(icon);
 	CloseWindow();
 }
 

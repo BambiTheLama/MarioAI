@@ -20,7 +20,8 @@ class Game:
 	std::list<GameObject*> toDelete;
 	int points = 0;
 	bool AI = true;
-
+	float timer = 0.0f;
+	float maxTimer = 180.0f;
 public:
 	Game();
 
@@ -66,7 +67,9 @@ public:
 
 	bool isPlaing() { return play; }
 
-	int getFitness() { return target->getFitness(); }
+	bool isWin() { return win; }
+
+	int getFitness() { return target->getFitness() + win ? 3000 * (maxTimer - timer) / maxTimer : 0; }
 
 	void beginCamareMode(){ BeginMode2D(camera); }
 

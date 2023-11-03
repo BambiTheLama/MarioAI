@@ -8,6 +8,7 @@
 #include <fstream>
 Game::Game()
 {
+	timer = maxTimer;
 	std::ifstream reader("Map1.json");
 	if (reader.is_open())
 	{
@@ -34,6 +35,7 @@ Game::Game()
 }
 Game::Game(bool AI)
 {
+	timer = maxTimer;
 	std::ifstream reader("Map1.json");
 	if (reader.is_open())
 	{
@@ -95,8 +97,10 @@ void Game::draw()
 	if (target)
 		target->draw();
 	EndMode2D();
+	DrawTextEx(CustomFont::customFont, TextFormat("Timer: %d:%d", (int)timer / 60, (int)timer % 60), Vector2{ GetScreenWidth() - 200.0f,0 }, 64, 0, BLACK);
 	if (target)
 		target->drawInterface();
+
 
 }
 
@@ -108,6 +112,12 @@ void Game::drawPlayerOnly()
 
 void Game::update(float deltaTime)
 {
+	timer -= deltaTime;
+	if (timer <= 0)
+	{
+		lostGame();
+		return;
+	}
 	if (!AI)
 	{
 		if (IsKeyPressed(KEY_ESCAPE))
