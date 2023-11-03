@@ -277,7 +277,12 @@ void Player::objectInteration()
 		if (obj.size() > 0)
 		{
 			game->setWin();
-			fitness = 9999999;
+			float newFitness = pos.x + points * 10;
+			if (newFitness > fitness)
+			{
+				fitness = newFitness;
+				endProcesTimer = endProcesTimerMax;
+			}
 		}
 		obj = getObjectsAt({ pos.x,pos.y + pos.height+1,pos.width,4 }, ObjectType::Enemy);
 		if (obj.size() > 0)
