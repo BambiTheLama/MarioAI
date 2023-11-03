@@ -69,7 +69,7 @@ public:
 
 	bool isWin() { return win; }
 
-	int getFitness() { return target->getFitness() + (win ? (3000 * (maxTimer - timer) / maxTimer) : 0); }
+	int getFitness() { return target->getFitness() + (win ? (3000 * (timer) / maxTimer) : 0); }
 
 	void beginCamareMode(){ BeginMode2D(camera); }
 
