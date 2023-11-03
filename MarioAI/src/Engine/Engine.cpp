@@ -10,11 +10,13 @@ Engine* Engine::e = NULL;
 
 
 Color backgroundColor;
+Image icon = LoadImage("res/icon.png");
 
 Engine::Engine()
 {
 	srand(time(NULL));
 	InitWindow(1600, 900, "Super Czesiek AI");
+	SetWindowIcon(icon);
 	CustomFont::loadFont();
 	//SetTargetFPS(60);
 	createObjectToCopy();
