@@ -231,7 +231,6 @@ void MapEditor::saveMap()
 	std::ofstream writer("Map" + std::to_string(mapID) + ".json");
 	if (!writer.is_open())
 		return;
-	std::cout << map.dump(1);
 	writer << map;
 	writer.close();	
 }
