@@ -6,10 +6,10 @@
 #include "Engine.h"
 #include "MainMenu.h"
 #include <fstream>
-Game::Game()
+Game::Game(int mapID)
 {
 	timer = maxTimer;
-	std::ifstream reader("Map1.json");
+	std::ifstream reader("Map" + std::to_string(mapID) + ".json");
 	if (reader.is_open())
 	{
 		nlohmann::json j;
@@ -33,10 +33,10 @@ Game::Game()
 	camera.zoom = 1;
 
 }
-Game::Game(bool AI)
+Game::Game(bool AI,int mapID)
 {
 	timer = maxTimer;
-	std::ifstream reader("Map1.json");
+	std::ifstream reader("Map"+std::to_string(mapID) + ".json");
 	if (reader.is_open())
 	{
 		nlohmann::json j;
@@ -59,7 +59,7 @@ Game::Game(bool AI)
 	camera.zoom = 1;
 	this->AI = AI;
 }
-Game::Game(NN* n):Game()
+Game::Game(NN* n,int mapID):Game(mapID)
 {
 	if (target)
 		delete target;

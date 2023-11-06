@@ -14,9 +14,10 @@ class MapEditor : public Scene {
   bool usingBlock = false;
   int ObjectId = 0;
   Rectangle menuPos;
+  int mapID;
 
 public:
-  MapEditor();
+  MapEditor(int mapID);
 
   ~MapEditor();
 

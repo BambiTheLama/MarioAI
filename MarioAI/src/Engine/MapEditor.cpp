@@ -7,9 +7,9 @@
 
 Color menuColor;
 
-MapEditor::MapEditor()
+MapEditor::MapEditor(int mapID)
 {
-
+	this->mapID = mapID;
 	menuColor = GetColor(0x2850ffff);
 
 	// Inicjalizacja kamery
@@ -44,7 +44,7 @@ MapEditor::MapEditor()
 	SetExitKey(0);
 
 	// Wczytanie mapy z pliku JSON
-	std::ifstream reader("Map1.json");
+	std::ifstream reader("Map" + std::to_string(mapID) + ".json");
 	if (reader.is_open())
 	{
 		nlohmann::json j;
@@ -228,7 +228,7 @@ void MapEditor::saveMap()
 	nlohmann::json map;
 	for (auto c : chunks)
 		c->saveToJson(map);
-	std::ofstream writer("Map1.json");
+	std::ofstream writer("Map" + std::to_string(mapID) + ".json");
 	if (!writer.is_open())
 		return;
 	std::cout << map.dump(1);

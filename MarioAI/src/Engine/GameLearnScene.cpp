@@ -3,10 +3,11 @@
 #include "MainMenu.h"
 #include <fstream>
 
-GameLearnScene::GameLearnScene()
+GameLearnScene::GameLearnScene(int mapID)
 {
+	this->mapID = mapID;
 	for (int g = 0; g < GenerationSize; g++)
-		games[g] = new Game();
+		games[g] = new Game(mapID);
 	readFromFile();
 	currentGame = NULL;
 	i = 0;
@@ -206,7 +207,7 @@ void GameLearnScene::newGeneration()
 	for (int g = 0; g < GenerationSize; g++)
 		delete games[g];
 	for (int g = 0; g < GenerationSize; g++)
-		games[g] = new Game(nns[g]);
+		games[g] = new Game(nns[g],mapID);
 	i = 0;
 	generationNumber++;
 

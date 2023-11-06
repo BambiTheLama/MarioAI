@@ -4,20 +4,24 @@
 #include <string>
 class Button {
     Rectangle pos;
-    std::string text;
 public:
+    std::string text;
+
     Button(Rectangle pos, std::string text);
 
     void draw();
 
-    virtual bool press();
+    bool press();
 };
 
 class MainMenu :
     public Scene
 {
-    Button *buttons[3];
+#define NButtons 4
+#define NMaps 3
+    Button *buttons[NButtons];
     Texture2D background;
+    int mapID = 1;
 public:
 
     MainMenu();

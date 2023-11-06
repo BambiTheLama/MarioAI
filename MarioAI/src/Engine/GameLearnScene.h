@@ -30,10 +30,10 @@ class GameLearnScene :
     bool fastModeOn = true;
     float speed = 1;
     bool drawScene = true;
-
+    int mapID;
     std::vector<LearningData> learnData;
 public:
-    GameLearnScene();
+    GameLearnScene(int mapID);
 
     ~GameLearnScene();
 

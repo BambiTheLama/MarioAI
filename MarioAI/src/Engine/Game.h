@@ -23,11 +23,11 @@ class Game:
 	float timer = 0.0f;
 	float maxTimer = 180.0f;
 public:
-	Game();
+	Game(int mapID = 1);
 
-	Game(bool AI);
+	Game(bool AI, int mapID = 1);
 
-	Game(NN* n);
+	Game(NN* n, int mapID = 1);
 
 	~Game();
 
