@@ -268,7 +268,7 @@ void GameLearnScene::readFromFile()
 		{
 			if (games[g])
 				delete games[g];
-			games[g] = new Game(new NN(j["NNS"][g]));
+			games[g] = new Game(new NN(j["NNS"][g]),mapID);
 		}
 		generationNumber = j["Generation"];
 
