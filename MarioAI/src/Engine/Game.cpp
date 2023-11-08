@@ -118,8 +118,7 @@ void Game::update(float deltaTime)
 		lostGame();
 		return;
 	}
-	if (IsKeyPressed(KEY_F))
-	  ToggleFullscreen();
+
 	if (!AI)
 	{
 		if (IsKeyPressed(KEY_ESCAPE))

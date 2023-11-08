@@ -43,6 +43,8 @@ void Engine::start()
 	backgroundColor = GetColor(0x688bffff);;
 	while (!WindowShouldClose())
 	{
+		if (IsKeyPressed(KEY_F))
+			ToggleFullscreen();
 		time = time2;
 		time2 = GetTime();
 		deltaTime = time2 - time;
