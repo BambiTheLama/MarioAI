@@ -182,9 +182,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ResourceCompile Include="MarioAI.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="MarioAI.rc" />
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
