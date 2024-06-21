@@ -10,7 +10,7 @@
 ![](Obrazy/Obraz(4).png)
 
 ## Sieć Neuronowa
-**Sieć Nauronowa** powstała [na podstawie](Docs/Sieci_neuronowe_Stanley_Miikkulainen.pdf) i została zaimplementowana [w klasie](MarioAI/MarioAI/src/NN.h). Reprezentacja graficzna sieci oraz połaczeń jest przedstawiona w kórnej części ekranu.
+**Sieć neuronowa** powstała [na podstawie](Docs/Sieci_neuronowe_Stanley_Miikkulainen.pdf) i została zaimplementowana [w klasie](MarioAI/MarioAI/src/NN.h). Reprezentacja graficzna sieci oraz połączeń jest przedstawiona w górnej części ekranu.
 ![](Obrazy/Obraz(6).png)
 
 ## Edytor Poziomów
