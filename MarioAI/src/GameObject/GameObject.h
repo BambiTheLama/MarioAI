@@ -4,6 +4,7 @@
 #include <string>
 #include "../json.hpp"
 
+
 struct CustomFont {
 	static Font customFont;
 	static void loadFont()

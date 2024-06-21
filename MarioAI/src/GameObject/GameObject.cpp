@@ -6,6 +6,7 @@ Font CustomFont::customFont;
 
 GameObject::GameObject(Rectangle pos, std::string path,Game* game)
 {
+	
 	this->pos = pos;
 	bool loaded = false;
 	texture = loadTexture(path);
