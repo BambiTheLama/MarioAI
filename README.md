@@ -1,5 +1,7 @@
 # Mario AI
-![](MarioAIres/icon.png)
+
+![](MarioAI/res/icon.png)
+
 ## Opis
 **Mario AI** jest to projekt który miał na celu stworzyć sieć neuronową i przetestować ją w klonie klasycznej gry Super Mario Bross.
 
