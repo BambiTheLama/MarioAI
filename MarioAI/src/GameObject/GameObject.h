@@ -9,7 +9,7 @@ struct CustomFont {
 	static Font customFont;
 	static void loadFont()
 	{
-		customFont = LoadFont("res/PatrickHand.ttf");
+		customFont = LoadFontEx("Res/PatrickHand.ttf", 512, 0, 255 * 2);
 	}
 	static void unloadFont()
 	{
